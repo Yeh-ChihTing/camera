@@ -145,7 +145,7 @@ namespace camera
         public MainScene()
         {
             InitializeComponent();
-
+            //this.Owner = null;
         }
         
         private void Form1_Load(object sender, EventArgs e)
@@ -273,7 +273,7 @@ namespace camera
             BSetText.Text = BlueTrack.Value.ToString();
             //BC = BlueTrack.Value;
 
-            BoxSetting.Text = BoxNameCombo.SelectedItem.ToString() + "の設定";
+            
 
         }
 
@@ -457,7 +457,7 @@ namespace camera
                         {
                             // 補間モードの設定（各画素が見えるように） 
                             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                            // ５０倍で描画  
+                            // 描画  
                             g.DrawImage(bmp, 0, 0, Cam_Width, Cam_Height);
                         }
 
@@ -474,10 +474,10 @@ namespace camera
                     }
 
                     BMul = 1;
-                    for (int i = 0; i < MyBoxList.Count; i++)
-                    {
-                        MyBoxList[i].setBottonRight(BMul);
-                    }
+                    //for (int i = 0; i < MyBoxList.Count; i++)
+                    //{
+                    //    MyBoxList[i].setBottonRight(BMul);
+                    //}
 
                 }
 
@@ -502,7 +502,7 @@ namespace camera
                     {
                         // 補間モードの設定（各画素が見えるように） 
                         g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                        // 描画元を０．５画素ずらして５０倍で描画  
+                        // 描画  
                         g.DrawImage(
                               bmp,
                               new RectangleF(0f, 0f, bmp.Width * 2, bmp.Height * 2),
@@ -535,10 +535,10 @@ namespace camera
 
                     }
                     BMul = 2;
-                    for (int i = 0; i < MyBoxList.Count; i++)
-                    {
-                        MyBoxList[i].setBottonRight(BMul);
-                    }
+                    //for (int i = 0; i < MyBoxList.Count; i++)
+                    //{
+                    //    MyBoxList[i].setBottonRight(BMul);
+                    //}
                 }
 
                 //400%
@@ -562,7 +562,7 @@ namespace camera
                     {
                         // 補間モードの設定（各画素が見えるように） 
                         g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                        // 描画元を０．５画素ずらして５０倍で描画  
+                        // 描画  
                         g.DrawImage(
                               bmp,
                               new RectangleF(0f, 0f, bmp.Width * 4, bmp.Height * 4),
@@ -596,10 +596,10 @@ namespace camera
                     }
 
                     BMul = 4;
-                    for (int i = 0; i < MyBoxList.Count; i++)
-                    {
-                        MyBoxList[i].setBottonRight(BMul);
-                    }
+                    //for (int i = 0; i < MyBoxList.Count; i++)
+                    //{
+                    //    MyBoxList[i].setBottonRight(BMul);
+                    //}
                 }
 
                 //800%
@@ -624,7 +624,7 @@ namespace camera
                     {
                         // 補間モードの設定（各画素が見えるように） 
                         g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                        // 描画元を０．５画素ずらして５０倍で描画  
+                        //描画  
                         g.DrawImage(
                               bmp,
                               new RectangleF(0f, 0f, bmp.Width * 8, bmp.Height * 8),
@@ -658,10 +658,10 @@ namespace camera
                     }
 
                     BMul = 8;
-                    for (int i = 0; i < MyBoxList.Count; i++)
-                    {
-                        MyBoxList[i].setBottonRight(BMul);
-                    }
+                    //for (int i = 0; i < MyBoxList.Count; i++)
+                    //{
+                    //    MyBoxList[i].setBottonRight(BMul);
+                    //}
                 }
             }
             catch
@@ -751,9 +751,9 @@ namespace camera
                         }
                     }
 
-                    BoxNameCombo.SelectedIndex = 0;
+                    
                 }
-
+                BoxNameCombo.SelectedIndex = 0;
                 //for (int i = 0; i < MyBoxList.Count; i++)
                 //{
 
@@ -1014,6 +1014,8 @@ namespace camera
             int BoxPercent = MyBoxList[BoxNameCombo.SelectedIndex].MySPercent;
             SetSusscePercent.Text = BoxPercent.ToString();
             CheckMode.SelectedIndex = (int)MyBoxList[BoxNameCombo.SelectedIndex].MyBoxMode;
+
+            BoxSetting.Text = BoxNameCombo.SelectedItem.ToString() + "の設定";
         }
 
         /// <summary>
@@ -1109,8 +1111,8 @@ namespace camera
         /// </summary>
         private void Check()
         {
-            //try
-            //{
+            try
+            {
                 CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
 
                 Bitmap Origin = (Bitmap)CameraPic.Image.Clone();
@@ -1155,12 +1157,15 @@ namespace camera
                     MyBoxList[k].Drawbox.Visible = true;
                     //PictureBox1に表示する
                     MyBoxList[k].Drawbox.Image = bmp;
-
+                    MyBoxList[k].Drawbox.Location = new System.Drawing.Point(3,3);
+                    MyBoxList[k].Drawbox.Width = MyBoxList[k].Width-6;
+                    MyBoxList[k].Drawbox.Height = MyBoxList[k].Height - 6;
 
                     for (int i = X; i < SizeX; i++)
                     {
                         for (int j = Y; j < SizeY; j++)
                         {
+
 
                             OR = Origin.GetPixel(i, j).R;
                             OG = Origin.GetPixel(i, j).G;
@@ -1243,11 +1248,11 @@ namespace camera
             }
 
                 SaveDataOnCsv(OkOrFail);
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("画像データを選択してください");
-            //}
+            }
+            catch
+            {
+                MessageBox.Show("画像データを選択してください");
+            }
         }
 
         /// <summary>
@@ -1411,13 +1416,14 @@ namespace camera
         /// </summary>
         private void MainScene_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Owner.Visible = true;
-
             DialogResult result = MessageBox.Show("対象情報を保存しますか？ ", "", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 SaveBoxSetting();
             }
+
+            this.Owner.Visible = true;
+            
         }
 
         /// <summary>
@@ -1472,6 +1478,8 @@ namespace camera
                 SaveBoxSetting();
             }
         }
+
+   
 
         ///廃棄コード
         //private void pictureBox1_MouseDown(object sender, MouseEventArgs e)

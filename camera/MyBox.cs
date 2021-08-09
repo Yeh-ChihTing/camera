@@ -95,6 +95,39 @@ namespace camera
         /// </summary>
         private Point OriginPoint;
 
+        private Size OriginSize;
+        public enum CursorPos
+        {
+            None,
+            LeftTop,
+            Top,
+            RightTop,
+            LeftBottom,
+            Bottom,
+            RightBottom
+        }
+
+        public enum ResizeDirection
+        {
+            None = 0,
+            Top = 1,
+            Left = 2,
+            Bottom = 4,
+            Right = 8,
+            All = 15
+        }
+
+        // サイズ変更が有効になる枠
+        ResizeDirection resizeDirection;
+
+        // サイズ変更中を表す状態
+        ResizeDirection resizeStatus;
+
+        CursorPos CurPos;
+
+        // 標準のカーソル
+        Cursor defaultCursor;
+
         public MyBox()
         {
             InitializeComponent();
@@ -116,18 +149,21 @@ namespace camera
             Drawbox.Controls.Add(MyNumber);
             MyBoxMode = BoxMode.Samontape;
             MyNumber.ForeColor = Color.LightSalmon;
-           
+            defaultCursor = this.Cursor;
+
+
         }
 
 
         //描画命令
         protected override void OnPaint(PaintEventArgs e)
         {
+            //Drawbox.SendToBack();
 
-            int right = this.ClientRectangle.Right - 5;
-            int bottom = this.ClientRectangle.Bottom - 5;
+            int right = this.ClientRectangle.Right - 3;
+            int bottom = this.ClientRectangle.Bottom - 3;
 
-            Pen pen = new Pen(this._borderColor,5);
+            Pen pen = new Pen(this._borderColor, 3);
 
             // 四角を描画
             Graphics g = this.CreateGraphics();
@@ -161,39 +197,228 @@ namespace camera
                 OriginPoint = e.Location;
                 PWeight = this.Parent.Width;
                 PHeight = this.Parent.Height;
+                OriginSize = this.Size;
+                this.Capture = true;
             }
         }
 
         //Box移動用
         private void MyBox_MouseMove(object sender, MouseEventArgs e)
         {
+           
+
+            ResizeDirection cursorPos = ResizeDirection.None;
+           
+            //上の判定
+            //if ((resizeDirection & ResizeDirection.Top) == ResizeDirection.Top)
+            //{
+            Rectangle topRect = new Rectangle(0, -5, this.Width, 10);
+            if (topRect.Contains(e.Location))
+            {
+                cursorPos |= ResizeDirection.Top;
+            }
+            // }
+            // 左の判定
+            //if ((resizeDirection & ResizeDirection.Left) == ResizeDirection.Left)
+            //{
+            Rectangle leftRect = new Rectangle(-5, 0, 10, this.Height);
+            if (leftRect.Contains(e.Location))
+            {
+                cursorPos |= ResizeDirection.Left;
+            }
+            // }
+
+            // 下の判定
+            //if ((resizeDirection & ResizeDirection.Bottom) == ResizeDirection.Bottom)
+            //{
+            Rectangle bottomRect = new Rectangle(0, this.Height - 10, this.Width, this.Height);
+            if (bottomRect.Contains(e.Location))
+            {
+                cursorPos |= ResizeDirection.Bottom;
+            }
+            //  }
+
+            // 右の判定
+            //if ((resizeDirection & ResizeDirection.Right) == ResizeDirection.Right)
+            //{
+            Rectangle rightRect = new Rectangle(this.Width - 10, 0, this.Width, this.Height);
+            if (rightRect.Contains(e.Location))
+            {
+                cursorPos |= ResizeDirection.Right;
+            }
+
+            // カーソルを変更
+            //左上
+            if ((cursorPos & ResizeDirection.Top) == ResizeDirection.Top
+            && (cursorPos & ResizeDirection.Left) == ResizeDirection.Left)
+            {
+                this.Cursor = Cursors.SizeNWSE;
+            }
+            //右上
+            else if ((cursorPos & ResizeDirection.Top) == ResizeDirection.Top
+                && (cursorPos & ResizeDirection.Right) == ResizeDirection.Right)
+            {
+                this.Cursor = Cursors.SizeNESW;
+            }
+
+            //左下
+            else if((cursorPos & ResizeDirection.Bottom) == ResizeDirection.Bottom
+                && (cursorPos & ResizeDirection.Left) == ResizeDirection.Left)
+            {
+                this.Cursor = Cursors.SizeNESW;
+            }
+            //右下
+            else if((cursorPos & ResizeDirection.Bottom) == ResizeDirection.Bottom
+                && (cursorPos & ResizeDirection.Right) == ResizeDirection.Right)
+            {
+                this.Cursor = Cursors.SizeNWSE;
+            }
+
+            // 上
+            else if ((cursorPos & ResizeDirection.Top) == ResizeDirection.Top)
+            {
+                this.Cursor = Cursors.SizeNS;
+            }
+            //　下
+            else if ((cursorPos & ResizeDirection.Bottom) == ResizeDirection.Bottom)
+            {
+                this.Cursor = Cursors.SizeNS;
+            }
+            // 左
+            else if ((cursorPos & ResizeDirection.Left) == ResizeDirection.Left)
+            {
+                this.Cursor = Cursors.SizeWE;
+            }
+            //　右
+            else if ((cursorPos & ResizeDirection.Right) == ResizeDirection.Right)
+            {
+                this.Cursor = Cursors.SizeWE;
+            }
+
+            else
+            {
+                this.Cursor = defaultCursor;
+            }
+
+
+       
+
             if (e.Button == MouseButtons.Left)
             {
-                if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
-                    this.Location.Y >= 0 && this.Location.Y <= PHeight)
+
+                int diffX = e.X - OriginPoint.X;
+                int diffY = e.Y - OriginPoint.Y;
+
+                //左上
+                if ((cursorPos & ResizeDirection.Top) == ResizeDirection.Top
+            && (cursorPos & ResizeDirection.Left) == ResizeDirection.Left)
                 {
-                    Point mp = new Point(e.X - OriginPoint.X + this.Location.X, e.Y - OriginPoint.Y + this.Location.Y);
-                    this.Location = mp;
+                    //this.Cursor = Cursors.SizeNWSE;
+                    //左
+                    int w = this.Width;
+                    this.Width -= diffX;
+                    this.Left += w - this.Width;
+                    //上
+                    int h = this.Height;
+                    this.Height -= diffY;
+                    this.Top += h - this.Height;
                 }
-                if (this.Location.X + this.Width > this.Parent.Width)
+                //右上
+                else if ((cursorPos & ResizeDirection.Top) == ResizeDirection.Top
+                    && (cursorPos & ResizeDirection.Right) == ResizeDirection.Right)
                 {
-                    this.Location = new Point(PWeight - this.Width, this.Location.Y);
+                    //this.Cursor = Cursors.SizeNESW;
+                    //右
+                    this.Height = OriginSize.Height + diffY;
+                    //上
+                    int h = this.Height;
+                    this.Height -= diffY;
+                    this.Top += h - this.Height;
                 }
-                if (this.Location.X < 0)
+
+                //左下
+                else if ((cursorPos & ResizeDirection.Bottom) == ResizeDirection.Bottom
+                    && (cursorPos & ResizeDirection.Left) == ResizeDirection.Left)
                 {
-                    this.Location = new Point(0, this.Location.Y);
+                    //this.Cursor = Cursors.SizeNESW;
+                    //左
+                    int w = this.Width;
+                    this.Width -= diffX;
+                    this.Left += w - this.Width;
+                    //下
+                    this.Width = OriginSize.Width + diffX;
                 }
-                if (this.Location.Y + this.Height > this.Parent.Height)
+                //右下
+                else if ((cursorPos & ResizeDirection.Bottom) == ResizeDirection.Bottom
+                    && (cursorPos & ResizeDirection.Right) == ResizeDirection.Right)
                 {
-                    this.Location = new Point(this.Location.X, PHeight-this.Height);
+                    //this.Cursor = Cursors.SizeNWSE;
+                    //右
+                    this.Height = OriginSize.Height + diffY;
+                    //下
+                    this.Width = OriginSize.Width + diffX;
                 }
-                if (this.Location.Y < 0)
+
+                // 上
+                else if (cursorPos == ResizeDirection.Top)
                 {
-                    this.Location = new Point(this.Location.X, 0);
+                    //this.Cursor = Cursors.SizeNS;
+                    int h = this.Height;
+                    this.Height -= diffY;
+                    this.Top += h - this.Height;
+
+                }
+                //　下
+                else if (cursorPos == ResizeDirection.Bottom)
+                {
+                    //this.Cursor = Cursors.SizeNS;
+                    this.Height = OriginSize.Height + diffY;
+                }
+                // 左
+                else if (cursorPos == ResizeDirection.Left)
+                {
+                    //this.Cursor = Cursors.SizeWE;
+                    int w = this.Width;
+                    this.Width -= diffX;
+                    this.Left += w - this.Width;
+                }
+                //　右
+                else if (cursorPos == ResizeDirection.Right)
+                {
+                    //this.Cursor = Cursors.SizeWE;
+                    this.Width = OriginSize.Width + diffX;
+
+                }
+
+                else
+                {
+                    if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
+                        this.Location.Y >= 0 && this.Location.Y <= PHeight)
+                    {
+                        Point mp = new Point(e.X - OriginPoint.X + this.Location.X, e.Y - OriginPoint.Y + this.Location.Y);
+                        this.Location = mp;
+                    }
+                    if (this.Location.X + this.Width > this.Parent.Width)
+                    {
+                        this.Location = new Point(PWeight - this.Width, this.Location.Y);
+                    }
+                    if (this.Location.X < 0)
+                    {
+                        this.Location = new Point(0, this.Location.Y);
+                    }
+                    if (this.Location.Y + this.Height > this.Parent.Height)
+                    {
+                        this.Location = new Point(this.Location.X, PHeight - this.Height);
+                    }
+                    if (this.Location.Y < 0)
+                    {
+                        this.Location = new Point(this.Location.X, 0);
+                    }
                 }
 
             }
         }
+        
 
         //
         private void timer1_Tick(object sender, EventArgs e)
@@ -225,39 +450,40 @@ namespace camera
         {
             if (e.Button == MouseButtons.Left)
             {
-                OriginPoint = e.Location;              
-            }
+                OriginPoint = e.Location;
+            }         
         }
 
         //サイズ変更用ボックスの移動
         private void BottonRight_MouseMove(object sender, MouseEventArgs e)
         {
+                    
             if (e.Button == MouseButtons.Left)
             {
                
-                if (this.Size.Width >= 30 & this.Size.Height >= 30)
-                {
-                    Point mp = new Point(e.X - OriginPoint.X + BottonRight.Location.X, e.Y - OriginPoint.Y + BottonRight.Location.Y);
-                    BottonRight.Location = mp;
-                    int CsX = BottonRight.Location.X + BottonRight.Width;
-                    int CsY = BottonRight.Location.Y + BottonRight.Height;
-                    this.Size = new Size(CsX, CsY);
-                }
-                else if(this.Size.Width < 30&& this.Size.Height < 30)
-                {
-                    this.Size = new Size(30, 30);
-                    BottonRight.Location = new Point(this.Width - BottonRight.Size.Width, this.Height - BottonRight.Size.Height);
-                }
-                else if(this.Size.Width<30)
-                {
-                    this.Size = new Size(30, this.Size.Height);
-                    BottonRight.Location = new Point(this.Width-BottonRight.Size.Width, BottonRight.Location.Y);
-                }
-                else if (this.Size.Height < 30)
-                {
-                    this.Size = new Size(this.Size.Width,30);
-                    BottonRight.Location = new Point(BottonRight.Width, this.Height-BottonRight.Size.Height);
-                }
+                //if (this.Size.Width >= 30 & this.Size.Height >= 30)
+                //{
+                //    Point mp = new Point(e.X - OriginPoint.X + BottonRight.Location.X, e.Y - OriginPoint.Y + BottonRight.Location.Y);
+                //    BottonRight.Location = mp;
+                //    int CsX = BottonRight.Location.X + BottonRight.Width;
+                //    int CsY = BottonRight.Location.Y + BottonRight.Height;
+                //    this.Size = new Size(CsX, CsY);
+                //}
+                //else if(this.Size.Width < 30&& this.Size.Height < 30)
+                //{
+                //    this.Size = new Size(30, 30);
+                //    BottonRight.Location = new Point(this.Width - BottonRight.Size.Width, this.Height - BottonRight.Size.Height);
+                //}
+                //else if(this.Size.Width<30)
+                //{
+                //    this.Size = new Size(30, this.Size.Height);
+                //    BottonRight.Location = new Point(this.Width-BottonRight.Size.Width, BottonRight.Location.Y);
+                //}
+                //else if (this.Size.Height < 30)
+                //{
+                //    this.Size = new Size(this.Size.Width,30);
+                //    BottonRight.Location = new Point(BottonRight.Width, this.Height-BottonRight.Size.Height);
+                //}
 
             }
         }
@@ -265,14 +491,22 @@ namespace camera
         //サイズ変更のイベント反応
         private void MyBox_SizeChanged(object sender, EventArgs e)
         {
-            BottonRight.Size = new Size(this.Width / BRSizeLevel, this.Height / BRSizeLevel);
+            //BottonRight.Size = new Size(this.Width / BRSizeLevel, this.Height / BRSizeLevel);
 
-            BottonRight.Location = new Point(this.Width - BottonRight.Width, this.Height - BottonRight.Height);
+            //BottonRight.Location = new Point(this.Width - BottonRight.Width, this.Height - BottonRight.Height);
 
-            Drawbox.Location = new Point(5, 5);
-            Drawbox.Width = this.Width - 10;
-            Drawbox.Height = this.Height - 10;
-            MyNumber.Font = new Font(MyNumber.Font.FontFamily, Drawbox.Width/6);
+            //Drawbox.Location = new Point(5, 5);
+            //Drawbox.Width = this.Width - 10;
+            //Drawbox.Height = this.Height - 10;
+            if ((int)(this.Width / 10) > 1)
+            {
+                MyNumber.Font = new Font(MyNumber.Font.FontFamily, (int)(this.Width / 10));
+            }
+            else
+            {
+                MyNumber.Font = new Font(MyNumber.Font.FontFamily, 1);
+            }
+
         }
 
         //粋線色設定
@@ -284,25 +518,25 @@ namespace camera
         //サイズ変更用ボックスの位置リーセット
         public void setBottonRight(int mul)
         {
-            BottonRight.Size = new Size(this.Width / BRSizeLevel, this.Height / BRSizeLevel);
+            //BottonRight.Size = new Size(this.Width / BRSizeLevel, this.Height / BRSizeLevel);
 
-            if (mul == 1)
-            {
-                MyNumber.Font = new Font("Serif", 12, FontStyle.Bold);
-                BottonRight.Width = BROW;
-                BottonRight.Height = BROH;
-            }
-            else
-            {
-                MyNumber.Font = new Font("Serif", 12 *(mul / 2), FontStyle.Bold);
-                //BottonRight.Width = BROW;
-                //BottonRight.Height = BROH;
-                BottonRight.Width = BROW * (mul / 2);
-                BottonRight.Height = BROH * (mul / 2);
-            }
+            //if (mul == 1)
+            //{
+            //    MyNumber.Font = new Font("Serif", 12, FontStyle.Bold);
+            //    BottonRight.Width = BROW;
+            //    BottonRight.Height = BROH;
+            //}
+            //else
+            //{
+            //    MyNumber.Font = new Font("Serif", 12 *(mul / 2), FontStyle.Bold);
+            //    //BottonRight.Width = BROW;
+            //    //BottonRight.Height = BROH;
+            //    BottonRight.Width = BROW * (mul / 2);
+            //    BottonRight.Height = BROH * (mul / 2);
+            //}
 
 
-            BottonRight.Location = new Point(this.Width - BottonRight.Width, this.Height - BottonRight.Height);
+            //BottonRight.Location = new Point(this.Width - BottonRight.Width, this.Height - BottonRight.Height);
         }
 
         private void MyBox_MouseClick(object sender, MouseEventArgs e)
@@ -375,6 +609,13 @@ namespace camera
         //Box移動用
         private void Drawbox_MouseMove(object sender, MouseEventArgs e)
         {
+            //if(e.Location.X>BottonRight.Location.X&&e.Location.X<(BottonRight.Location.X+BottonRight.Width)&&
+            //    e.Location.Y > BottonRight.Location.Y && e.Location.Y < (BottonRight.Location.Y + BottonRight.Height))
+            //{
+            //    this.Cursor = Cursors.SizeNWSE;
+            //}
+            this.Cursor = defaultCursor;
+
             if (e.Button == MouseButtons.Left)
             {
                 if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
@@ -401,6 +642,11 @@ namespace camera
                 }
 
             }
+        }
+
+        private void MyBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.Capture = false;
         }
     }
 }

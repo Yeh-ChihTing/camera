@@ -5,11 +5,13 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using SharpDX.MediaFoundation;
+
 
 namespace camera
 {
@@ -37,6 +39,8 @@ namespace camera
                 main.Cmode = MainScene.CamMode.WebCam;
                 main.WebCamNum = WebCamSelect.SelectedIndex;
                 main.Show();
+                       
+                //this.Close();
                 this.Visible = false;
             }
             else

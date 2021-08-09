@@ -46,6 +46,7 @@ namespace camera
             this.BottonRight.Size = new System.Drawing.Size(15, 15);
             this.BottonRight.TabIndex = 2;
             this.BottonRight.TabStop = false;
+            this.BottonRight.Visible = false;
             this.BottonRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BottonRight_MouseDown);
             this.BottonRight.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BottonRight_MouseMove);
             // 
@@ -60,7 +61,7 @@ namespace camera
             this.MyNumber.BackColor = System.Drawing.Color.Transparent;
             this.MyNumber.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.MyNumber.ForeColor = System.Drawing.Color.Black;
-            this.MyNumber.Location = new System.Drawing.Point(0, 0);
+            this.MyNumber.Location = new System.Drawing.Point(3, 3);
             this.MyNumber.Name = "MyNumber";
             this.MyNumber.Size = new System.Drawing.Size(52, 16);
             this.MyNumber.TabIndex = 3;
@@ -74,6 +75,7 @@ namespace camera
             this.Drawbox.Size = new System.Drawing.Size(144, 144);
             this.Drawbox.TabIndex = 4;
             this.Drawbox.TabStop = false;
+            this.Drawbox.Visible = false;
             this.Drawbox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Drawbox_MouseClick);
             this.Drawbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drawbox_MouseDown);
             this.Drawbox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drawbox_MouseMove);
@@ -93,6 +95,7 @@ namespace camera
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseUp);
             ((System.ComponentModel.ISupportInitialize)(this.BottonRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Drawbox)).EndInit();
             this.ResumeLayout(false);
