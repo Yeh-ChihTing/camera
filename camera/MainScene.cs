@@ -254,7 +254,6 @@ namespace camera
 
         }
 
-
         /// <summary>
         ///数値変化チェックタイマー
         /// </summary>
