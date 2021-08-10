@@ -45,7 +45,7 @@ namespace camera
             EighthundredPer//800%
 
         };
-        
+         
         /// <summary>
         /// カメラモード
         /// </summary>
