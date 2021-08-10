@@ -31,8 +31,8 @@ namespace camera
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OpenScene));
             this.StartnetCamera = new System.Windows.Forms.Button();
-            this.PassWord = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.PASS = new System.Windows.Forms.Label();
+            this.PassWord = new System.Windows.Forms.TextBox();
             this.ID = new System.Windows.Forms.Label();
             this.UserID = new System.Windows.Forms.TextBox();
             this.IP = new System.Windows.Forms.Label();
@@ -52,22 +52,22 @@ namespace camera
             this.StartnetCamera.UseVisualStyleBackColor = true;
             this.StartnetCamera.Click += new System.EventHandler(this.StartnetCamera_Click);
             // 
+            // PASS
+            // 
+            this.PASS.AutoSize = true;
+            this.PASS.Location = new System.Drawing.Point(18, 67);
+            this.PASS.Name = "PASS";
+            this.PASS.Size = new System.Drawing.Size(34, 12);
+            this.PASS.TabIndex = 281;
+            this.PASS.Text = "PASS";
+            // 
             // PassWord
             // 
-            this.PassWord.AutoSize = true;
-            this.PassWord.Location = new System.Drawing.Point(18, 67);
+            this.PassWord.Location = new System.Drawing.Point(53, 64);
             this.PassWord.Name = "PassWord";
-            this.PassWord.Size = new System.Drawing.Size(34, 12);
-            this.PassWord.TabIndex = 281;
-            this.PassWord.Text = "PASS";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(53, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(197, 19);
-            this.textBox1.TabIndex = 280;
-            this.textBox1.Text = "root";
+            this.PassWord.Size = new System.Drawing.Size(197, 19);
+            this.PassWord.TabIndex = 280;
+            this.PassWord.Text = "root";
             // 
             // ID
             // 
@@ -140,8 +140,8 @@ namespace camera
             this.Controls.Add(this.SelectcamText);
             this.Controls.Add(this.StartWebCamera);
             this.Controls.Add(this.StartnetCamera);
+            this.Controls.Add(this.PASS);
             this.Controls.Add(this.PassWord);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.ID);
             this.Controls.Add(this.UserID);
             this.Controls.Add(this.IP);
@@ -159,8 +159,8 @@ namespace camera
         #endregion
 
         private System.Windows.Forms.Button StartnetCamera;
-        private System.Windows.Forms.Label PassWord;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label PASS;
+        private System.Windows.Forms.TextBox PassWord;
         private System.Windows.Forms.Label ID;
         private System.Windows.Forms.TextBox UserID;
         private System.Windows.Forms.Label IP;

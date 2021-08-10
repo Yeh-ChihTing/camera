@@ -55,7 +55,8 @@ namespace camera
             MainScene main = new MainScene();
             main.Owner = this;
             main.Cmode = MainScene.CamMode.NetCam;
-            main.CamTypeName = "http://"+UserID+":"+PassWord+"@"+IpAdress+ "/axis-cgi/mjpg/video.cgi";
+            //main.CamTypeName = "http://"+UserID.Text+":"+ PassWord.Text+"@"+IpAdress.Text+ "/axis-cgi/mjpg/video.cgi";
+            main.CamTypeName = "http://" + UserID.Text + ":" + PassWord.Text + "@" + IpAdress.Text + "/cgi-bin/camera?resolution=640";
             main.Show();
             this.Visible = false;
         }

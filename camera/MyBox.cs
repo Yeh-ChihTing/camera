@@ -63,22 +63,26 @@ namespace camera
 
         public BoxMode MyBoxMode;
 
+        public bool BoxChecked = false;
+
+        public Color UsedCol;
+
         /// <summary>
         /// private
         /// </summary>
         
-        /// <summary>
-        ///　サイズ調整Boxの基礎横幅
-        /// </summary>
-        private int BROW = 15;
-        /// <summary>
-        ///　サイズ調整Boxの基礎縦幅
-        /// </summary>
-        private int BROH = 15;
-        /// <summary>
-        ///　サイズ調整Boxの変更倍率
-        /// </summary>
-        private int BRSizeLevel = 7;
+        ///// <summary>
+        /////　サイズ調整Boxの基礎横幅
+        ///// </summary>
+        //private int BROW = 15;
+        ///// <summary>
+        /////　サイズ調整Boxの基礎縦幅
+        ///// </summary>
+        //private int BROH = 15;
+        ///// <summary>
+        /////　サイズ調整Boxの変更倍率
+        ///// </summary>
+        //private int BRSizeLevel = 7;
 
 
         /// <summary>

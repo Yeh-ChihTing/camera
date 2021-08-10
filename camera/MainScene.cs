@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
-using Excel = Microsoft.Office.Interop.Excel;
 
 
 namespace camera
@@ -136,6 +135,9 @@ namespace camera
         /// </summary>
         private string SaveDataname;
 
+        private bool StarChooseCol = false;
+        private Color CheckCol;
+
         //List<Rectangle> BoxList = new List<Rectangle>();
         //int CamWidth;
         //int CamHeight;
@@ -238,9 +240,7 @@ namespace camera
                         //vc.Read(img);
                         img = vc.RetrieveMat();
                         CameraPic.Image = img.ToBitmap();
-
                         // }
-
                     }
 
                 });
@@ -272,8 +272,6 @@ namespace camera
             Btracktext.Text = BlueTrack.Value.ToString();
             BSetText.Text = BlueTrack.Value.ToString();
             //BC = BlueTrack.Value;
-
-            
 
         }
 
@@ -338,23 +336,33 @@ namespace camera
                             MyBox box = new MyBox();
                             CutPic.Controls.Add(box);
                             //name
-                            string[] names = DataList[(i*6) + 1].Split(':');
+                            string[] names = DataList[(i * 8) + 1].Split(':');
                             box.MyNumber.Text = names[1];
                             BoxNameList.Add(names[1]);
                             MyBoxList.Add(box);                           
                             BoxNameCombo.Items.Add(names[1]);
                             //pos
-                            string[] Posstr = DataList[(i * 6) + 2].Split(':',',');
+                            string[] Posstr = DataList[(i * 8) + 2].Split(':',',');
                             int PosX = Convert.ToInt32(Posstr[1]);
                             int PosY = Convert.ToInt32(Posstr[2]);
                             box.Location = new System.Drawing.Point(PosX, PosY);
                             //size
-                            string[] Size = DataList[(i * 6) + 3].Split(':', ',');
+                            string[] Size = DataList[(i * 8) + 3].Split(':', ',');
                             int w = Convert.ToInt32(Size[1]);
                             int h = Convert.ToInt32(Size[2]);
                             box.Size = new System.Drawing.Size(w, h);
+                            //BoxCheck
+                            string Checked = DataList[(i * 8) + 4];
+                            if (Checked == "BoxCheckedFalse")
+                            {
+                                box.BoxChecked = false;
+                            }
+                            else if(Checked == "BoxCheckedTrue")
+                            {
+                                box.BoxChecked = true;
+                            }
                             //RGB
-                            string[] col = DataList[(i * 6) + 4].Split(':', ',');
+                            string[] col = DataList[(i * 8) + 5].Split(':', ',');
                             int SR = Convert.ToInt32(col[1]);
                             int SG = Convert.ToInt32(col[2]);
                             int SB = Convert.ToInt32(col[3]);
@@ -362,11 +370,15 @@ namespace camera
                             box.Green = SG;
                             box.Blue = SB;
                             //%
-                            string[] SPercent = DataList[(i * 6) + 5].Split(':', ',');
+                            string[] SPercent = DataList[(i * 8) + 6].Split(':', ',');
                             box.MySPercent = Convert.ToInt32(SPercent[1]);
                             //Mode
-                            string[] Smode = DataList[(i * 6) + 6].Split(':', ',');
+                            string[] Smode = DataList[(i * 8) + 7].Split(':', ',');
                             box.MyBoxMode = (MyBox.BoxMode)Convert.ToInt32(Smode[1]);
+                            //checkBox
+                            string[] SCheckBoxCol = DataList[(i * 8) + 8].Split(':', ',');
+                            box.UsedCol = Color.FromArgb(Convert.ToInt32(SCheckBoxCol[1]), Convert.ToInt32(SCheckBoxCol[2])
+                                , Convert.ToInt32(SCheckBoxCol[3]));
                         }
 
                         BoxNameCombo.SelectedIndex = 0;
@@ -1029,19 +1041,25 @@ namespace camera
             SetSusscePercent.Text = BoxPercent.ToString();
             CheckMode.SelectedIndex = (int)MyBoxList[BoxNameCombo.SelectedIndex].MyBoxMode;
 
+            UseThisCol.Checked = MyBoxList[BoxNameCombo.SelectedIndex].BoxChecked;
+
             BoxSetting.Text = BoxNameCombo.SelectedItem.ToString() + "の設定";
+
+            UseCol.BackColor = MyBoxList[BoxNameCombo.SelectedIndex].UsedCol;
         }
 
         /// <summary>
         ///RGB値の変更
         /// </summary>
-        
+
         /// <summary>
         ///R値変更
         /// </summary>
         private void RedTrack_ValueChanged(object sender, EventArgs e)
         {
+
             MyBoxList[BoxNameCombo.SelectedIndex].Red = RedTrack.Value;
+
         }
 
         /// <summary>
@@ -1049,7 +1067,9 @@ namespace camera
         /// </summary>
         private void GreenTrack_ValueChanged(object sender, EventArgs e)
         {
+
             MyBoxList[BoxNameCombo.SelectedIndex].Green = GreenTrack.Value;
+
         }
 
         /// <summary>
@@ -1057,7 +1077,9 @@ namespace camera
         /// </summary>
         private void BlueTrack_ValueChanged(object sender, EventArgs e)
         {
+
             MyBoxList[BoxNameCombo.SelectedIndex].Blue = BlueTrack.Value;
+
         }
 
         /// <summary>
@@ -1131,7 +1153,7 @@ namespace camera
 
                 Bitmap Origin = (Bitmap)CameraPic.Image.Clone();
                 Bitmap CheackBT = (Bitmap)MasterImage.Clone();
-                int OR, OG, OB, CR, CG, CB;
+                int OR=0, OG=0, OB=0, CR, CG, CB;
                 bool[] OkOrFail = new bool[MyBoxList.Count];
                 for (int i = 0; i < OkOrFail.Length; i++)
                 {
@@ -1180,10 +1202,18 @@ namespace camera
                         for (int j = Y; j < SizeY; j++)
                         {
 
-
-                            OR = Origin.GetPixel(i, j).R;
-                            OG = Origin.GetPixel(i, j).G;
-                            OB = Origin.GetPixel(i, j).B;
+                            if (!MyBoxList[k].BoxChecked)
+                            {
+                                OR = Origin.GetPixel(i, j).R;
+                                OG = Origin.GetPixel(i, j).G;
+                                OB = Origin.GetPixel(i, j).B;
+                            }
+                            else
+                            {
+                                OR = CheckCol.R;
+                                OG = CheckCol.G;
+                                OB = CheckCol.B;
+                            }
                             CR = CheackBT.GetPixel(i, j).R;
                             CG = CheackBT.GetPixel(i, j).G;
                             CB = CheackBT.GetPixel(i, j).B;
@@ -1459,13 +1489,19 @@ namespace camera
                             sw.WriteLine("name:" + BoxNameCombo.Items[i].ToString());
                             sw.WriteLine("pos:" + MyBoxList[i].Location.X + "," + MyBoxList[i].Location.Y);
                             sw.WriteLine("size:" + MyBoxList[i].Width + "," + MyBoxList[i].Height);
+                            sw.WriteLine("BoxChecked" + MyBoxList[i].BoxChecked);
+
                             int _赤 = MyBoxList[i].Red;
                             int _緑 = MyBoxList[i].Green;
-                            int _青=MyBoxList[i].Blue;
+                            int _青 = MyBoxList[i].Blue;
                             sw.WriteLine("RGB:" + _赤.ToString() + "," + _緑.ToString() + "," + _青.ToString());
+
                             int _パーセント = MyBoxList[i].MySPercent;
                             sw.WriteLine("%:" + _パーセント.ToString());
                             sw.WriteLine("Mode:" + ((int)MyBoxList[i].MyBoxMode).ToString());
+
+                            Color Col = MyBoxList[i].UsedCol;
+                            sw.WriteLine("CheckCol:" + Col.R + "," + Col.G + "," + Col.B);
 
                         }
                     }
@@ -1493,7 +1529,68 @@ namespace camera
             }
         }
 
-   
+        private void ChooseCol_Click(object sender, EventArgs e)
+        {
+            StarChooseCol = true;
+        }
+
+        private void CutPic_MouseDown(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (StarChooseCol)
+                {
+                    Bitmap bmp = new Bitmap(CutPic.Image);
+                    Color color = bmp.GetPixel(e.X, e.Y);
+                    //RNums.Text = color.R.ToString();
+                    //GNums.Text = color.G.ToString();
+                    //BNums.Text = color.B.ToString();
+
+                    UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
+
+                    MyBoxList[BoxNameCombo.SelectedIndex].UsedCol=CheckCol = color;
+                    
+                    //Mdown.X = e.X;
+                    //Mdown.Y = e.Y;
+                    StarChooseCol = false;
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void CutPic_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (StarChooseCol)
+            {
+                Bitmap bmp = new Bitmap(CutPic.Image);
+                Color color = bmp.GetPixel(e.X, e.Y);
+                //RNums.Text = color.R.ToString();
+                //GNums.Text = color.G.ToString();
+                //BNums.Text = color.B.ToString();
+
+                UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
+
+                //Mdown.X = e.X;
+                //Mdown.Y = e.Y;
+                //StarChooseCol = false;
+            }
+        }
+
+
+        private void UseThisCol_CheckedChanged(object sender, EventArgs e)
+        {
+            if (UseThisCol.Checked)
+            {
+                MyBoxList[BoxNameCombo.SelectedIndex].BoxChecked = true;
+            }
+            else
+            {
+                MyBoxList[BoxNameCombo.SelectedIndex].BoxChecked = false;
+            }
+        }
 
         ///廃棄コード
         //private void pictureBox1_MouseDown(object sender, MouseEventArgs e)

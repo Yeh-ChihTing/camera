@@ -82,6 +82,9 @@ namespace camera
             this.BoxSetting = new System.Windows.Forms.GroupBox();
             this.CheckMode = new System.Windows.Forms.ComboBox();
             this.SaveBoxData = new System.Windows.Forms.Button();
+            this.UseThisCol = new System.Windows.Forms.CheckBox();
+            this.UseCol = new System.Windows.Forms.PictureBox();
+            this.ChooseCol = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChangePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
@@ -90,6 +93,7 @@ namespace camera
             ((System.ComponentModel.ISupportInitialize)(this.CutPic)).BeginInit();
             this.panel1.SuspendLayout();
             this.BoxSetting.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UseCol)).BeginInit();
             this.SuspendLayout();
             // 
             // CameraPic
@@ -195,6 +199,8 @@ namespace camera
             this.CutPic.Size = new System.Drawing.Size(640, 360);
             this.CutPic.TabIndex = 261;
             this.CutPic.TabStop = false;
+            this.CutPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CutPic_MouseDown);
+            this.CutPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CutPic_MouseMove);
             // 
             // GetPicBtn
             // 
@@ -560,6 +566,9 @@ namespace camera
             // 
             // BoxSetting
             // 
+            this.BoxSetting.Controls.Add(this.ChooseCol);
+            this.BoxSetting.Controls.Add(this.UseCol);
+            this.BoxSetting.Controls.Add(this.UseThisCol);
             this.BoxSetting.Controls.Add(this.CheckMode);
             this.BoxSetting.Controls.Add(this.SetSusscePercent);
             this.BoxSetting.Controls.Add(this.RGBLabel);
@@ -614,6 +623,36 @@ namespace camera
             this.SaveBoxData.UseVisualStyleBackColor = true;
             this.SaveBoxData.Click += new System.EventHandler(this.SaveBoxData_Click);
             // 
+            // UseThisCol
+            // 
+            this.UseThisCol.AutoSize = true;
+            this.UseThisCol.Location = new System.Drawing.Point(109, 223);
+            this.UseThisCol.Name = "UseThisCol";
+            this.UseThisCol.Size = new System.Drawing.Size(60, 16);
+            this.UseThisCol.TabIndex = 303;
+            this.UseThisCol.Text = "指定色";
+            this.UseThisCol.UseVisualStyleBackColor = true;
+            this.UseThisCol.CheckedChanged += new System.EventHandler(this.UseThisCol_CheckedChanged);
+            // 
+            // UseCol
+            // 
+            this.UseCol.BackColor = System.Drawing.Color.Red;
+            this.UseCol.Location = new System.Drawing.Point(236, 221);
+            this.UseCol.Name = "UseCol";
+            this.UseCol.Size = new System.Drawing.Size(21, 18);
+            this.UseCol.TabIndex = 304;
+            this.UseCol.TabStop = false;
+            // 
+            // ChooseCol
+            // 
+            this.ChooseCol.Location = new System.Drawing.Point(174, 219);
+            this.ChooseCol.Name = "ChooseCol";
+            this.ChooseCol.Size = new System.Drawing.Size(56, 23);
+            this.ChooseCol.TabIndex = 305;
+            this.ChooseCol.Text = "色選択";
+            this.ChooseCol.UseVisualStyleBackColor = true;
+            this.ChooseCol.Click += new System.EventHandler(this.ChooseCol_Click);
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -661,6 +700,7 @@ namespace camera
             this.panel1.ResumeLayout(false);
             this.BoxSetting.ResumeLayout(false);
             this.BoxSetting.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UseCol)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -719,6 +759,9 @@ namespace camera
         private System.Windows.Forms.GroupBox BoxSetting;
         private System.Windows.Forms.ComboBox CheckMode;
         private System.Windows.Forms.Button SaveBoxData;
+        private System.Windows.Forms.PictureBox UseCol;
+        private System.Windows.Forms.CheckBox UseThisCol;
+        private System.Windows.Forms.Button ChooseCol;
     }
 }
 
