@@ -443,10 +443,10 @@ namespace camera
 
                     if (MasterImage != null)
                     {
-                        int[] bx = new int[MyBoxList.Count];
-                        int[] by = new int[MyBoxList.Count];
-                        int[] bw = new int[MyBoxList.Count];
-                        int[] bh = new int[MyBoxList.Count];
+                        double[] bx = new double[MyBoxList.Count];
+                        double[] by = new double[MyBoxList.Count];
+                        double[] bw = new double[MyBoxList.Count];
+                        double[] bh = new double[MyBoxList.Count];
 
                         GetNowBoxStatus(bx, by, bw, bh);
                         // Image GetCutPic = CutPic.Image;
@@ -463,14 +463,18 @@ namespace camera
 
                         for (int i = 0; i < MyBoxList.Count; i++)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] / BMul, by[i] / BMul);
-                            MyBoxList[i].Width = bw[i] / BMul;
-                            MyBoxList[i].Height = bh[i] / BMul;
+                            double x, y;
+                            x =Math.Round(bx[i] / BMul);
+                            y= Math.Round(by[i] / BMul);
+                            MyBoxList[i].Location = new System.Drawing.Point((int)x,(int)y);
+                            MyBoxList[i].Width = (int)Math.Round(bw[i] / BMul);
+                            MyBoxList[i].Height = (int)Math.Round(bh[i] / BMul);
+                           
                         }
                         //box1.Location = new System.Drawing.Point(bx / 2, by / 2);
                         //box1.Width = bw / 2;
                         //box1.Height = bh / 2;
-
+                      
                     }
 
                     BMul = 1;
@@ -484,10 +488,10 @@ namespace camera
                 //200%
                 if (CSComboBox.SelectedIndex == (int)CutSize.TwohundredPer)
                 {
-                    int[] bx = new int[MyBoxList.Count];
-                    int[] by = new int[MyBoxList.Count];
-                    int[] bw = new int[MyBoxList.Count];
-                    int[] bh = new int[MyBoxList.Count];
+                    double[] bx = new double[MyBoxList.Count];
+                    double[] by = new double[MyBoxList.Count];
+                    double[] bw = new double[MyBoxList.Count];
+                    double[] bh = new double[MyBoxList.Count];
 
                     GetNowBoxStatus(bx, by, bw, bh);
 
@@ -514,23 +518,30 @@ namespace camera
                     {
                         if (BMul == 1)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] * 2, by[i] * 2);
-                            MyBoxList[i].Width = bw[i] * 2;
-                            MyBoxList[i].Height = bh[i] * 2;
+                           
+                            MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 2, (int)by[i] * 2);
+                            MyBoxList[i].Width = (int)bw[i] * 2;
+                            MyBoxList[i].Height = (int)bh[i] * 2;
                         }
 
                         if (BMul == 4)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] / 2, by[i] / 2);
-                            MyBoxList[i].Width = bw[i] / 2;
-                            MyBoxList[i].Height = bh[i] / 2;
+                            double x, y;
+                            x = Math.Round(bx[i] /2);
+                            y = Math.Round(by[i] / 2);
+                            MyBoxList[i].Location = new System.Drawing.Point((int)x, (int)y);
+                            MyBoxList[i].Width =(int)Math.Round(bw[i] / 2);
+                            MyBoxList[i].Height = (int)Math.Round(bh[i] / 2);
                         }
 
                         if (BMul == 8)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] / 4, by[i] / 4);
-                            MyBoxList[i].Width = bw[i] / 4;
-                            MyBoxList[i].Height = bh[i] / 4;
+                            double x, y;
+                            x = Math.Round(bx[i] / 4);
+                            y = Math.Round(by[i] / 4);
+                            MyBoxList[i].Location = new System.Drawing.Point((int)x, (int)y);
+                            MyBoxList[i].Width = (int)Math.Round(bw[i] / 4);
+                            MyBoxList[i].Height = (int)Math.Round(bh[i] / 4);
                         }
 
                     }
@@ -544,10 +555,10 @@ namespace camera
                 //400%
                 if (CSComboBox.SelectedIndex == (int)CutSize.FourhundredPer)
                 {
-                    int[] bx = new int[MyBoxList.Count];
-                    int[] by = new int[MyBoxList.Count];
-                    int[] bw = new int[MyBoxList.Count];
-                    int[] bh = new int[MyBoxList.Count];
+                    double[] bx = new double[MyBoxList.Count];
+                    double[] by = new double[MyBoxList.Count];
+                    double[] bw = new double[MyBoxList.Count];
+                    double[] bh = new double[MyBoxList.Count];
 
                     GetNowBoxStatus(bx, by, bw, bh);
 
@@ -574,23 +585,26 @@ namespace camera
                     {
                         if (BMul == 1)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] * 4, by[i] * 4);
-                            MyBoxList[i].Width = bw[i] * 4;
-                            MyBoxList[i].Height = bh[i] * 4;
+                            MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 4, (int)by[i] * 4);
+                            MyBoxList[i].Width = (int)bw[i] * 4;
+                            MyBoxList[i].Height = (int)bh[i] * 4;
                         }
 
                         if (BMul == 2)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] * 2, by[i] * 2);
-                            MyBoxList[i].Width = bw[i] * 2;
-                            MyBoxList[i].Height = bh[i] * 2;
+                            MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 2, (int)by[i] * 2);
+                            MyBoxList[i].Width = (int)bw[i] * 2;
+                            MyBoxList[i].Height = (int)bh[i] * 2;
                         }
 
                         if (BMul == 8)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] / 2, by[i] / 2);
-                            MyBoxList[i].Width = bw[i] / 2;
-                            MyBoxList[i].Height = bh[i] / 2;
+                            double x, y;
+                            x = Math.Round(bx[i] / 2);
+                            y = Math.Round(by[i] / 2);
+                            MyBoxList[i].Location = new System.Drawing.Point((int)x, (int)y);
+                            MyBoxList[i].Width = (int)Math.Round(bw[i] / 2);
+                            MyBoxList[i].Height = (int)Math.Round(bh[i] / 2);
                         }
 
                     }
@@ -605,10 +619,10 @@ namespace camera
                 //800%
                 if (CSComboBox.SelectedIndex == (int)CutSize.EighthundredPer)
                 {
-                    int[] bx = new int[MyBoxList.Count];
-                    int[] by = new int[MyBoxList.Count];
-                    int[] bw = new int[MyBoxList.Count];
-                    int[] bh = new int[MyBoxList.Count];
+                    double[] bx = new double[MyBoxList.Count];
+                    double[] by = new double[MyBoxList.Count];
+                    double[] bw = new double[MyBoxList.Count];
+                    double[] bh = new double[MyBoxList.Count];
 
 
                     GetNowBoxStatus(bx, by, bw, bh);
@@ -636,23 +650,23 @@ namespace camera
                     {
                         if (BMul == 1)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] * 8, by[i] * 8);
-                            MyBoxList[i].Width = bw[i] * 8;
-                            MyBoxList[i].Height = bh[i] * 8;
+                            MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 8, (int)by[i] * 8);
+                            MyBoxList[i].Width = (int)bw[i] * 8;
+                            MyBoxList[i].Height = (int)bh[i] * 8;
                         }
 
                         if (BMul == 2)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] * 4, by[i] * 4);
-                            MyBoxList[i].Width = bw[i] * 4;
-                            MyBoxList[i].Height = bh[i] * 4;
+                            MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 4, (int)by[i] * 4);
+                            MyBoxList[i].Width = (int)bw[i] * 4;
+                            MyBoxList[i].Height = (int)bh[i] * 4;
                         }
 
                         if (BMul == 4)
                         {
-                            MyBoxList[i].Location = new System.Drawing.Point(bx[i] * 2, by[i] * 2);
-                            MyBoxList[i].Width = bw[i] * 2;
-                            MyBoxList[i].Height = bh[i] * 2;
+                            MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 2, (int)by[i] * 2);
+                            MyBoxList[i].Width = (int)bw[i] * 2;
+                            MyBoxList[i].Height = (int)bh[i] * 2;
                         }
 
                     }
@@ -673,7 +687,7 @@ namespace camera
         /// <summary>
         ///粋の位置とサイズを取得
         /// </summary>
-        public void GetNowBoxStatus(int[] x,int[] y,int[] w,int[] h)
+        public void GetNowBoxStatus(double[] x, double[] y, double[] w, double[] h)
         {
             for (int i = 0; i < MyBoxList.Count; i++)
             {

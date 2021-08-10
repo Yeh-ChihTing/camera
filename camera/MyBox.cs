@@ -13,7 +13,7 @@ namespace camera
 {
     public partial class MyBox : UserControl 
     {
-
+        
         /// <summary>
         ///　public変数
         /// </summary>
@@ -117,16 +117,17 @@ namespace camera
             All = 15
         }
 
-        // サイズ変更が有効になる枠
-        ResizeDirection resizeDirection;
+        //// サイズ変更が有効になる枠
+        //ResizeDirection resizeDirection;
 
-        // サイズ変更中を表す状態
-        ResizeDirection resizeStatus;
+        //// サイズ変更中を表す状態
+        //ResizeDirection resizeStatus;
 
         CursorPos CurPos;
 
         // 標準のカーソル
-        Cursor defaultCursor;
+        private Cursor defaultCursor;
+        private bool ReSize = false;
 
         public MyBox()
         {
@@ -151,7 +152,7 @@ namespace camera
             MyNumber.ForeColor = Color.LightSalmon;
             defaultCursor = this.Cursor;
 
-
+            
         }
 
 
@@ -322,6 +323,7 @@ namespace camera
                     int h = this.Height;
                     this.Height -= diffY;
                     this.Top += h - this.Height;
+                    ReSize = true;
                 }
                 //右上
                 else if ((cursorPos & ResizeDirection.Top) == ResizeDirection.Top
@@ -334,6 +336,7 @@ namespace camera
                     int h = this.Height;
                     this.Height -= diffY;
                     this.Top += h - this.Height;
+                    ReSize = true;
                 }
 
                 //左下
@@ -347,6 +350,7 @@ namespace camera
                     this.Left += w - this.Width;
                     //下
                     this.Width = OriginSize.Width + diffX;
+                    ReSize = true;
                 }
                 //右下
                 else if ((cursorPos & ResizeDirection.Bottom) == ResizeDirection.Bottom
@@ -357,6 +361,7 @@ namespace camera
                     this.Height = OriginSize.Height + diffY;
                     //下
                     this.Width = OriginSize.Width + diffX;
+                    ReSize = true;
                 }
 
                 // 上
@@ -366,6 +371,7 @@ namespace camera
                     int h = this.Height;
                     this.Height -= diffY;
                     this.Top += h - this.Height;
+                    ReSize = true;
 
                 }
                 //　下
@@ -373,6 +379,7 @@ namespace camera
                 {
                     //this.Cursor = Cursors.SizeNS;
                     this.Height = OriginSize.Height + diffY;
+                    ReSize = true;
                 }
                 // 左
                 else if (cursorPos == ResizeDirection.Left)
@@ -381,38 +388,45 @@ namespace camera
                     int w = this.Width;
                     this.Width -= diffX;
                     this.Left += w - this.Width;
+                    ReSize = true;
                 }
                 //　右
                 else if (cursorPos == ResizeDirection.Right)
                 {
                     //this.Cursor = Cursors.SizeWE;
                     this.Width = OriginSize.Width + diffX;
+                    ReSize = true;
 
                 }
 
                 else
                 {
-                    if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
-                        this.Location.Y >= 0 && this.Location.Y <= PHeight)
+                    
+                    if (!ReSize)
                     {
-                        Point mp = new Point(e.X - OriginPoint.X + this.Location.X, e.Y - OriginPoint.Y + this.Location.Y);
-                        this.Location = mp;
-                    }
-                    if (this.Location.X + this.Width > this.Parent.Width)
-                    {
-                        this.Location = new Point(PWeight - this.Width, this.Location.Y);
-                    }
-                    if (this.Location.X < 0)
-                    {
-                        this.Location = new Point(0, this.Location.Y);
-                    }
-                    if (this.Location.Y + this.Height > this.Parent.Height)
-                    {
-                        this.Location = new Point(this.Location.X, PHeight - this.Height);
-                    }
-                    if (this.Location.Y < 0)
-                    {
-                        this.Location = new Point(this.Location.X, 0);
+                        if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
+                            this.Location.Y >= 0 && this.Location.Y <= PHeight)
+                        {
+                            Point mp = new Point(e.X - OriginPoint.X + this.Location.X, e.Y - OriginPoint.Y + this.Location.Y);
+                            this.Location = mp;
+                        }
+                        if (this.Location.X + this.Width > this.Parent.Width)
+                        {
+                            this.Location = new Point(PWeight - this.Width, this.Location.Y);
+                        }
+                        if (this.Location.X < 0)
+                        {
+                            this.Location = new Point(0, this.Location.Y);
+                        }
+                        if (this.Location.Y + this.Height > this.Parent.Height)
+                        {
+                            this.Location = new Point(this.Location.X, PHeight - this.Height);
+                        }
+                        if (this.Location.Y < 0)
+                        {
+                            this.Location = new Point(this.Location.X, 0);
+                        }
+
                     }
                 }
 
@@ -506,6 +520,10 @@ namespace camera
             {
                 MyNumber.Font = new Font(MyNumber.Font.FontFamily, 1);
             }
+
+            string a ="Pw:"+this.Parent.Width+"PH:"+this.Parent.Height+ 
+                "       Width:" + this.Width + "Height:" + this.Height;
+            this.Parent.Parent.Parent.Text = a;
 
         }
 
@@ -616,37 +634,38 @@ namespace camera
             //}
             this.Cursor = defaultCursor;
 
-            if (e.Button == MouseButtons.Left)
-            {
-                if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
-                    this.Location.Y >= 0 && this.Location.Y <= PHeight)
-                {
-                    Point mp = new Point(e.X - OriginPoint.X + this.Location.X, e.Y - OriginPoint.Y + this.Location.Y);
-                    this.Location = mp;
-                }
-                if (this.Location.X + this.Width > this.Parent.Width)
-                {
-                    this.Location = new Point(PWeight - this.Width, this.Location.Y);
-                }
-                if (this.Location.X < 0)
-                {
-                    this.Location = new Point(0, this.Location.Y);
-                }
-                if (this.Location.Y + this.Height > this.Parent.Height)
-                {
-                    this.Location = new Point(this.Location.X, PHeight - this.Height);
-                }
-                if (this.Location.Y < 0)
-                {
-                    this.Location = new Point(this.Location.X, 0);
-                }
+            //if (e.Button == MouseButtons.Left)
+            //{
+            //    if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
+            //        this.Location.Y >= 0 && this.Location.Y <= PHeight)
+            //    {
+            //        Point mp = new Point(e.X - OriginPoint.X + this.Location.X, e.Y - OriginPoint.Y + this.Location.Y);
+            //        this.Location = mp;
+            //    }
+            //    if (this.Location.X + this.Width > this.Parent.Width)
+            //    {
+            //        this.Location = new Point(PWeight - this.Width, this.Location.Y);
+            //    }
+            //    if (this.Location.X < 0)
+            //    {
+            //        this.Location = new Point(0, this.Location.Y);
+            //    }
+            //    if (this.Location.Y + this.Height > this.Parent.Height)
+            //    {
+            //        this.Location = new Point(this.Location.X, PHeight - this.Height);
+            //    }
+            //    if (this.Location.Y < 0)
+            //    {
+            //        this.Location = new Point(this.Location.X, 0);
+            //    }
 
-            }
+            //}
         }
 
         private void MyBox_MouseUp(object sender, MouseEventArgs e)
         {
             this.Capture = false;
+            ReSize = false;
         }
     }
 }
