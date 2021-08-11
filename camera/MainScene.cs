@@ -1665,7 +1665,6 @@ namespace camera
                                 }
                             }
 
-
                             BoxNum++;
                             MyBox box = new MyBox();
                             CutPic.Controls.Add(box);
@@ -1678,6 +1677,11 @@ namespace camera
                             MyBoxList[boxnum].Width = w;
                             MyBoxList[boxnum].Height = h;
                             boxnum++;
+
+
+
+
+
                         }
                         else if (boxnum < Boxlimit && boxnum != 0)
                         {
