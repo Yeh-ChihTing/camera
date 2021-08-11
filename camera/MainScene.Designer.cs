@@ -671,7 +671,7 @@ namespace camera
             this.CheckLockNum.Name = "CheckLockNum";
             this.CheckLockNum.Size = new System.Drawing.Size(31, 19);
             this.CheckLockNum.TabIndex = 304;
-            this.CheckLockNum.Text = "1";
+            this.CheckLockNum.Text = "0";
             this.CheckLockNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
             // 
             // MainScene
