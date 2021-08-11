@@ -1591,7 +1591,11 @@ namespace camera
             }
         }
 
-
+        /// <summary>
+        /// 全部無理　新しいく書く必要
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AutoLock_Click(object sender, EventArgs e)
         {
             Bitmap CheackBT = (Bitmap)MasterImage.Clone();
