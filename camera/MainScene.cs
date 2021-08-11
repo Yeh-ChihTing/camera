@@ -1617,85 +1617,24 @@ namespace camera
 
 
 
-            for (int j = 0; j < CutPic.Height; j++)
+
+            for (int i = 0; i < CutPic.Width; i++)
             {
-                for (int i = 0; i < CutPic.Width; i++)
+                for (int j = 0; j < CutPic.Height; j++)
                 {
-                    int CR = CheackBT.GetPixel(i, j).R;
-                    int CG = CheackBT.GetPixel(i, j).G;
-                    int CB = CheackBT.GetPixel(i, j).B;
-
-                    if (boxnum == 0)
                     {
-                        if (CR >= R - 10 && CR <= R + 10 &&
-                        CG >= G - 10 && CG <= G + 10 &&
-                        CB >= B - 10 && CB <= B + 10)
+                        int CR = CheackBT.GetPixel(i, j).R;
+                        int CG = CheackBT.GetPixel(i, j).G;
+                        int CB = CheackBT.GetPixel(i, j).B;
+
+                        if (boxnum == 0)
                         {
-
-
-
-                            for (int l = j; l < CutPic.Height; l++)
-                            {
-                                int lR = CheackBT.GetPixel(i, l).R;
-                                int lG = CheackBT.GetPixel(i, l).G;
-                                int lB = CheackBT.GetPixel(i, l).B;
-
-                                if (lR >= R - 30 && lR <= R + 30 &&
-                                    lG >= G - 30 && lG <= G + 30 &&
-                                    lB >= B - 30 && lB <= B + 30)
-                                {
-                                    h++;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-
-                            for (int k = i; k < CutPic.Width; k++)
-                            {
-                                int KR = CheackBT.GetPixel(k, j).R;
-                                int KG = CheackBT.GetPixel(k, j).G;
-                                int KB = CheackBT.GetPixel(k, j).B;
-
-                                if (KR >= R - 30 && KR <= R + 30 &&
-                                    KG >= G - 30 && KG <= G + 30 &&
-                                    KB >= B - 30 && KB <= B + 30)
-                                {
-                                    w++;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-
-
-                            BoxNum++;
-                            MyBox box = new MyBox();
-                            CutPic.Controls.Add(box);
-                            box.MyNumber.Text = BoxNum.ToString(); ;
-                            MyBoxList.Add(box);
-                            BoxNameCombo.Items.Add(BoxNum.ToString());
-                            Rectangle angle = new Rectangle(i, j, w, h);
-                            rectList.Add(angle);
-                            MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
-                            MyBoxList[boxnum].Width = w;
-                            MyBoxList[boxnum].Height = h;
-                            boxnum++;
-                        }
-
-
-                    }
-
-                    else if (boxnum < Boxlimit && boxnum != 0)
-                    {
-                        if (CR >= R - 10 && CR <= R + 10 &&
+                            if (CR >= R - 10 && CR <= R + 10 &&
                             CG >= G - 10 && CG <= G + 10 &&
                             CB >= B - 10 && CB <= B + 10)
-                        {
-                            if (!rectList[0].Contains(i, j))
                             {
+
+
 
                                 for (int l = j; l < CutPic.Height; l++)
                                 {
@@ -1732,39 +1671,104 @@ namespace camera
                                         break;
                                     }
                                 }
-                                Rectangle angle = new Rectangle(i, j, w, h);
-                                if (rectList[0].Contains(angle.X, angle.Y) ||
-                                    rectList[0].Contains(angle.X + 5, angle.Y + 5))
-                                {
-                                    w = 0;
-                                    h = 0;
-                                    break;
-                                }
+
+
                                 BoxNum++;
                                 MyBox box = new MyBox();
                                 CutPic.Controls.Add(box);
                                 box.MyNumber.Text = BoxNum.ToString(); ;
                                 MyBoxList.Add(box);
                                 BoxNameCombo.Items.Add(BoxNum.ToString());
-
+                                Rectangle angle = new Rectangle(i, j, w, h);
                                 rectList.Add(angle);
                                 MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
                                 MyBoxList[boxnum].Width = w;
                                 MyBoxList[boxnum].Height = h;
                                 boxnum++;
                             }
+
+
                         }
 
+                        else if (boxnum < Boxlimit && boxnum != 0)
+                        {
+                            if (CR >= R - 10 && CR <= R + 10 &&
+                                CG >= G - 10 && CG <= G + 10 &&
+                                CB >= B - 10 && CB <= B + 10)
+                            {
+                                if (!rectList[0].Contains(i, j))
+                                {
+
+                                    for (int l = j; l < CutPic.Height; l++)
+                                    {
+                                        int lR = CheackBT.GetPixel(i, l).R;
+                                        int lG = CheackBT.GetPixel(i, l).G;
+                                        int lB = CheackBT.GetPixel(i, l).B;
+
+                                        if (lR >= R - 30 && lR <= R + 30 &&
+                                            lG >= G - 30 && lG <= G + 30 &&
+                                            lB >= B - 30 && lB <= B + 30)
+                                        {
+                                            h++;
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+
+                                    for (int k = i; k < CutPic.Width; k++)
+                                    {
+                                        int KR = CheackBT.GetPixel(k, j).R;
+                                        int KG = CheackBT.GetPixel(k, j).G;
+                                        int KB = CheackBT.GetPixel(k, j).B;
+
+                                        if (KR >= R - 30 && KR <= R + 30 &&
+                                            KG >= G - 30 && KG <= G + 30 &&
+                                            KB >= B - 30 && KB <= B + 30)
+                                        {
+                                            w++;
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    Rectangle angle = new Rectangle(i, j, w, h);
+                                    if (rectList[0].Contains(angle.X, angle.Y) ||
+                                        rectList[0].Contains(angle.X + 5, angle.Y + 5))
+                                    {
+                                        w = 0;
+                                        h = 0;
+                                        break;
+                                    }
+                                    BoxNum++;
+                                    MyBox box = new MyBox();
+                                    CutPic.Controls.Add(box);
+                                    box.MyNumber.Text = BoxNum.ToString(); ;
+                                    MyBoxList.Add(box);
+                                    BoxNameCombo.Items.Add(BoxNum.ToString());
+
+                                    rectList.Add(angle);
+                                    MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
+                                    MyBoxList[boxnum].Width = w;
+                                    MyBoxList[boxnum].Height = h;
+                                    boxnum++;
+                                }
+                            }
+
+
+                        }
+                        w = 0;
+                        h = 0;
+                        //BoxNameCombo.SelectedIndex = 0;
+                        UseCol.BackColor = CheckCol;
 
                     }
-                    w = 0;
-                    h = 0;
-                    //BoxNameCombo.SelectedIndex = 0;
-                    UseCol.BackColor = CheckCol;
-
                 }
             }
         }
+
 
             ///廃棄コード
             //private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -1913,5 +1917,6 @@ namespace camera
 
 
             //}
-        }
+        
+    }
 }
