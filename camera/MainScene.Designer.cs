@@ -80,11 +80,13 @@ namespace camera
             this.SetSusscePercent = new System.Windows.Forms.TextBox();
             this.ClearCheckScene = new System.Windows.Forms.Button();
             this.BoxSetting = new System.Windows.Forms.GroupBox();
+            this.ChooseCol = new System.Windows.Forms.Button();
+            this.UseCol = new System.Windows.Forms.PictureBox();
+            this.UseThisCol = new System.Windows.Forms.CheckBox();
             this.CheckMode = new System.Windows.Forms.ComboBox();
             this.SaveBoxData = new System.Windows.Forms.Button();
-            this.UseThisCol = new System.Windows.Forms.CheckBox();
-            this.UseCol = new System.Windows.Forms.PictureBox();
-            this.ChooseCol = new System.Windows.Forms.Button();
+            this.AutoLock = new System.Windows.Forms.Button();
+            this.CheckLockNum = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChangePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
@@ -599,6 +601,36 @@ namespace camera
             this.BoxSetting.TabStop = false;
             this.BoxSetting.Text = "groupBox1";
             // 
+            // ChooseCol
+            // 
+            this.ChooseCol.Location = new System.Drawing.Point(174, 219);
+            this.ChooseCol.Name = "ChooseCol";
+            this.ChooseCol.Size = new System.Drawing.Size(56, 23);
+            this.ChooseCol.TabIndex = 305;
+            this.ChooseCol.Text = "色選択";
+            this.ChooseCol.UseVisualStyleBackColor = true;
+            this.ChooseCol.Click += new System.EventHandler(this.ChooseCol_Click);
+            // 
+            // UseCol
+            // 
+            this.UseCol.BackColor = System.Drawing.Color.Red;
+            this.UseCol.Location = new System.Drawing.Point(236, 221);
+            this.UseCol.Name = "UseCol";
+            this.UseCol.Size = new System.Drawing.Size(21, 18);
+            this.UseCol.TabIndex = 304;
+            this.UseCol.TabStop = false;
+            // 
+            // UseThisCol
+            // 
+            this.UseThisCol.AutoSize = true;
+            this.UseThisCol.Location = new System.Drawing.Point(109, 223);
+            this.UseThisCol.Name = "UseThisCol";
+            this.UseThisCol.Size = new System.Drawing.Size(60, 16);
+            this.UseThisCol.TabIndex = 303;
+            this.UseThisCol.Text = "指定色";
+            this.UseThisCol.UseVisualStyleBackColor = true;
+            this.UseThisCol.CheckedChanged += new System.EventHandler(this.UseThisCol_CheckedChanged);
+            // 
             // CheckMode
             // 
             this.CheckMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -623,35 +655,24 @@ namespace camera
             this.SaveBoxData.UseVisualStyleBackColor = true;
             this.SaveBoxData.Click += new System.EventHandler(this.SaveBoxData_Click);
             // 
-            // UseThisCol
+            // AutoLock
             // 
-            this.UseThisCol.AutoSize = true;
-            this.UseThisCol.Location = new System.Drawing.Point(109, 223);
-            this.UseThisCol.Name = "UseThisCol";
-            this.UseThisCol.Size = new System.Drawing.Size(60, 16);
-            this.UseThisCol.TabIndex = 303;
-            this.UseThisCol.Text = "指定色";
-            this.UseThisCol.UseVisualStyleBackColor = true;
-            this.UseThisCol.CheckedChanged += new System.EventHandler(this.UseThisCol_CheckedChanged);
+            this.AutoLock.Location = new System.Drawing.Point(837, 718);
+            this.AutoLock.Name = "AutoLock";
+            this.AutoLock.Size = new System.Drawing.Size(94, 23);
+            this.AutoLock.TabIndex = 303;
+            this.AutoLock.Text = "自動対象検出";
+            this.AutoLock.UseVisualStyleBackColor = true;
+            this.AutoLock.Click += new System.EventHandler(this.AutoLock_Click);
             // 
-            // UseCol
+            // CheckLockNum
             // 
-            this.UseCol.BackColor = System.Drawing.Color.Red;
-            this.UseCol.Location = new System.Drawing.Point(236, 221);
-            this.UseCol.Name = "UseCol";
-            this.UseCol.Size = new System.Drawing.Size(21, 18);
-            this.UseCol.TabIndex = 304;
-            this.UseCol.TabStop = false;
-            // 
-            // ChooseCol
-            // 
-            this.ChooseCol.Location = new System.Drawing.Point(174, 219);
-            this.ChooseCol.Name = "ChooseCol";
-            this.ChooseCol.Size = new System.Drawing.Size(56, 23);
-            this.ChooseCol.TabIndex = 305;
-            this.ChooseCol.Text = "色選択";
-            this.ChooseCol.UseVisualStyleBackColor = true;
-            this.ChooseCol.Click += new System.EventHandler(this.ChooseCol_Click);
+            this.CheckLockNum.Location = new System.Drawing.Point(802, 720);
+            this.CheckLockNum.Name = "CheckLockNum";
+            this.CheckLockNum.Size = new System.Drawing.Size(31, 19);
+            this.CheckLockNum.TabIndex = 304;
+            this.CheckLockNum.Text = "0";
+            this.CheckLockNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
             // 
             // MainScene
             // 
@@ -659,6 +680,8 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(951, 791);
+            this.Controls.Add(this.CheckLockNum);
+            this.Controls.Add(this.AutoLock);
             this.Controls.Add(this.SaveBoxData);
             this.Controls.Add(this.BoxSetting);
             this.Controls.Add(this.ClearCheckScene);
@@ -762,6 +785,8 @@ namespace camera
         private System.Windows.Forms.PictureBox UseCol;
         private System.Windows.Forms.CheckBox UseThisCol;
         private System.Windows.Forms.Button ChooseCol;
+        private System.Windows.Forms.Button AutoLock;
+        private System.Windows.Forms.TextBox CheckLockNum;
     }
 }
 

@@ -26,15 +26,15 @@ namespace camera
         /// <summary>
         ///　BoxのRed参照値
         /// </summary>
-        public int Red = 20;
+        public int Red = 30;
         /// <summary>
         ///　BoxのGreen参照値
         /// </summary>
-        public int Green = 20;
+        public int Green = 30;
         /// <summary>
         ///　BoxのBlue参照値
         /// </summary>
-        public int Blue = 20;
+        public int Blue = 30;
         /// <summary>
         ///　Boxの合格パーセント参照値
         /// </summary>
@@ -127,7 +127,7 @@ namespace camera
         //// サイズ変更中を表す状態
         //ResizeDirection resizeStatus;
 
-        CursorPos CurPos;
+        //CursorPos CurPos;
 
         // 標準のカーソル
         private Cursor defaultCursor;

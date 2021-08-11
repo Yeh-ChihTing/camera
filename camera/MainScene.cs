@@ -37,7 +37,7 @@ namespace camera
         /// <summary>
         /// カメラサイズモード
         /// </summary>
-        public enum CutSize             
+        public enum CutSize
         {
             OnehundredPer,//100%
             TwohundredPer,//200%
@@ -45,11 +45,11 @@ namespace camera
             EighthundredPer//800%
 
         };
-          
+
         /// <summary>
         /// カメラモード
         /// </summary>
-        public enum CamMode　
+        public enum CamMode
         {
             WebCam,//WEBカメラ
             NetCam//ネットワークカメラ
@@ -94,7 +94,7 @@ namespace camera
         /// <summary>
         /// 検査用写真用空間
         /// </summary>
-        private Image MasterImage=null;
+        private Image MasterImage = null;
         /// <summary>
         /// 一つ目の粋の宣言
         /// </summary>
@@ -149,7 +149,7 @@ namespace camera
             InitializeComponent();
             //this.Owner = null;
         }
-        
+
         private void Form1_Load(object sender, EventArgs e)
         {
             /// <summary>
@@ -173,7 +173,7 @@ namespace camera
             int BoxPercent = MyBoxList[BoxNameCombo.SelectedIndex].MySPercent;
             SetSusscePercent.Text = BoxPercent.ToString();
             CheckMode.SelectedIndex = 0;
-            
+
             /// <summary>
             /// 初期化END
             /// </summary>
@@ -293,10 +293,10 @@ namespace camera
             {
                 using (FileStream fileStream = File.OpenRead(ofd.FileName))
                 {
-                    
+
                     // 画像データの検証なしで読み込む
                     Image image = Image.FromStream(fileStream, true, true);
- 
+
                     MasterImage = image;
 
                     //
@@ -306,7 +306,7 @@ namespace camera
 
                     //対象情報データある時の処理
                     string[] name = SaveDataname.Split('.');
-                    string dataSpace= name[0] + ".bat";
+                    string dataSpace = name[0] + ".bat";
                     if (File.Exists(dataSpace))
                     {
                         MyBoxList.Clear();
@@ -316,7 +316,7 @@ namespace camera
                         int line_cnt = 0;
                         string line;
                         List<string> DataList = new List<string>();
-                        using(StreamReader sr=new StreamReader(dataSpace))
+                        using (StreamReader sr = new StreamReader(dataSpace))
                         {
                             // ファイルの内容を1行ずつ読み込み
                             while ((line = sr.ReadLine()) != null)
@@ -330,7 +330,7 @@ namespace camera
 
                         int nums = Convert.ToInt32(DataList[0]);
 
-                        for(int i = 0; i < nums; i++)
+                        for (int i = 0; i < nums; i++)
                         {
                             MyBox box = new MyBox();
                             CutPic.Controls.Add(box);
@@ -338,10 +338,10 @@ namespace camera
                             string[] names = DataList[(i * 8) + 1].Split(':');
                             box.MyNumber.Text = names[1];
                             BoxNameList.Add(names[1]);
-                            MyBoxList.Add(box);                           
+                            MyBoxList.Add(box);
                             BoxNameCombo.Items.Add(names[1]);
                             //pos
-                            string[] Posstr = DataList[(i * 8) + 2].Split(':',',');
+                            string[] Posstr = DataList[(i * 8) + 2].Split(':', ',');
                             int PosX = Convert.ToInt32(Posstr[1]);
                             int PosY = Convert.ToInt32(Posstr[2]);
                             box.Location = new System.Drawing.Point(PosX, PosY);
@@ -356,7 +356,7 @@ namespace camera
                             {
                                 box.BoxChecked = false;
                             }
-                            else if(Checked == "BoxCheckedTrue")
+                            else if (Checked == "BoxCheckedTrue")
                             {
                                 box.BoxChecked = true;
                             }
@@ -382,14 +382,14 @@ namespace camera
 
                         BoxNameCombo.SelectedIndex = 0;
                     }
-                 
+
                     //ChangePic.Image = MasterImage;
                 }
-              
+
             }
 
-            GetCutPicNow = CutPic.Image; 
-            
+            GetCutPicNow = CutPic.Image;
+
         }
 
         /// <summary>
@@ -401,9 +401,9 @@ namespace camera
             sfd.FileName = "newMaster";
             sfd.Filter = "JPEG形式|*.jpg";
 
-            string dc = Directory.GetCurrentDirectory()+@"\Pic";
+            string dc = Directory.GetCurrentDirectory() + @"\Pic";
             sfd.InitialDirectory = dc;
-            
+
 
 
             if (sfd.ShowDialog() == DialogResult.OK)
@@ -475,17 +475,17 @@ namespace camera
                         for (int i = 0; i < MyBoxList.Count; i++)
                         {
                             double x, y;
-                            x =Math.Round(bx[i] / BMul);
-                            y= Math.Round(by[i] / BMul);
-                            MyBoxList[i].Location = new System.Drawing.Point((int)x,(int)y);
+                            x = Math.Round(bx[i] / BMul);
+                            y = Math.Round(by[i] / BMul);
+                            MyBoxList[i].Location = new System.Drawing.Point((int)x, (int)y);
                             MyBoxList[i].Width = (int)Math.Round(bw[i] / BMul);
                             MyBoxList[i].Height = (int)Math.Round(bh[i] / BMul);
-                           
+
                         }
                         //box1.Location = new System.Drawing.Point(bx / 2, by / 2);
                         //box1.Width = bw / 2;
                         //box1.Height = bh / 2;
-                      
+
                     }
 
                     BMul = 1;
@@ -529,7 +529,7 @@ namespace camera
                     {
                         if (BMul == 1)
                         {
-                           
+
                             MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 2, (int)by[i] * 2);
                             MyBoxList[i].Width = (int)bw[i] * 2;
                             MyBoxList[i].Height = (int)bh[i] * 2;
@@ -538,10 +538,10 @@ namespace camera
                         if (BMul == 4)
                         {
                             double x, y;
-                            x = Math.Round(bx[i] /2);
+                            x = Math.Round(bx[i] / 2);
                             y = Math.Round(by[i] / 2);
                             MyBoxList[i].Location = new System.Drawing.Point((int)x, (int)y);
-                            MyBoxList[i].Width =(int)Math.Round(bw[i] / 2);
+                            MyBoxList[i].Width = (int)Math.Round(bw[i] / 2);
                             MyBoxList[i].Height = (int)Math.Round(bh[i] / 2);
                         }
 
@@ -730,11 +730,11 @@ namespace camera
             //GetCutPic();
             //Graphics g = Graphics.FromImage(BoxList[0]);
             if (MyBoxList.Count > 1)
-            {            
+            {
                 MyBoxList.RemoveAt(BoxNameCombo.SelectedIndex);
                 CutPic.Controls.RemoveAt(BoxNameCombo.SelectedIndex);
                 BoxNum--;
-                
+
                 if (BoxNameList.Count == 0)
                 {
                     BoxNameCombo.Items.Clear();
@@ -751,14 +751,14 @@ namespace camera
                         BoxNameList.RemoveAt(BoxNameCombo.SelectedIndex);
                     }
                     BoxNameCombo.Items.Clear();
-                   
+
                     for (int i = 0; i < BoxNum; i++)
                     {
-                        
+
                         if (i < BoxNameList.Count - 1 && BoxNameList[i] != "")
                         {
-                           
-                            if (i < BoxNameList.Count-1)
+
+                            if (i < BoxNameList.Count - 1)
                             {
                                 MyBoxList[i].MyNumber.Text = BoxNameList[i];
                                 BoxNameCombo.Items.Add(BoxNameList[i]);
@@ -772,11 +772,11 @@ namespace camera
                         else
                         {
                             MyBoxList[i].MyNumber.Text = (i + 1).ToString();
-                            BoxNameCombo.Items.Add((i + 1).ToString());                           
+                            BoxNameCombo.Items.Add((i + 1).ToString());
                         }
                     }
 
-                    
+
                 }
                 BoxNameCombo.SelectedIndex = 0;
                 //for (int i = 0; i < MyBoxList.Count; i++)
@@ -816,7 +816,7 @@ namespace camera
                     {
                         if (ok[i])
                         {
-                            if (MyBoxList[i].MyBoxMode ==MyBox.BoxMode.Samontape)
+                            if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.Samontape)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "温度正常");
                             }
@@ -855,11 +855,11 @@ namespace camera
                             }
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine(BoxNameList[i] + ","  + "点灯");
+                                sw.WriteLine(BoxNameList[i] + "," + "点灯");
                             }
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine(BoxNameList[i] + ","  + "," + "消灯");
+                                sw.WriteLine(BoxNameList[i] + "," + "," + "消灯");
                             }
 
                         }
@@ -879,24 +879,24 @@ namespace camera
                             }
                         }
                     }
-                }               
+                }
             }
             else
             {
-               // Excel.Application excelApp;
+                // Excel.Application excelApp;
 
-                
+
                 sw = File.AppendText(Path);
 
                 //excelApp =new Excel.Application();
 
-             
+
                 ////Excel 起動しているなら終了したいです
                 //if (!excelApp.Visible)
                 //{
                 //    excelApp.Quit();
                 //}
-               
+
 
                 sw.WriteLine(DateTime.Now);
                 for (int i = 0; i < ok.Length; i++)
@@ -998,7 +998,7 @@ namespace camera
             for (int i = 0; i < SBN.TextBox.Count; i++)
             {
                 BoxNameList.Add(SBN.TextBox[i].Text);
-                if (SBN.TextBox[i].Text !="")
+                if (SBN.TextBox[i].Text != "")
                 {
                     BoxNameCombo.Items.Add(SBN.TextBox[i].Text);
                     MyBoxList[i].MyNumber.Text = SBN.TextBox[i].Text;
@@ -1006,7 +1006,7 @@ namespace camera
                 }
                 else
                 {
-                    BoxNameCombo.Items.Add((i+1).ToString());
+                    BoxNameCombo.Items.Add((i + 1).ToString());
                     MyBoxList[i].MyNumber.Text = (i + 1).ToString();
                 }
             }
@@ -1020,7 +1020,7 @@ namespace camera
         /// </summary>
         private void BoxNameCombo_SelectedValueChanged(object sender, EventArgs e)
         {
-            for(int i = 0; i < MyBoxList.Count; i++)
+            for (int i = 0; i < MyBoxList.Count; i++)
             {
                 MyBoxList[i]._borderColor = Color.Blue;
                 MyBoxList[i].Invalidate();
@@ -1101,12 +1101,12 @@ namespace camera
 
             if (LoopBtnFlag)
             {
-                
+
                 CheckLoopBtn.Text = "停止";
                 CheckLoopBtn.BackColor = Color.Pink;
                 //Cheack();
-                LoopFrame = (Convert.ToInt32(HourText.Text)*36000) + (Convert.ToInt32(MinText.Text)*6000) 
-                    + (Convert.ToInt32(SecText.Text)*1000);
+                LoopFrame = (Convert.ToInt32(HourText.Text) * 36000) + (Convert.ToInt32(MinText.Text) * 6000)
+                    + (Convert.ToInt32(SecText.Text) * 1000);
                 if (LoopFrame != 0)
                 {
                     LoopTimer.Enabled = true;
@@ -1121,7 +1121,7 @@ namespace camera
                     CheckLoopBtn.BackColor = SystemColors.Control;
                 }
 
-               
+
             }
 
             else
@@ -1130,7 +1130,7 @@ namespace camera
                 CheckLoopBtn.Text = "連続チェック";
                 CheckLoopBtn.BackColor = SystemColors.Control;
                 this.BackColor = SystemColors.Control;
-                for(int i = 0; i < MyBoxList.Count; i++)
+                for (int i = 0; i < MyBoxList.Count; i++)
                 {
                     MyBoxList[i].Drawbox.Visible = false;
                     //MyBoxList[i].Drawbox.BackColor = Color.Transparent;
@@ -1152,7 +1152,7 @@ namespace camera
 
                 Bitmap Origin = (Bitmap)CameraPic.Image.Clone();
                 Bitmap CheackBT = (Bitmap)MasterImage.Clone();
-                int OR=0, OG=0, OB=0, CR, CG, CB;
+                int OR = 0, OG = 0, OB = 0, CR, CG, CB;
                 bool[] OkOrFail = new bool[MyBoxList.Count];
                 for (int i = 0; i < OkOrFail.Length; i++)
                 {
@@ -1174,7 +1174,7 @@ namespace camera
 
                     int RightNum = 0;
 
-                    
+
 
                     Bitmap bmp = new Bitmap(MyBoxList[k].Width, MyBoxList[k].Height);
 
@@ -1192,8 +1192,8 @@ namespace camera
                     MyBoxList[k].Drawbox.Visible = true;
                     //PictureBox1に表示する
                     MyBoxList[k].Drawbox.Image = bmp;
-                    MyBoxList[k].Drawbox.Location = new System.Drawing.Point(3,3);
-                    MyBoxList[k].Drawbox.Width = MyBoxList[k].Width-6;
+                    MyBoxList[k].Drawbox.Location = new System.Drawing.Point(3, 3);
+                    MyBoxList[k].Drawbox.Width = MyBoxList[k].Width - 6;
                     MyBoxList[k].Drawbox.Height = MyBoxList[k].Height - 6;
 
                     for (int i = X; i < SizeX; i++)
@@ -1247,18 +1247,18 @@ namespace camera
                         if (BoxNameList[k] != "")
                         {
                             CheckPerList.Items.Add(BoxNameList[k] + " : " + Getpercent.ToString() + "%"
-                                +"/ "+ BoxPercent.ToString()+"%" + " 一致");
+                                + "/ " + BoxPercent.ToString() + "%" + " 一致");
                         }
                         else
                         {
-                            CheckPerList.Items.Add((k+1).ToString() + " : " + Getpercent.ToString() + "%"
+                            CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
                                 + "/" + BoxPercent.ToString() + "%" + " 一致");
                         }
                     }
                     else
                     {
                         CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
-                                +"/"+ BoxPercent.ToString()+ "%" + " 一致");
+                                + "/" + BoxPercent.ToString() + "%" + " 一致");
                     }
                     // GetPercent.Text = Getpercent.ToString();
                     if (percentOfSusses < BoxPercent)
@@ -1268,27 +1268,27 @@ namespace camera
                         OkOrFail[k] = false;
                     }
 
-                    
+
                 }
 
-            if (!haveFail)
-            {
-                if (LoopBtnFlag)
+                if (!haveFail)
                 {
-                    Player = new System.Media.SoundPlayer(SussesSound);
-                    Player.Play();
+                    if (LoopBtnFlag)
+                    {
+                        Player = new System.Media.SoundPlayer(SussesSound);
+                        Player.Play();
+                    }
+                    this.BackColor = Color.Green;
+                    //DrawCheak();
+                    //Ans.Text = "OK";
                 }
-                this.BackColor = Color.Green;
-                //DrawCheak();
-                //Ans.Text = "OK";
-            }
-            else
-            {
-                Player = new System.Media.SoundPlayer(FailSound);
-                Player.Play();
-                this.BackColor = Color.Red;
-                //Ans.Text = "FAIL";
-            }
+                else
+                {
+                    Player = new System.Media.SoundPlayer(FailSound);
+                    Player.Play();
+                    this.BackColor = Color.Red;
+                    //Ans.Text = "FAIL";
+                }
 
                 SaveDataOnCsv(OkOrFail);
             }
@@ -1301,7 +1301,7 @@ namespace camera
         /// <summary>
         ///入力を数字に限定用関数
         /// </summary>
-        private void OnlyInputNum(object sender,KeyPressEventArgs e)
+        private void OnlyInputNum(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
                (e.KeyChar != '.'))
@@ -1440,7 +1440,7 @@ namespace camera
         /// </summary>
         private void ClearCheckScene_Click(object sender, EventArgs e)
         {
-           
+
             this.BackColor = SystemColors.Control;
             for (int i = 0; i < MyBoxList.Count; i++)
             {
@@ -1466,7 +1466,7 @@ namespace camera
             }
 
             this.Owner.Visible = true;
-            
+
         }
 
         /// <summary>
@@ -1521,7 +1521,7 @@ namespace camera
         /// </summary>
         private void SaveBoxData_Click(object sender, EventArgs e)
         {
-            DialogResult result=MessageBox.Show("対象情報を保存しますか？ ", "", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("対象情報を保存しますか？ ", "", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 SaveBoxSetting();
@@ -1547,8 +1547,8 @@ namespace camera
 
                     UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
 
-                    MyBoxList[BoxNameCombo.SelectedIndex].UsedCol=CheckCol = color;
-                    
+                    MyBoxList[BoxNameCombo.SelectedIndex].UsedCol = CheckCol = color;
+
                     //Mdown.X = e.X;
                     //Mdown.Y = e.Y;
                     StarChooseCol = false;
@@ -1591,152 +1591,305 @@ namespace camera
             }
         }
 
-        ///廃棄コード
-        //private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    //try
-        //    //{
-        //    //    Color color = BitmapConverter.ToBitmap(img).GetPixel(e.X, e.Y);
-        //    //    RNums.Text = color.R.ToString();
-        //    //    GNums.Text = color.G.ToString();
-        //    //    BNums.Text = color.B.ToString();
 
-        //    //    PColor.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-        //    //    //Mdown.X = e.X;
-        //    //    //Mdown.Y = e.Y;
-        //    //}
-        //    //catch
-        //    //{
-
-        //    //}
-        //}
-
-        //private void CameraPic_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    //Mup.X = e.X;
-        //    //Mup.Y = e.Y;
-
-        //    //int sizeX = Mup.X - Mdown.X;
-        //    //int sizeY = Mup.Y - Mdown.Y;
-
-        //    //Bitmap bmp = new Bitmap(ChangePic.Width, ChangePic.Height);
-        //    //Graphics g = Graphics.FromImage(bmp);
-
-        //    //Rectangle srcRect = new Rectangle(Mdown.X, Mdown.Y, sizeX, sizeY);
-        //    ////描画する部分の範囲を決定する。ここでは、位置(0,0)、大きさ100x100で描画する
-        //    //Rectangle desRect = new Rectangle(0, 0, ChangePic.Width, ChangePic.Height);
-        //    ////画像の一部を描画する
-        //    //g.DrawImage(img.ToBitmap(), desRect, srcRect, GraphicsUnit.Pixel);
-
-
-        //    ////Graphicsオブジェクトのリソースを解放する
-        //    //g.Dispose();
-
-        //    ////PictureBox1に表示する
-        //    //ChangePic.Image = bmp;
-        //}
-
-        //private void ChangePic_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    //try
-        //    //{
-        //    //    Color color = BitmapConverter.ToBitmap(img).GetPixel(e.X, e.Y);
-        //    //    RNums.Text = color.R.ToString();
-        //    //    GNums.Text = color.G.ToString();
-        //    //    BNums.Text = color.B.ToString();
-
-        //    //    PColor.BackColor = Color.FromArgb(color.R, color.G, color.B);
-        //    //}
-        //    //catch
-        //    //{
-
-        //    //}
-        //}
-
-        //private void CutPic_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    //try
-        //    //{
-        //    //    Bitmap bmp = new Bitmap(CutPic.Image);
-        //    //    Color color = bmp.GetPixel(e.X, e.Y);
-        //    //    RNums.Text = color.R.ToString();
-        //    //    GNums.Text = color.G.ToString();
-        //    //    BNums.Text = color.B.ToString();
-
-        //    //    PColor.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-        //    //    Mdown.X = e.X;
-        //    //    Mdown.Y = e.Y;
-        //    //}
-        //    //catch
-        //    //{
-
-        //    //}
-        //}
-
-        //private void CutPic_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    //Mup.X = e.X;
-        //    //Mup.Y = e.Y;
-
-        //    //int GetSizeX = Mup.X - Mdown.X;
-        //    //int GetSizeY = Mup.Y - Mdown.Y;
-
-        //    //Bitmap bmp = new Bitmap(ChangePic.Width, ChangePic.Height);
-        //    //Graphics g = Graphics.FromImage(bmp);
-
-        //    //Rectangle srcRect = new Rectangle(Mdown.X, Mdown.Y, GetSizeX, GetSizeY);
-        //    ////描画する部分の範囲を決定する。ここでは、位置(0,0)、大きさ100x100で描画する
-        //    //Rectangle desRect = new Rectangle(0, 0, ChangePic.Width, ChangePic.Height);
-        //    ////画像の一部を描画する
-        //    //g.DrawImage(CutPic.Image, desRect, srcRect, GraphicsUnit.Pixel);
-
-
-        //    ////Graphicsオブジェクトのリソースを解放する
-        //    //g.Dispose();
-
-
-        //    ////PictureBox1に表示する
-        //    //ChangePic.Image = bmp;
-
-        //    ////PaintBox(PE, Mup.X, Mup.Y, GetSizeX, GetSizeY);
-        //    ////GetCutPic();
-
-        //    //Bitmap bmpC = new Bitmap(CutPic.Width, CutPic.Height);
-        //    //Graphics gc = Graphics.FromImage(bmpC);
-
-        //    //Rectangle CutRect = new Rectangle(0, 0, CutPic.Width, CutPic.Height);
-        //    //gc.DrawImage(CutPic.Image, CutRect, CutRect, GraphicsUnit.Pixel);
-        //    //gc.DrawRectangle(Pens.Blue, Mdown.X - 1, Mdown.Y - 1, GetSizeX + 1, GetSizeY + 1);
-        //    //CutPic.Image = bmpC;
-
-        //    //Rectangle boxRect = new Rectangle(Mdown.X, Mdown.Y, GetSizeX, GetSizeY);
-        //    //BoxList.Add(boxRect);
+        private void AutoLock_Click(object sender, EventArgs e)
+        {
+            Bitmap CheackBT = (Bitmap)MasterImage.Clone();
+            int R = CheckCol.R;
+            int G = CheckCol.G;
+            int B = CheckCol.B;
+            int boxnum = 0;
+            int Boxlimit = Convert.ToInt32(CheckLockNum.Text);
+            BoxNum = 0;
+            int w = 0, h = 0;
+            List<Rectangle> rectList = new List<Rectangle>();
+            BoxNameCombo.Items.Clear();
+            MyBoxList.RemoveRange(0, MyBoxList.Count);
+            for (int i = 0; i < CutPic.Controls.Count; i++)
+            {
+                CutPic.Controls.RemoveAt(0);
+            }
 
 
 
-        //    //gc.Dispose();
-        //}
-        //private void GetCutPic()
-        //{
-        //    //Bitmap bmp = new Bitmap(CutPic.Width, CutPic.Height);
+            for (int j = 0; j < CutPic.Height; j++)
+            {
+                for (int i = 0; i < CutPic.Width; i++)
+                {
+                    int CR = CheackBT.GetPixel(i, j).R;
+                    int CG = CheackBT.GetPixel(i, j).G;
+                    int CB = CheackBT.GetPixel(i, j).B;
 
-        //    //Graphics g = Graphics.FromImage(bmp);
+                    if (CR >= R - 10 && CR <= R + 10 &&
+                        CG >= G - 10 && CG <= G + 10 &&
+                        CB >= B - 10 && CB <= B + 10)
+                    {
 
-        //    //Rectangle srcRect = new Rectangle(0, 0, img.Width, img.Width);
-        //    ////描画する部分の範囲を決定する。ここでは、位置(0,0)、大きさ100x100で描画する
-        //    //Rectangle desRect = new Rectangle(0, 0, img.Width, img.Width);
-        //    ////画像の一部を描画する
-        //    //g.DrawImage(img.ToBitmap(), desRect, srcRect, GraphicsUnit.Pixel);
+                        if (boxnum == 0)
+                        {
+                           
 
-        //    ////Graphicsオブジェクトのリソースを解放する
-        //    //g.Dispose();
+                            for (int l = j; l < CutPic.Height; l++)
+                            {
+                                int lR = CheackBT.GetPixel(i, l).R;
+                                int lG = CheackBT.GetPixel(i, l).G;
+                                int lB = CheackBT.GetPixel(i, l).B;
 
-        //    ////PictureBox1に表示する
-        //    //CutPic.Image = bmp;
+                                if (lR >= R - 30 && lR <= R + 30 &&
+                                    lG >= G - 30 && lG <= G + 30 &&
+                                    lB >= B - 30 && lB <= B + 30)
+                                {
+                                    h++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            for (int k = i; k < CutPic.Width; k++)
+                            {
+                                int KR = CheackBT.GetPixel(k, j).R;
+                                int KG = CheackBT.GetPixel(k, j).G;
+                                int KB = CheackBT.GetPixel(k, j).B;
+
+                                if (KR >= R - 30 && KR <= R + 30 &&
+                                    KG >= G - 30 && KG <= G + 30 &&
+                                    KB >= B - 30 && KB <= B + 30)
+                                {
+                                    w++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
 
 
-        //}
-    }
+                            BoxNum++;
+                            MyBox box = new MyBox();
+                            CutPic.Controls.Add(box);
+                            box.MyNumber.Text = BoxNum.ToString(); ;
+                            MyBoxList.Add(box);
+                            BoxNameCombo.Items.Add(BoxNum.ToString());
+                            Rectangle angle = new Rectangle(i, j, w, h);
+                            rectList.Add(angle);
+                            MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
+                            MyBoxList[boxnum].Width = w;
+                            MyBoxList[boxnum].Height = h;
+                            boxnum++;
+                        }
+                        else if (boxnum < Boxlimit && boxnum != 0)
+                        {
+
+                            //if (!rectList[boxnum - 1].Contains(i, j))
+                            //{
+                            //    for (int k = i; k < CutPic.Width; k++)
+                            //    {
+                            //        int KR = CheackBT.GetPixel(k, j).R;
+                            //        int KG = CheackBT.GetPixel(k, j).G;
+                            //        int KB = CheackBT.GetPixel(k, j).B;
+
+                            //        if (KR >= R - 30 && KR <= R + 30 &&
+                            //            KG >= G - 30 && KG <= G + 30 &&
+                            //            KB >= B - 30 && KB <= B + 30)
+                            //        {
+                            //            w++;
+                            //        }
+                            //        else
+                            //        {
+                            //            break;
+                            //        }
+                            //    }
+
+                            //    for (int l = j; l < CutPic.Height; l++)
+                            //    {
+                            //        int lR = CheackBT.GetPixel(i, l).R;
+                            //        int lG = CheackBT.GetPixel(i, l).G;
+                            //        int lB = CheackBT.GetPixel(i, l).B;
+
+                            //        if (lR >= R - 30 && lR <= R + 30 &&
+                            //            lG >= G - 30 && lG <= G + 30 &&
+                            //            lB >= B - 30 && lB <= B + 30)
+                            //        {
+                            //            h++;
+                            //        }
+                            //        else
+                            //        {
+                            //            break;
+                            //        }
+                            //    }
+                            //    BoxNum++;
+                            //    MyBox box = new MyBox();
+                            //    CutPic.Controls.Add(box);
+                            //    box.MyNumber.Text = BoxNum.ToString(); ;
+                            //    MyBoxList.Add(box);
+                            //    BoxNameCombo.Items.Add(BoxNum.ToString());
+                            //    Rectangle angle = new Rectangle(i, j, w, h);
+                            //    rectList.Add(angle);
+                            //    MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
+                            //    MyBoxList[boxnum].Width = w;
+                            //    MyBoxList[boxnum].Height = h;
+                            //    boxnum++;
+                            //}
+
+                        }
+
+                        w = 0;
+                        h = 0;
+                        BoxNameCombo.SelectedIndex = 0;
+                    }
+
+                }
+            }
+        }
+
+            ///廃棄コード
+            //private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+            //{
+            //    //try
+            //    //{
+            //    //    Color color = BitmapConverter.ToBitmap(img).GetPixel(e.X, e.Y);
+            //    //    RNums.Text = color.R.ToString();
+            //    //    GNums.Text = color.G.ToString();
+            //    //    BNums.Text = color.B.ToString();
+
+            //    //    PColor.BackColor = Color.FromArgb(color.R, color.G, color.B);
+
+            //    //    //Mdown.X = e.X;
+            //    //    //Mdown.Y = e.Y;
+            //    //}
+            //    //catch
+            //    //{
+
+            //    //}
+            //}
+
+            //private void CameraPic_MouseUp(object sender, MouseEventArgs e)
+            //{
+            //    //Mup.X = e.X;
+            //    //Mup.Y = e.Y;
+
+            //    //int sizeX = Mup.X - Mdown.X;
+            //    //int sizeY = Mup.Y - Mdown.Y;
+
+            //    //Bitmap bmp = new Bitmap(ChangePic.Width, ChangePic.Height);
+            //    //Graphics g = Graphics.FromImage(bmp);
+
+            //    //Rectangle srcRect = new Rectangle(Mdown.X, Mdown.Y, sizeX, sizeY);
+            //    ////描画する部分の範囲を決定する。ここでは、位置(0,0)、大きさ100x100で描画する
+            //    //Rectangle desRect = new Rectangle(0, 0, ChangePic.Width, ChangePic.Height);
+            //    ////画像の一部を描画する
+            //    //g.DrawImage(img.ToBitmap(), desRect, srcRect, GraphicsUnit.Pixel);
+
+
+            //    ////Graphicsオブジェクトのリソースを解放する
+            //    //g.Dispose();
+
+            //    ////PictureBox1に表示する
+            //    //ChangePic.Image = bmp;
+            //}
+
+            //private void ChangePic_MouseDown(object sender, MouseEventArgs e)
+            //{
+            //    //try
+            //    //{
+            //    //    Color color = BitmapConverter.ToBitmap(img).GetPixel(e.X, e.Y);
+            //    //    RNums.Text = color.R.ToString();
+            //    //    GNums.Text = color.G.ToString();
+            //    //    BNums.Text = color.B.ToString();
+
+            //    //    PColor.BackColor = Color.FromArgb(color.R, color.G, color.B);
+            //    //}
+            //    //catch
+            //    //{
+
+            //    //}
+            //}
+
+            //private void CutPic_MouseDown(object sender, MouseEventArgs e)
+            //{
+            //    //try
+            //    //{
+            //    //    Bitmap bmp = new Bitmap(CutPic.Image);
+            //    //    Color color = bmp.GetPixel(e.X, e.Y);
+            //    //    RNums.Text = color.R.ToString();
+            //    //    GNums.Text = color.G.ToString();
+            //    //    BNums.Text = color.B.ToString();
+
+            //    //    PColor.BackColor = Color.FromArgb(color.R, color.G, color.B);
+
+            //    //    Mdown.X = e.X;
+            //    //    Mdown.Y = e.Y;
+            //    //}
+            //    //catch
+            //    //{
+
+            //    //}
+            //}
+
+            //private void CutPic_MouseUp(object sender, MouseEventArgs e)
+            //{
+            //    //Mup.X = e.X;
+            //    //Mup.Y = e.Y;
+
+            //    //int GetSizeX = Mup.X - Mdown.X;
+            //    //int GetSizeY = Mup.Y - Mdown.Y;
+
+            //    //Bitmap bmp = new Bitmap(ChangePic.Width, ChangePic.Height);
+            //    //Graphics g = Graphics.FromImage(bmp);
+
+            //    //Rectangle srcRect = new Rectangle(Mdown.X, Mdown.Y, GetSizeX, GetSizeY);
+            //    ////描画する部分の範囲を決定する。ここでは、位置(0,0)、大きさ100x100で描画する
+            //    //Rectangle desRect = new Rectangle(0, 0, ChangePic.Width, ChangePic.Height);
+            //    ////画像の一部を描画する
+            //    //g.DrawImage(CutPic.Image, desRect, srcRect, GraphicsUnit.Pixel);
+
+
+            //    ////Graphicsオブジェクトのリソースを解放する
+            //    //g.Dispose();
+
+
+            //    ////PictureBox1に表示する
+            //    //ChangePic.Image = bmp;
+
+            //    ////PaintBox(PE, Mup.X, Mup.Y, GetSizeX, GetSizeY);
+            //    ////GetCutPic();
+
+            //    //Bitmap bmpC = new Bitmap(CutPic.Width, CutPic.Height);
+            //    //Graphics gc = Graphics.FromImage(bmpC);
+
+            //    //Rectangle CutRect = new Rectangle(0, 0, CutPic.Width, CutPic.Height);
+            //    //gc.DrawImage(CutPic.Image, CutRect, CutRect, GraphicsUnit.Pixel);
+            //    //gc.DrawRectangle(Pens.Blue, Mdown.X - 1, Mdown.Y - 1, GetSizeX + 1, GetSizeY + 1);
+            //    //CutPic.Image = bmpC;
+
+            //    //Rectangle boxRect = new Rectangle(Mdown.X, Mdown.Y, GetSizeX, GetSizeY);
+            //    //BoxList.Add(boxRect);
+
+
+
+            //    //gc.Dispose();
+            //}
+            //private void GetCutPic()
+            //{
+            //    //Bitmap bmp = new Bitmap(CutPic.Width, CutPic.Height);
+
+            //    //Graphics g = Graphics.FromImage(bmp);
+
+            //    //Rectangle srcRect = new Rectangle(0, 0, img.Width, img.Width);
+            //    ////描画する部分の範囲を決定する。ここでは、位置(0,0)、大きさ100x100で描画する
+            //    //Rectangle desRect = new Rectangle(0, 0, img.Width, img.Width);
+            //    ////画像の一部を描画する
+            //    //g.DrawImage(img.ToBitmap(), desRect, srcRect, GraphicsUnit.Pixel);
+
+            //    ////Graphicsオブジェクトのリソースを解放する
+            //    //g.Dispose();
+
+            //    ////PictureBox1に表示する
+            //    //CutPic.Image = bmp;
+
+
+            //}
+        }
 }
