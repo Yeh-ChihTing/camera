@@ -54,6 +54,9 @@ namespace camera
             }
         }
 
+        /// <summary>
+        /// 検査モード
+        /// </summary>
         public enum BoxMode
         {
             Samontape=0,
@@ -61,30 +64,25 @@ namespace camera
             LampOff=2
         }
 
+        /// <summary>
+        /// 検査モード宣言
+        /// </summary>
         public BoxMode MyBoxMode;
 
+        /// <summary>
+        /// 色合い使用チェックボックス
+        /// </summary>
         public bool BoxChecked = false;
-
+        
+        /// <summary>
+        /// 色合い使用色
+        /// </summary>
         public Color UsedCol=Color.FromArgb(255,0,0);
 
         /// <summary>
         /// private
         /// </summary>
         
-        ///// <summary>
-        /////　サイズ調整Boxの基礎横幅
-        ///// </summary>
-        //private int BROW = 15;
-        ///// <summary>
-        /////　サイズ調整Boxの基礎縦幅
-        ///// </summary>
-        //private int BROH = 15;
-        ///// <summary>
-        /////　サイズ調整Boxの変更倍率
-        ///// </summary>
-        //private int BRSizeLevel = 7;
-
-
         /// <summary>
         ///　親フォームの横幅値を取得用
         /// </summary>
@@ -99,7 +97,14 @@ namespace camera
         /// </summary>
         private Point OriginPoint;
 
+        /// <summary>
+        ///　初期サイズ
+        /// </summary>
         private Size OriginSize;
+
+        /// <summary>
+        ///　コンソールの位置
+        /// </summary>
         public enum CursorPos
         {
             None,
@@ -111,6 +116,9 @@ namespace camera
             RightBottom
         }
 
+        /// <summary>
+        ///　コンソールとボックス相対位置
+        /// </summary>
         public enum ResizeDirection
         {
             None = 0,
@@ -121,16 +129,9 @@ namespace camera
             All = 15
         }
 
-        //// サイズ変更が有効になる枠
-        //ResizeDirection resizeDirection;
-
-        //// サイズ変更中を表す状態
-        //ResizeDirection resizeStatus;
-
-        //CursorPos CurPos;
-
         // 標準のカーソル
         private Cursor defaultCursor;
+        //サイズ変更の時位置の移動をブラック用
         private bool ReSize = false;
 
         public MyBox()
@@ -194,6 +195,7 @@ namespace camera
             base.OnSizeChanged(e);
         }
 
+        //マウスダウン
         private void MyBox_MouseDown(object sender, MouseEventArgs e)
         {
             //マウス左クリック
@@ -207,7 +209,7 @@ namespace camera
             }
         }
 
-        //Box移動用
+        //Box移動とサイズ変更用
         private void MyBox_MouseMove(object sender, MouseEventArgs e)
         {
            
@@ -438,7 +440,7 @@ namespace camera
         }
         
 
-        //
+        //タイマー
         private void timer1_Tick(object sender, EventArgs e)
         {
             //背景色を常にColor.Transparent
@@ -472,50 +474,10 @@ namespace camera
             }         
         }
 
-        //サイズ変更用ボックスの移動
-        private void BottonRight_MouseMove(object sender, MouseEventArgs e)
-        {
-                    
-            if (e.Button == MouseButtons.Left)
-            {
-               
-                //if (this.Size.Width >= 30 & this.Size.Height >= 30)
-                //{
-                //    Point mp = new Point(e.X - OriginPoint.X + BottonRight.Location.X, e.Y - OriginPoint.Y + BottonRight.Location.Y);
-                //    BottonRight.Location = mp;
-                //    int CsX = BottonRight.Location.X + BottonRight.Width;
-                //    int CsY = BottonRight.Location.Y + BottonRight.Height;
-                //    this.Size = new Size(CsX, CsY);
-                //}
-                //else if(this.Size.Width < 30&& this.Size.Height < 30)
-                //{
-                //    this.Size = new Size(30, 30);
-                //    BottonRight.Location = new Point(this.Width - BottonRight.Size.Width, this.Height - BottonRight.Size.Height);
-                //}
-                //else if(this.Size.Width<30)
-                //{
-                //    this.Size = new Size(30, this.Size.Height);
-                //    BottonRight.Location = new Point(this.Width-BottonRight.Size.Width, BottonRight.Location.Y);
-                //}
-                //else if (this.Size.Height < 30)
-                //{
-                //    this.Size = new Size(this.Size.Width,30);
-                //    BottonRight.Location = new Point(BottonRight.Width, this.Height-BottonRight.Size.Height);
-                //}
-
-            }
-        }
-
-        //サイズ変更のイベント反応
+        //サイズ変更した時フォントサイズ変更
         private void MyBox_SizeChanged(object sender, EventArgs e)
         {
-            //BottonRight.Size = new Size(this.Width / BRSizeLevel, this.Height / BRSizeLevel);
 
-            //BottonRight.Location = new Point(this.Width - BottonRight.Width, this.Height - BottonRight.Height);
-
-            //Drawbox.Location = new Point(5, 5);
-            //Drawbox.Width = this.Width - 10;
-            //Drawbox.Height = this.Height - 10;
             if ((int)(this.Width / 10) > 1)
             {
                 MyNumber.Font = new Font(MyNumber.Font.FontFamily, (int)(this.Width / 10));
@@ -525,6 +487,7 @@ namespace camera
                 MyNumber.Font = new Font(MyNumber.Font.FontFamily, 1);
             }
 
+            //ボックスサイズ表示
             //string a ="Pw:"+this.Parent.Width+"PH:"+this.Parent.Height+ 
             //    "       Width:" + this.Width + "Height:" + this.Height;
             //this.Parent.Parent.Parent.Text = a;
@@ -537,84 +500,11 @@ namespace camera
             BorderColor = col;
         }
 
-        //サイズ変更用ボックスの位置リーセット
-        public void setBottonRight(int mul)
-        {
-            //BottonRight.Size = new Size(this.Width / BRSizeLevel, this.Height / BRSizeLevel);
-
-            //if (mul == 1)
-            //{
-            //    MyNumber.Font = new Font("Serif", 12, FontStyle.Bold);
-            //    BottonRight.Width = BROW;
-            //    BottonRight.Height = BROH;
-            //}
-            //else
-            //{
-            //    MyNumber.Font = new Font("Serif", 12 *(mul / 2), FontStyle.Bold);
-            //    //BottonRight.Width = BROW;
-            //    //BottonRight.Height = BROH;
-            //    BottonRight.Width = BROW * (mul / 2);
-            //    BottonRight.Height = BROH * (mul / 2);
-            //}
-
-
-            //BottonRight.Location = new Point(this.Width - BottonRight.Width, this.Height - BottonRight.Height);
-        }
-
-        private void MyBox_MouseClick(object sender, MouseEventArgs e)
-        {
-            //MainScene main = (MainScene)this.FindForm();
-            //main.RedTrack.Value = Red;
-            //main.GreenTrack.Value = Green;
-            //main.BlueTrack.Value = Blue;
-
-            //_borderColor = Color.Purple;
-            //this.Invalidate();
-        }
 
         public void ChangeColor(Color col)
         {
             _borderColor = col;
             this.Invalidate();
-        }
-
-        //DrawBoxにクリック
-        private void Drawbox_MouseClick(object sender, MouseEventArgs e)
-        {
-            //MainScene main = (MainScene)this.FindForm();
-            //main.RedTrack.Value = Red;
-            //main.GreenTrack.Value = Green;
-            //main.BlueTrack.Value = Blue;
-
-            //_borderColor = Color.Purple;
-            //this.Invalidate();
-
-            //if (e.Button == MouseButtons.Left)
-            //{
-            //    if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
-            //        this.Location.Y >= 0 && this.Location.Y <= PHeight)
-            //    {
-            //        Point mp = new Point(e.X - OriginPoint.X + this.Location.X, e.Y - OriginPoint.Y + this.Location.Y);
-            //        this.Location = mp;
-            //    }
-            //    if (this.Location.X + this.Width > this.Parent.Width)
-            //    {
-            //        this.Location = new Point(PWeight - this.Width, this.Location.Y);
-            //    }
-            //    if (this.Location.X < 0)
-            //    {
-            //        this.Location = new Point(0, this.Location.Y);
-            //    }
-            //    if (this.Location.Y + this.Height > this.Parent.Height)
-            //    {
-            //        this.Location = new Point(this.Location.X, PHeight - this.Height);
-            //    }
-            //    if (this.Location.Y < 0)
-            //    {
-            //        this.Location = new Point(this.Location.X, 0);
-            //    }
-
-            //}
         }
 
         //マウスダウンの時Box位置記録
@@ -631,39 +521,8 @@ namespace camera
         //Box移動用
         private void Drawbox_MouseMove(object sender, MouseEventArgs e)
         {
-            //if(e.Location.X>BottonRight.Location.X&&e.Location.X<(BottonRight.Location.X+BottonRight.Width)&&
-            //    e.Location.Y > BottonRight.Location.Y && e.Location.Y < (BottonRight.Location.Y + BottonRight.Height))
-            //{
-            //    this.Cursor = Cursors.SizeNWSE;
-            //}
+
             this.Cursor = defaultCursor;
-
-            //if (e.Button == MouseButtons.Left)
-            //{
-            //    if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
-            //        this.Location.Y >= 0 && this.Location.Y <= PHeight)
-            //    {
-            //        Point mp = new Point(e.X - OriginPoint.X + this.Location.X, e.Y - OriginPoint.Y + this.Location.Y);
-            //        this.Location = mp;
-            //    }
-            //    if (this.Location.X + this.Width > this.Parent.Width)
-            //    {
-            //        this.Location = new Point(PWeight - this.Width, this.Location.Y);
-            //    }
-            //    if (this.Location.X < 0)
-            //    {
-            //        this.Location = new Point(0, this.Location.Y);
-            //    }
-            //    if (this.Location.Y + this.Height > this.Parent.Height)
-            //    {
-            //        this.Location = new Point(this.Location.X, PHeight - this.Height);
-            //    }
-            //    if (this.Location.Y < 0)
-            //    {
-            //        this.Location = new Point(this.Location.X, 0);
-            //    }
-
-            //}
         }
 
         private void MyBox_MouseUp(object sender, MouseEventArgs e)
@@ -671,5 +530,6 @@ namespace camera
             this.Capture = false;
             ReSize = false;
         }
+
     }
 }

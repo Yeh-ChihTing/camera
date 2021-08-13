@@ -30,25 +30,11 @@ namespace camera
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.BottonRight = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.MyNumber = new System.Windows.Forms.Label();
             this.Drawbox = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.BottonRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Drawbox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // BottonRight
-            // 
-            this.BottonRight.BackColor = System.Drawing.Color.Brown;
-            this.BottonRight.Location = new System.Drawing.Point(137, 136);
-            this.BottonRight.Name = "BottonRight";
-            this.BottonRight.Size = new System.Drawing.Size(15, 15);
-            this.BottonRight.TabIndex = 2;
-            this.BottonRight.TabStop = false;
-            this.BottonRight.Visible = false;
-            this.BottonRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BottonRight_MouseDown);
-            this.BottonRight.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BottonRight_MouseMove);
             // 
             // timer1
             // 
@@ -76,7 +62,6 @@ namespace camera
             this.Drawbox.TabIndex = 4;
             this.Drawbox.TabStop = false;
             this.Drawbox.Visible = false;
-            this.Drawbox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Drawbox_MouseClick);
             this.Drawbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drawbox_MouseDown);
             this.Drawbox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drawbox_MouseMove);
             // 
@@ -86,17 +71,14 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.MyNumber);
-            this.Controls.Add(this.BottonRight);
             this.Controls.Add(this.Drawbox);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.Name = "MyBox";
             this.SizeChanged += new System.EventHandler(this.MyBox_SizeChanged);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseUp);
-            ((System.ComponentModel.ISupportInitialize)(this.BottonRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Drawbox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -104,7 +86,6 @@ namespace camera
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox BottonRight;
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.Label MyNumber;
         public System.Windows.Forms.PictureBox Drawbox;

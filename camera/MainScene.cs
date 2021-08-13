@@ -139,18 +139,18 @@ namespace camera
         private bool StarChooseAutoCol = false;
         private Color CheckCol;
 
-        //List<Rectangle> BoxList = new List<Rectangle>();
-        //int CamWidth;
-        //int CamHeight;
-        //private int RC;
-        //private int GC;
-        //private int BC;  
+        /// <summary>
+        ///初期化
+        /// </summary>
         public MainScene()
         {
             InitializeComponent();
             //this.Owner = null;
         }
 
+        /// <summary>
+        ///ロード
+        /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
             /// <summary>
@@ -281,6 +281,219 @@ namespace camera
         private void Check_Click(object sender, EventArgs e)
         {
             Check();
+        }
+
+        /// <summary>
+        ///連続チェックボタン
+        /// </summary>
+        private void CheckLoopBtn_Click(object sender, EventArgs e)
+        {
+
+            if (LoopBtnFlag)
+            {
+
+                CheckLoopBtn.Text = "停止";
+                CheckLoopBtn.BackColor = Color.Pink;
+                //Cheack();
+                LoopFrame = (Convert.ToInt32(HourText.Text) * 36000) + (Convert.ToInt32(MinText.Text) * 6000)
+                    + (Convert.ToInt32(SecText.Text) * 1000);
+                if (LoopFrame != 0)
+                {
+                    LoopTimer.Enabled = true;
+                    LoopTimer.Interval = LoopFrame;
+                    Check();
+                }
+                else
+                {
+                    MessageBox.Show("0間隔連続チェックはできないです、時間を入力してください");
+                    LoopTimer.Enabled = false;
+                    CheckLoopBtn.Text = "連続チェック";
+                    CheckLoopBtn.BackColor = SystemColors.Control;
+                }
+
+
+            }
+
+            else
+            {
+                LoopTimer.Enabled = false;
+                CheckLoopBtn.Text = "連続チェック";
+                CheckLoopBtn.BackColor = SystemColors.Control;
+                this.BackColor = SystemColors.Control;
+                for (int i = 0; i < MyBoxList.Count; i++)
+                {
+                    MyBoxList[i].Drawbox.Visible = false;
+                    //MyBoxList[i].Drawbox.BackColor = Color.Transparent;
+                }
+            }
+
+
+            LoopBtnFlag = !LoopBtnFlag;
+        }
+
+        /// <summary>
+        ///チェックループ
+        /// </summary>
+        private void LoopTimer_Tick(object sender, EventArgs e)
+        {
+            Check();
+        }
+
+        /// <summary>
+        ///チェック用関数
+        /// </summary>
+        private void Check()
+        {
+            try
+            {
+                CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
+
+                Bitmap Origin = (Bitmap)CameraPic.Image.Clone();
+                Bitmap CheackBT = (Bitmap)MasterImage.Clone();
+                int OR = 0, OG = 0, OB = 0, CR, CG, CB;
+                bool[] OkOrFail = new bool[MyBoxList.Count];
+                for (int i = 0; i < OkOrFail.Length; i++)
+                {
+                    OkOrFail[i] = true;
+
+                }
+
+                bool haveFail = false;
+
+                CheckPerList.Items.Clear();
+
+                for (int k = 0; k < MyBoxList.Count; k++)
+                {
+
+                    int X = MyBoxList[k].Location.X;
+                    int SizeX = X + (MyBoxList[k].Width);
+                    int Y = MyBoxList[k].Location.Y;
+                    int SizeY = Y + (MyBoxList[k].Height);
+
+                    int RightNum = 0;
+
+
+
+                    Bitmap bmp = new Bitmap(MyBoxList[k].Width, MyBoxList[k].Height);
+
+                    Graphics g = Graphics.FromImage(bmp);
+
+                    Rectangle srcRect = new Rectangle(X, Y, MyBoxList[k].Width, MyBoxList[k].Height);
+                    //描画する部分の範囲を決定する
+                    Rectangle desRect = new Rectangle(0, 0, MyBoxList[k].Width, MyBoxList[k].Width);
+                    //画像の一部を描画する
+                    g.DrawImage(MasterImage, desRect, srcRect, GraphicsUnit.Pixel);
+
+                    //Graphicsオブジェクトのリソースを解放する
+                    g.Dispose();
+
+                    MyBoxList[k].Drawbox.Visible = true;
+                    //PictureBox1に表示する
+                    MyBoxList[k].Drawbox.Image = bmp;
+                    MyBoxList[k].Drawbox.Location = new System.Drawing.Point(3, 3);
+                    MyBoxList[k].Drawbox.Width = MyBoxList[k].Width - 6;
+                    MyBoxList[k].Drawbox.Height = MyBoxList[k].Height - 6;
+
+                    for (int i = X; i < SizeX; i++)
+                    {
+                        for (int j = Y; j < SizeY; j++)
+                        {
+
+                            if (!MyBoxList[k].BoxChecked)
+                            {
+                                OR = Origin.GetPixel(i, j).R;
+                                OG = Origin.GetPixel(i, j).G;
+                                OB = Origin.GetPixel(i, j).B;
+                            }
+                            else
+                            {
+                                OR = CheckCol.R;
+                                OG = CheckCol.G;
+                                OB = CheckCol.B;
+                            }
+                            CR = CheackBT.GetPixel(i, j).R;
+                            CG = CheackBT.GetPixel(i, j).G;
+                            CB = CheackBT.GetPixel(i, j).B;
+                            if ((CR <= OR + MyBoxList[k].Red && CR >= OR - MyBoxList[k].Red) &&
+                                (CG <= OG + MyBoxList[k].Green && CG >= OG - MyBoxList[k].Green) &&
+                                (CB <= OB + MyBoxList[k].Blue && CB >= OB - MyBoxList[k].Blue))
+                            {
+
+                                OkOrFail[k] = true;
+                                bmp.SetPixel(i - X, j - Y, Color.Green);
+                                MyBoxList[k].ChangeColor(Color.Blue);
+                                RightNum++;
+                            }
+                            else
+                            {
+                                //haveFail = true;
+                                //OkOrFail[k] = false;
+                                //MyBoxList[k].ChangeColor(Color.Red);
+                                break;
+                            }
+                        }
+
+                    }
+
+                    MyBoxList[k].Drawbox.Image = bmp;
+                    percentOfSusses = ((double)RightNum / ((double)MyBoxList[k].Width * (double)MyBoxList[k].Height)) * 100.0;
+                    int Getpercent = (int)percentOfSusses;
+                    int BoxPercent = MyBoxList[k].MySPercent;
+
+                    if (BoxNameList.Count > 0)
+                    {
+                        if (BoxNameList[k] != "")
+                        {
+                            CheckPerList.Items.Add(BoxNameList[k] + " : " + Getpercent.ToString() + "%"
+                                + "/ " + BoxPercent.ToString() + "%" + " 一致");
+                        }
+                        else
+                        {
+                            CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
+                                + "/" + BoxPercent.ToString() + "%" + " 一致");
+                        }
+                    }
+                    else
+                    {
+                        CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
+                                + "/" + BoxPercent.ToString() + "%" + " 一致");
+                    }
+                    // GetPercent.Text = Getpercent.ToString();
+                    if (percentOfSusses < BoxPercent)
+                    {
+                        MyBoxList[k].ChangeColor(Color.Red);
+                        haveFail = true;
+                        OkOrFail[k] = false;
+                    }
+
+
+                }
+
+                if (!haveFail)
+                {
+                    if (LoopBtnFlag)
+                    {
+                        Player = new System.Media.SoundPlayer(SussesSound);
+                        Player.Play();
+                    }
+                    this.BackColor = Color.Green;
+                    //DrawCheak();
+                    //Ans.Text = "OK";
+                }
+                else
+                {
+                    Player = new System.Media.SoundPlayer(FailSound);
+                    Player.Play();
+                    this.BackColor = Color.Red;
+                    //Ans.Text = "FAIL";
+                }
+
+                SaveDataOnCsv(OkOrFail);
+            }
+            catch
+            {
+                MessageBox.Show("画像データを選択してください");
+            }
         }
 
         /// <summary>
@@ -1095,212 +1308,7 @@ namespace camera
         }
 
         /// <summary>
-        ///連続チェックボタン
-        /// </summary>
-        private void CheckLoopBtn_Click(object sender, EventArgs e)
-        {
-
-            if (LoopBtnFlag)
-            {
-
-                CheckLoopBtn.Text = "停止";
-                CheckLoopBtn.BackColor = Color.Pink;
-                //Cheack();
-                LoopFrame = (Convert.ToInt32(HourText.Text) * 36000) + (Convert.ToInt32(MinText.Text) * 6000)
-                    + (Convert.ToInt32(SecText.Text) * 1000);
-                if (LoopFrame != 0)
-                {
-                    LoopTimer.Enabled = true;
-                    LoopTimer.Interval = LoopFrame;
-                    Check();
-                }
-                else
-                {
-                    MessageBox.Show("0間隔連続チェックはできないです、時間を入力してください");
-                    LoopTimer.Enabled = false;
-                    CheckLoopBtn.Text = "連続チェック";
-                    CheckLoopBtn.BackColor = SystemColors.Control;
-                }
-
-
-            }
-
-            else
-            {
-                LoopTimer.Enabled = false;
-                CheckLoopBtn.Text = "連続チェック";
-                CheckLoopBtn.BackColor = SystemColors.Control;
-                this.BackColor = SystemColors.Control;
-                for (int i = 0; i < MyBoxList.Count; i++)
-                {
-                    MyBoxList[i].Drawbox.Visible = false;
-                    //MyBoxList[i].Drawbox.BackColor = Color.Transparent;
-                }
-            }
-
-
-            LoopBtnFlag = !LoopBtnFlag;
-        }
-
-        /// <summary>
-        ///チェック用関数
-        /// </summary>
-        private void Check()
-        {
-            try
-            {
-                CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
-
-                Bitmap Origin = (Bitmap)CameraPic.Image.Clone();
-                Bitmap CheackBT = (Bitmap)MasterImage.Clone();
-                int OR = 0, OG = 0, OB = 0, CR, CG, CB;
-                bool[] OkOrFail = new bool[MyBoxList.Count];
-                for (int i = 0; i < OkOrFail.Length; i++)
-                {
-                    OkOrFail[i] = true;
-
-                }
-
-                bool haveFail = false;
-
-                CheckPerList.Items.Clear();
-
-                for (int k = 0; k < MyBoxList.Count; k++)
-                {
-
-                    int X = MyBoxList[k].Location.X;
-                    int SizeX = X + (MyBoxList[k].Width);
-                    int Y = MyBoxList[k].Location.Y;
-                    int SizeY = Y + (MyBoxList[k].Height);
-
-                    int RightNum = 0;
-
-
-
-                    Bitmap bmp = new Bitmap(MyBoxList[k].Width, MyBoxList[k].Height);
-
-                    Graphics g = Graphics.FromImage(bmp);
-
-                    Rectangle srcRect = new Rectangle(X, Y, MyBoxList[k].Width, MyBoxList[k].Height);
-                    //描画する部分の範囲を決定する
-                    Rectangle desRect = new Rectangle(0, 0, MyBoxList[k].Width, MyBoxList[k].Width);
-                    //画像の一部を描画する
-                    g.DrawImage(MasterImage, desRect, srcRect, GraphicsUnit.Pixel);
-
-                    //Graphicsオブジェクトのリソースを解放する
-                    g.Dispose();
-
-                    MyBoxList[k].Drawbox.Visible = true;
-                    //PictureBox1に表示する
-                    MyBoxList[k].Drawbox.Image = bmp;
-                    MyBoxList[k].Drawbox.Location = new System.Drawing.Point(3, 3);
-                    MyBoxList[k].Drawbox.Width = MyBoxList[k].Width - 6;
-                    MyBoxList[k].Drawbox.Height = MyBoxList[k].Height - 6;
-
-                    for (int i = X; i < SizeX; i++)
-                    {
-                        for (int j = Y; j < SizeY; j++)
-                        {
-
-                            if (!MyBoxList[k].BoxChecked)
-                            {
-                                OR = Origin.GetPixel(i, j).R;
-                                OG = Origin.GetPixel(i, j).G;
-                                OB = Origin.GetPixel(i, j).B;
-                            }
-                            else
-                            {
-                                OR = CheckCol.R;
-                                OG = CheckCol.G;
-                                OB = CheckCol.B;
-                            }
-                            CR = CheackBT.GetPixel(i, j).R;
-                            CG = CheackBT.GetPixel(i, j).G;
-                            CB = CheackBT.GetPixel(i, j).B;
-                            if ((CR <= OR + MyBoxList[k].Red && CR >= OR - MyBoxList[k].Red) &&
-                                (CG <= OG + MyBoxList[k].Green && CG >= OG - MyBoxList[k].Green) &&
-                                (CB <= OB + MyBoxList[k].Blue && CB >= OB - MyBoxList[k].Blue))
-                            {
-
-                                OkOrFail[k] = true;
-                                bmp.SetPixel(i - X, j - Y, Color.Green);
-                                MyBoxList[k].ChangeColor(Color.Blue);
-                                RightNum++;
-                            }
-                            else
-                            {
-                                //haveFail = true;
-                                //OkOrFail[k] = false;
-                                //MyBoxList[k].ChangeColor(Color.Red);
-                                break;
-                            }
-                        }
-
-                    }
-
-                    MyBoxList[k].Drawbox.Image = bmp;
-                    percentOfSusses = ((double)RightNum / ((double)MyBoxList[k].Width * (double)MyBoxList[k].Height)) * 100.0;
-                    int Getpercent = (int)percentOfSusses;
-                    int BoxPercent = MyBoxList[k].MySPercent;
-
-                    if (BoxNameList.Count > 0)
-                    {
-                        if (BoxNameList[k] != "")
-                        {
-                            CheckPerList.Items.Add(BoxNameList[k] + " : " + Getpercent.ToString() + "%"
-                                + "/ " + BoxPercent.ToString() + "%" + " 一致");
-                        }
-                        else
-                        {
-                            CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
-                                + "/" + BoxPercent.ToString() + "%" + " 一致");
-                        }
-                    }
-                    else
-                    {
-                        CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
-                                + "/" + BoxPercent.ToString() + "%" + " 一致");
-                    }
-                    // GetPercent.Text = Getpercent.ToString();
-                    if (percentOfSusses < BoxPercent)
-                    {
-                        MyBoxList[k].ChangeColor(Color.Red);
-                        haveFail = true;
-                        OkOrFail[k] = false;
-                    }
-
-
-                }
-
-                if (!haveFail)
-                {
-                    if (LoopBtnFlag)
-                    {
-                        Player = new System.Media.SoundPlayer(SussesSound);
-                        Player.Play();
-                    }
-                    this.BackColor = Color.Green;
-                    //DrawCheak();
-                    //Ans.Text = "OK";
-                }
-                else
-                {
-                    Player = new System.Media.SoundPlayer(FailSound);
-                    Player.Play();
-                    this.BackColor = Color.Red;
-                    //Ans.Text = "FAIL";
-                }
-
-                SaveDataOnCsv(OkOrFail);
-            }
-            catch
-            {
-                MessageBox.Show("画像データを選択してください");
-            }
-        }
-
-        /// <summary>
-        ///入力を数字に限定用関数
+        ///入力を数字に限定する関数
         /// </summary>
         private void OnlyInputNum(object sender, KeyPressEventArgs e)
         {
@@ -1318,15 +1326,7 @@ namespace camera
         }
 
         /// <summary>
-        ///ループ
-        /// </summary>
-        private void LoopTimer_Tick(object sender, EventArgs e)
-        {
-            Check();
-        }
-
-        /// <summary>
-        ///RsetText入力したイベント
+        ///色合いの値（赤）入力したイベント
         /// </summary>
         private void RSetText_TextChanged(object sender, EventArgs e)
         {
@@ -1354,7 +1354,7 @@ namespace camera
         }
 
         /// <summary>
-        ///GsetText入力したイベント
+        ///色合いの値（緑）入力したイベント
         /// </summary>
         private void GSetText_TextChanged(object sender, EventArgs e)
         {
@@ -1382,7 +1382,7 @@ namespace camera
         }
 
         /// <summary>
-        ///BsetText入力したイベント
+        ///色合いの値（青）入力したイベント
         /// </summary>
         private void BSetText_TextChanged(object sender, EventArgs e)
         {
@@ -1404,13 +1404,12 @@ namespace camera
                 else
                 {
                     BlueTrack.Value = Convert.ToInt32(text.Text);
-
                 }
             }
         }
 
         /// <summary>
-        ///SetSusscePercent入力したイベント
+        ///成功パーセント設定入力したイベント
         /// </summary>
         private void SetSusscePercent_TextChanged(object sender, EventArgs e)
         {
@@ -1450,6 +1449,9 @@ namespace camera
             }
         }
 
+        /// <summary>
+        /// モードの切り替え
+        /// </summary>
         private void CheckMode_SelectedValueChanged(object sender, EventArgs e)
         {
             MyBoxList[BoxNameCombo.SelectedIndex].MyBoxMode = (MyBox.BoxMode)CheckMode.SelectedIndex;
@@ -1529,89 +1531,9 @@ namespace camera
             }
         }
 
-        private void ChooseCol_Click(object sender, EventArgs e)
-        {
-            StarChooseCol = true;
-        }
-
-        private void CutPic_MouseDown(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                if (StarChooseCol)
-                {
-                    Bitmap bmp = new Bitmap(CutPic.Image);
-                    Color color = bmp.GetPixel(e.X, e.Y);
-                    //RNums.Text = color.R.ToString();
-                    //GNums.Text = color.G.ToString();
-                    //BNums.Text = color.B.ToString();
-
-                    UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-                    MyBoxList[BoxNameCombo.SelectedIndex].UsedCol = CheckCol = color;
-
-                    //Mdown.X = e.X;
-                    //Mdown.Y = e.Y;
-                    StarChooseCol = false;
-                }
-
-                if (StarChooseAutoCol)
-                {
-                    Bitmap bmp = new Bitmap(CutPic.Image);
-                    Color color = bmp.GetPixel(e.X, e.Y);
-                    //RNums.Text = color.R.ToString();
-                    //GNums.Text = color.G.ToString();
-                    //BNums.Text = color.B.ToString();
-
-                    AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-                    MyBoxList[BoxNameCombo.SelectedIndex].UsedCol = CheckCol = color;
-
-                    //Mdown.X = e.X;
-                    //Mdown.Y = e.Y;
-                    StarChooseAutoCol = false;
-                }
-            }
-            catch
-            {
-
-            }
-        }
-
-        private void CutPic_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (StarChooseCol)
-            {
-                Bitmap bmp = new Bitmap(CutPic.Image);
-                Color color = bmp.GetPixel(e.X, e.Y);
-                //RNums.Text = color.R.ToString();
-                //GNums.Text = color.G.ToString();
-                //BNums.Text = color.B.ToString();
-
-                UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-                //Mdown.X = e.X;
-                //Mdown.Y = e.Y;
-                //StarChooseCol = false;
-            }
-
-            if (StarChooseAutoCol)
-            {
-                Bitmap bmp = new Bitmap(CutPic.Image);
-                Color color = bmp.GetPixel(e.X, e.Y);
-                //RNums.Text = color.R.ToString();
-                //GNums.Text = color.G.ToString();
-                //BNums.Text = color.B.ToString();
-
-                AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-                //Mdown.X = e.X;
-                //Mdown.Y = e.Y;
-                //StarChooseCol = false;
-            }
-        }
-
-
+        /// <summary>
+        /// 指定色参照使用するかのチェックボックス
+        /// </summary>
         private void UseThisCol_CheckedChanged(object sender, EventArgs e)
         {
             if (UseThisCol.Checked)
@@ -1625,10 +1547,16 @@ namespace camera
         }
 
         /// <summary>
-        /// 全部無理　新しいく書く必要
+        /// 指定色選択ボタン
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        private void ChooseCol_Click(object sender, EventArgs e)
+        {
+            StarChooseCol = true;
+        }
+
+        /// <summary>
+        /// 自動対象目標設定ボタン
+        /// </summary>
         private void AutoLock_Click(object sender, EventArgs e)
         {
             Bitmap CheackBT = (Bitmap)MasterImage.Clone();
@@ -1652,6 +1580,7 @@ namespace camera
             //}
             int firstLimit = Convert.ToInt32(AutoColNums.Text);
             int IroAi = 50;
+
             for (int i = 0; i < CutPic.Width; i++)
             {
                 for (int j = 0; j < CutPic.Height; j++)
@@ -1721,7 +1650,6 @@ namespace camera
                             w = 0;
                             h = 0;
                         }
-
 
                     }
 
@@ -1821,158 +1749,96 @@ namespace camera
 
         }
 
+        /// <summary>
+        /// 自動対象目標設定色選択ボタン
+        /// </summary>
         private void AutoColSelectBtn_Click(object sender, EventArgs e)
         {
             StarChooseAutoCol = true;
         }
 
-        ///廃棄コード
-        //private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    //try
-        //    //{
-        //    //    Color color = BitmapConverter.ToBitmap(img).GetPixel(e.X, e.Y);
-        //    //    RNums.Text = color.R.ToString();
-        //    //    GNums.Text = color.G.ToString();
-        //    //    BNums.Text = color.B.ToString();
+        /// <summary>
+        /// マウスでマスタ画像から参照したい色を決める
+        /// </summary>
+        private void CutPic_MouseDown(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (StarChooseCol)
+                {
+                    Bitmap bmp = new Bitmap(CutPic.Image);
+                    Color color = bmp.GetPixel(e.X, e.Y);
+                    //RNums.Text = color.R.ToString();
+                    //GNums.Text = color.G.ToString();
+                    //BNums.Text = color.B.ToString();
 
-        //    //    PColor.BackColor = Color.FromArgb(color.R, color.G, color.B);
+                    UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
 
-        //    //    //Mdown.X = e.X;
-        //    //    //Mdown.Y = e.Y;
-        //    //}
-        //    //catch
-        //    //{
+                    MyBoxList[BoxNameCombo.SelectedIndex].UsedCol = CheckCol = color;
 
-        //    //}
-        //}
+                    //Mdown.X = e.X;
+                    //Mdown.Y = e.Y;
+                    StarChooseCol = false;
+                }
 
-        //private void CameraPic_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    //Mup.X = e.X;
-        //    //Mup.Y = e.Y;
+                if (StarChooseAutoCol)
+                {
+                    Bitmap bmp = new Bitmap(CutPic.Image);
+                    Color color = bmp.GetPixel(e.X, e.Y);
+                    //RNums.Text = color.R.ToString();
+                    //GNums.Text = color.G.ToString();
+                    //BNums.Text = color.B.ToString();
 
-        //    //int sizeX = Mup.X - Mdown.X;
-        //    //int sizeY = Mup.Y - Mdown.Y;
+                    AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
 
-        //    //Bitmap bmp = new Bitmap(ChangePic.Width, ChangePic.Height);
-        //    //Graphics g = Graphics.FromImage(bmp);
+                    MyBoxList[BoxNameCombo.SelectedIndex].UsedCol = CheckCol = color;
 
-        //    //Rectangle srcRect = new Rectangle(Mdown.X, Mdown.Y, sizeX, sizeY);
-        //    ////描画する部分の範囲を決定する。ここでは、位置(0,0)、大きさ100x100で描画する
-        //    //Rectangle desRect = new Rectangle(0, 0, ChangePic.Width, ChangePic.Height);
-        //    ////画像の一部を描画する
-        //    //g.DrawImage(img.ToBitmap(), desRect, srcRect, GraphicsUnit.Pixel);
+                    //Mdown.X = e.X;
+                    //Mdown.Y = e.Y;
+                    StarChooseAutoCol = false;
+                }
+            }
+            catch
+            {
 
+            }
+        }
 
-        //    ////Graphicsオブジェクトのリソースを解放する
-        //    //g.Dispose();
+        /// <summary>
+        /// マウスでマスタ画像から参照したい色をみる
+        /// </summary>
+        private void CutPic_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (StarChooseCol)
+            {
+                Bitmap bmp = new Bitmap(CutPic.Image);
+                Color color = bmp.GetPixel(e.X, e.Y);
+                //RNums.Text = color.R.ToString();
+                //GNums.Text = color.G.ToString();
+                //BNums.Text = color.B.ToString();
 
-        //    ////PictureBox1に表示する
-        //    //ChangePic.Image = bmp;
-        //}
+                UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
 
-        //private void ChangePic_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    //try
-        //    //{
-        //    //    Color color = BitmapConverter.ToBitmap(img).GetPixel(e.X, e.Y);
-        //    //    RNums.Text = color.R.ToString();
-        //    //    GNums.Text = color.G.ToString();
-        //    //    BNums.Text = color.B.ToString();
+                //Mdown.X = e.X;
+                //Mdown.Y = e.Y;
+                //StarChooseCol = false;
+            }
 
-        //    //    PColor.BackColor = Color.FromArgb(color.R, color.G, color.B);
-        //    //}
-        //    //catch
-        //    //{
+            if (StarChooseAutoCol)
+            {
+                Bitmap bmp = new Bitmap(CutPic.Image);
+                Color color = bmp.GetPixel(e.X, e.Y);
+                //RNums.Text = color.R.ToString();
+                //GNums.Text = color.G.ToString();
+                //BNums.Text = color.B.ToString();
 
-        //    //}
-        //}
+                AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
 
-        //private void CutPic_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    //try
-        //    //{
-        //    //    Bitmap bmp = new Bitmap(CutPic.Image);
-        //    //    Color color = bmp.GetPixel(e.X, e.Y);
-        //    //    RNums.Text = color.R.ToString();
-        //    //    GNums.Text = color.G.ToString();
-        //    //    BNums.Text = color.B.ToString();
-
-        //    //    PColor.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-        //    //    Mdown.X = e.X;
-        //    //    Mdown.Y = e.Y;
-        //    //}
-        //    //catch
-        //    //{
-
-        //    //}
-        //}
-
-        //private void CutPic_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    //Mup.X = e.X;
-        //    //Mup.Y = e.Y;
-
-        //    //int GetSizeX = Mup.X - Mdown.X;
-        //    //int GetSizeY = Mup.Y - Mdown.Y;
-
-        //    //Bitmap bmp = new Bitmap(ChangePic.Width, ChangePic.Height);
-        //    //Graphics g = Graphics.FromImage(bmp);
-
-        //    //Rectangle srcRect = new Rectangle(Mdown.X, Mdown.Y, GetSizeX, GetSizeY);
-        //    ////描画する部分の範囲を決定する。ここでは、位置(0,0)、大きさ100x100で描画する
-        //    //Rectangle desRect = new Rectangle(0, 0, ChangePic.Width, ChangePic.Height);
-        //    ////画像の一部を描画する
-        //    //g.DrawImage(CutPic.Image, desRect, srcRect, GraphicsUnit.Pixel);
-
-
-        //    ////Graphicsオブジェクトのリソースを解放する
-        //    //g.Dispose();
-
-
-        //    ////PictureBox1に表示する
-        //    //ChangePic.Image = bmp;
-
-        //    ////PaintBox(PE, Mup.X, Mup.Y, GetSizeX, GetSizeY);
-        //    ////GetCutPic();
-
-        //    //Bitmap bmpC = new Bitmap(CutPic.Width, CutPic.Height);
-        //    //Graphics gc = Graphics.FromImage(bmpC);
-
-        //    //Rectangle CutRect = new Rectangle(0, 0, CutPic.Width, CutPic.Height);
-        //    //gc.DrawImage(CutPic.Image, CutRect, CutRect, GraphicsUnit.Pixel);
-        //    //gc.DrawRectangle(Pens.Blue, Mdown.X - 1, Mdown.Y - 1, GetSizeX + 1, GetSizeY + 1);
-        //    //CutPic.Image = bmpC;
-
-        //    //Rectangle boxRect = new Rectangle(Mdown.X, Mdown.Y, GetSizeX, GetSizeY);
-        //    //BoxList.Add(boxRect);
-
-
-
-        //    //gc.Dispose();
-        //}
-        //private void GetCutPic()
-        //{
-        //    //Bitmap bmp = new Bitmap(CutPic.Width, CutPic.Height);
-
-        //    //Graphics g = Graphics.FromImage(bmp);
-
-        //    //Rectangle srcRect = new Rectangle(0, 0, img.Width, img.Width);
-        //    ////描画する部分の範囲を決定する。ここでは、位置(0,0)、大きさ100x100で描画する
-        //    //Rectangle desRect = new Rectangle(0, 0, img.Width, img.Width);
-        //    ////画像の一部を描画する
-        //    //g.DrawImage(img.ToBitmap(), desRect, srcRect, GraphicsUnit.Pixel);
-
-        //    ////Graphicsオブジェクトのリソースを解放する
-        //    //g.Dispose();
-
-        //    ////PictureBox1に表示する
-        //    //CutPic.Image = bmp;
-
-
-        //}
+                //Mdown.X = e.X;
+                //Mdown.Y = e.Y;
+                //StarChooseCol = false;
+            }
+        }
 
     }
 }
