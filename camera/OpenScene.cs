@@ -32,8 +32,8 @@ namespace camera
         //Webカメラを起動
         private void StartWebCamera_Click(object sender, EventArgs e)
         {
-            if (CameraNames.Count > 0)
-            {
+            //if (CameraNames.Count > 0)
+            //{
                 MainScene main = new MainScene();
                 main.Owner = this;
                 main.Cmode = MainScene.CamMode.WebCam;
@@ -42,11 +42,11 @@ namespace camera
                        
                 //this.Close();
                 this.Visible = false;
-            }
-            else
-            {
-                MessageBox.Show("使用できるカメラは0です");
-            }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("使用できるカメラは0です");
+            //}
         }
 
         //ネットワークカメラを起動

@@ -87,6 +87,8 @@ namespace camera
             this.SaveBoxData = new System.Windows.Forms.Button();
             this.AutoLock = new System.Windows.Forms.Button();
             this.CheckLockNum = new System.Windows.Forms.TextBox();
+            this.AutoColSelectBtn = new System.Windows.Forms.Button();
+            this.AutoCol = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChangePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
@@ -96,6 +98,7 @@ namespace camera
             this.panel1.SuspendLayout();
             this.BoxSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UseCol)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AutoCol)).BeginInit();
             this.SuspendLayout();
             // 
             // CameraPic
@@ -339,7 +342,7 @@ namespace camera
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(664, 536);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.Size = new System.Drawing.Size(58, 12);
             this.label1.TabIndex = 277;
             this.label1.Text = "画像サイズ";
             // 
@@ -397,7 +400,7 @@ namespace camera
             this.BoxNameListlabel.AutoSize = true;
             this.BoxNameListlabel.Location = new System.Drawing.Point(745, 677);
             this.BoxNameListlabel.Name = "BoxNameListlabel";
-            this.BoxNameListlabel.Size = new System.Drawing.Size(77, 12);
+            this.BoxNameListlabel.Size = new System.Drawing.Size(65, 12);
             this.BoxNameListlabel.TabIndex = 284;
             this.BoxNameListlabel.Text = "対象名リスト";
             // 
@@ -422,7 +425,7 @@ namespace camera
             this.MinText.Location = new System.Drawing.Point(719, 12);
             this.MinText.MaxLength = 2;
             this.MinText.Name = "MinText";
-            this.MinText.Size = new System.Drawing.Size(30, 22);
+            this.MinText.Size = new System.Drawing.Size(30, 19);
             this.MinText.TabIndex = 286;
             this.MinText.Text = "0";
             this.MinText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
@@ -432,7 +435,7 @@ namespace camera
             this.SecText.Location = new System.Drawing.Point(771, 12);
             this.SecText.MaxLength = 2;
             this.SecText.Name = "SecText";
-            this.SecText.Size = new System.Drawing.Size(32, 22);
+            this.SecText.Size = new System.Drawing.Size(32, 19);
             this.SecText.TabIndex = 287;
             this.SecText.Text = "0";
             this.SecText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
@@ -442,7 +445,7 @@ namespace camera
             this.HourText.Location = new System.Drawing.Point(667, 12);
             this.HourText.MaxLength = 2;
             this.HourText.Name = "HourText";
-            this.HourText.Size = new System.Drawing.Size(29, 22);
+            this.HourText.Size = new System.Drawing.Size(29, 19);
             this.HourText.TabIndex = 288;
             this.HourText.Text = "0";
             this.HourText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
@@ -489,7 +492,7 @@ namespace camera
             this.AllPercentShow.AutoSize = true;
             this.AllPercentShow.Location = new System.Drawing.Point(667, 97);
             this.AllPercentShow.Name = "AllPercentShow";
-            this.AllPercentShow.Size = new System.Drawing.Size(113, 12);
+            this.AllPercentShow.Size = new System.Drawing.Size(100, 12);
             this.AllPercentShow.TabIndex = 293;
             this.AllPercentShow.Text = "各自結果パーセント";
             // 
@@ -540,7 +543,7 @@ namespace camera
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(5, 193);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 12);
+            this.label2.Size = new System.Drawing.Size(100, 12);
             this.label2.TabIndex = 298;
             this.label2.Text = "合格パーセント設定";
             // 
@@ -657,7 +660,7 @@ namespace camera
             // 
             // AutoLock
             // 
-            this.AutoLock.Location = new System.Drawing.Point(837, 718);
+            this.AutoLock.Location = new System.Drawing.Point(840, 736);
             this.AutoLock.Name = "AutoLock";
             this.AutoLock.Size = new System.Drawing.Size(94, 23);
             this.AutoLock.TabIndex = 303;
@@ -667,12 +670,31 @@ namespace camera
             // 
             // CheckLockNum
             // 
-            this.CheckLockNum.Location = new System.Drawing.Point(802, 720);
+            this.CheckLockNum.Location = new System.Drawing.Point(805, 738);
             this.CheckLockNum.Name = "CheckLockNum";
-            this.CheckLockNum.Size = new System.Drawing.Size(31, 22);
+            this.CheckLockNum.Size = new System.Drawing.Size(31, 19);
             this.CheckLockNum.TabIndex = 304;
             this.CheckLockNum.Text = "0";
             this.CheckLockNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
+            // 
+            // AutoColSelectBtn
+            // 
+            this.AutoColSelectBtn.Location = new System.Drawing.Point(850, 707);
+            this.AutoColSelectBtn.Name = "AutoColSelectBtn";
+            this.AutoColSelectBtn.Size = new System.Drawing.Size(56, 23);
+            this.AutoColSelectBtn.TabIndex = 307;
+            this.AutoColSelectBtn.Text = "色選択";
+            this.AutoColSelectBtn.UseVisualStyleBackColor = true;
+            this.AutoColSelectBtn.Click += new System.EventHandler(this.AutoColSelectBtn_Click);
+            // 
+            // AutoCol
+            // 
+            this.AutoCol.BackColor = System.Drawing.Color.Red;
+            this.AutoCol.Location = new System.Drawing.Point(912, 709);
+            this.AutoCol.Name = "AutoCol";
+            this.AutoCol.Size = new System.Drawing.Size(21, 18);
+            this.AutoCol.TabIndex = 306;
+            this.AutoCol.TabStop = false;
             // 
             // MainScene
             // 
@@ -680,6 +702,8 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.AutoColSelectBtn);
+            this.Controls.Add(this.AutoCol);
             this.Controls.Add(this.CheckLockNum);
             this.Controls.Add(this.AutoLock);
             this.Controls.Add(this.SaveBoxData);
@@ -724,6 +748,7 @@ namespace camera
             this.BoxSetting.ResumeLayout(false);
             this.BoxSetting.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UseCol)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AutoCol)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -787,6 +812,8 @@ namespace camera
         private System.Windows.Forms.Button ChooseCol;
         private System.Windows.Forms.Button AutoLock;
         private System.Windows.Forms.TextBox CheckLockNum;
+        private System.Windows.Forms.Button AutoColSelectBtn;
+        private System.Windows.Forms.PictureBox AutoCol;
     }
 }
 
