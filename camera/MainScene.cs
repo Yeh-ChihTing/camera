@@ -1668,23 +1668,7 @@ namespace camera
                         CB >= B - firstLimit && CB <= B + firstLimit)
                         {
 
-                            for (int l = j; l < CutPic.Height; l++)
-                            {
-                                int lR = CheackBT.GetPixel(i, l).R;
-                                int lG = CheackBT.GetPixel(i, l).G;
-                                int lB = CheackBT.GetPixel(i, l).B;
-
-                                if (lR >= R - 30 && lR <= R + 30 &&
-                                    lG >= G - 30 && lG <= G + 30 &&
-                                    lB >= B - 50 && lB <= B + 50)
-                                {
-                                    h++;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
+                    
 
                             for (int k = i; k < CutPic.Width; k++)
                             {
@@ -1697,6 +1681,24 @@ namespace camera
                                     KB >= B - 50 && KB <= B + 50)
                                 {
                                     w++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            for (int l = j; l < CutPic.Height; l++)
+                            {
+                                int lR = CheackBT.GetPixel(i, l).R;
+                                int lG = CheackBT.GetPixel(i, l).G;
+                                int lB = CheackBT.GetPixel(i, l).B;
+
+                                if (lR >= R - 30 && lR <= R + 30 &&
+                                    lG >= G - 30 && lG <= G + 30 &&
+                                    lB >= B - 50 && lB <= B + 50)
+                                {
+                                    h++;
                                 }
                                 else
                                 {
@@ -1734,23 +1736,7 @@ namespace camera
 
                             //if (!rectList[r].Contains(i, j))
                             //{
-                            for (int l = j; l < CutPic.Height; l++)
-                            {
-                                int lR = CheackBT.GetPixel(i, l).R;
-                                int lG = CheackBT.GetPixel(i, l).G;
-                                int lB = CheackBT.GetPixel(i, l).B;
-
-                                if (lR >= R - 30 && lR <= R + 30 &&
-                                    lG >= G - 30 && lG <= G + 30 &&
-                                    lB >= B - 50 && lB <= B + 50)
-                                {
-                                    h++;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
+                 
 
                             for (int k = i; k < CutPic.Width; k++)
                             {
@@ -1770,11 +1756,32 @@ namespace camera
                                 }
                             }
 
+                            for (int l = j; l < CutPic.Height; l++)
+                            {
+                                int lR = CheackBT.GetPixel(i, l).R;
+                                int lG = CheackBT.GetPixel(i, l).G;
+                                int lB = CheackBT.GetPixel(i, l).B;
+
+                                if (lR >= R - 30 && lR <= R + 30 &&
+                                    lG >= G - 30 && lG <= G + 30 &&
+                                    lB >= B - 50 && lB <= B + 50)
+                                {
+                                    h++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
                             bool canbuild = true;
 
                             for (int r = 0; r < rectList.Count; r++)
                             {
-                                if (rectList[r].Contains((i + (i + w)) / 2, (j + (j + h)) / 2))
+                                if (rectList[r].Contains((i + (i + w)) / 2, (j + (j + h)) / 2) ||
+                                    rectList[r].Contains(i + 3, j - 3)||
+                                    rectList[r].Contains(i + 3, j + 3) ||
+                                    rectList[r].Contains(i - 3, j - 3) ||
+                                    rectList[r].Contains(i - 3, j + 3))
                                 {
                                     w = 0;
                                     h = 0;

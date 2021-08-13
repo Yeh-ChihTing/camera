@@ -525,9 +525,9 @@ namespace camera
                 MyNumber.Font = new Font(MyNumber.Font.FontFamily, 1);
             }
 
-            string a ="Pw:"+this.Parent.Width+"PH:"+this.Parent.Height+ 
-                "       Width:" + this.Width + "Height:" + this.Height;
-            this.Parent.Parent.Parent.Text = a;
+            //string a ="Pw:"+this.Parent.Width+"PH:"+this.Parent.Height+ 
+            //    "       Width:" + this.Width + "Height:" + this.Height;
+            //this.Parent.Parent.Parent.Text = a;
 
         }
 

@@ -141,6 +141,7 @@
     </Compile>
     <EmbeddedResource Include="MainScene.resx">
       <DependentUpon>MainScene.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="OpenScene.resx">
       <DependentUpon>OpenScene.cs</DependentUpon>
@@ -160,7 +161,6 @@
     <EmbeddedResource Include="SettingBoxName.resx">
       <DependentUpon>SettingBoxName.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="camera_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

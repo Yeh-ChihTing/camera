@@ -90,9 +90,9 @@ namespace camera
             this.AutoColSelectBtn = new System.Windows.Forms.Button();
             this.AutoCol = new System.Windows.Forms.PictureBox();
             this.AutoGroup = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.AutoColNums = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChangePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
@@ -214,7 +214,7 @@ namespace camera
             // 
             // GetPicBtn
             // 
-            this.GetPicBtn.Location = new System.Drawing.Point(663, 505);
+            this.GetPicBtn.Location = new System.Drawing.Point(663, 484);
             this.GetPicBtn.Name = "GetPicBtn";
             this.GetPicBtn.Size = new System.Drawing.Size(75, 23);
             this.GetPicBtn.TabIndex = 262;
@@ -290,7 +290,7 @@ namespace camera
             // 
             // DelectBoxBtn
             // 
-            this.DelectBoxBtn.Location = new System.Drawing.Point(859, 561);
+            this.DelectBoxBtn.Location = new System.Drawing.Point(858, 538);
             this.DelectBoxBtn.Name = "DelectBoxBtn";
             this.DelectBoxBtn.Size = new System.Drawing.Size(80, 45);
             this.DelectBoxBtn.TabIndex = 265;
@@ -300,7 +300,7 @@ namespace camera
             // 
             // SavePicBtn
             // 
-            this.SavePicBtn.Location = new System.Drawing.Point(762, 505);
+            this.SavePicBtn.Location = new System.Drawing.Point(760, 484);
             this.SavePicBtn.Name = "SavePicBtn";
             this.SavePicBtn.Size = new System.Drawing.Size(75, 23);
             this.SavePicBtn.TabIndex = 266;
@@ -325,7 +325,7 @@ namespace camera
             // 
             // AddBoxBtn
             // 
-            this.AddBoxBtn.Location = new System.Drawing.Point(859, 510);
+            this.AddBoxBtn.Location = new System.Drawing.Point(859, 484);
             this.AddBoxBtn.Name = "AddBoxBtn";
             this.AddBoxBtn.Size = new System.Drawing.Size(80, 45);
             this.AddBoxBtn.TabIndex = 268;
@@ -380,7 +380,7 @@ namespace camera
             // 
             // SettingNameBtn
             // 
-            this.SettingNameBtn.Location = new System.Drawing.Point(659, 628);
+            this.SettingNameBtn.Location = new System.Drawing.Point(659, 605);
             this.SettingNameBtn.Name = "SettingNameBtn";
             this.SettingNameBtn.Size = new System.Drawing.Size(75, 23);
             this.SettingNameBtn.TabIndex = 282;
@@ -394,7 +394,7 @@ namespace camera
             this.BoxNameCombo.FormattingEnabled = true;
             this.BoxNameCombo.Items.AddRange(new object[] {
             "1"});
-            this.BoxNameCombo.Location = new System.Drawing.Point(823, 628);
+            this.BoxNameCombo.Location = new System.Drawing.Point(823, 605);
             this.BoxNameCombo.Name = "BoxNameCombo";
             this.BoxNameCombo.Size = new System.Drawing.Size(121, 20);
             this.BoxNameCombo.TabIndex = 283;
@@ -403,7 +403,7 @@ namespace camera
             // BoxNameListlabel
             // 
             this.BoxNameListlabel.AutoSize = true;
-            this.BoxNameListlabel.Location = new System.Drawing.Point(740, 634);
+            this.BoxNameListlabel.Location = new System.Drawing.Point(740, 611);
             this.BoxNameListlabel.Name = "BoxNameListlabel";
             this.BoxNameListlabel.Size = new System.Drawing.Size(65, 12);
             this.BoxNameListlabel.TabIndex = 284;
@@ -546,7 +546,7 @@ namespace camera
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 193);
+            this.label2.Location = new System.Drawing.Point(3, 178);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 12);
             this.label2.TabIndex = 298;
@@ -555,7 +555,7 @@ namespace camera
             // SetSusscePercent
             // 
             this.SetSusscePercent.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.SetSusscePercent.Location = new System.Drawing.Point(10, 208);
+            this.SetSusscePercent.Location = new System.Drawing.Point(5, 196);
             this.SetSusscePercent.MaxLength = 3;
             this.SetSusscePercent.Name = "SetSusscePercent";
             this.SetSusscePercent.Size = new System.Drawing.Size(32, 23);
@@ -604,14 +604,14 @@ namespace camera
             this.BoxSetting.Controls.Add(this.GNums);
             this.BoxSetting.Location = new System.Drawing.Point(664, 250);
             this.BoxSetting.Name = "BoxSetting";
-            this.BoxSetting.Size = new System.Drawing.Size(277, 245);
+            this.BoxSetting.Size = new System.Drawing.Size(277, 227);
             this.BoxSetting.TabIndex = 301;
             this.BoxSetting.TabStop = false;
             this.BoxSetting.Text = "groupBox1";
             // 
             // ChooseCol
             // 
-            this.ChooseCol.Location = new System.Drawing.Point(174, 219);
+            this.ChooseCol.Location = new System.Drawing.Point(191, 188);
             this.ChooseCol.Name = "ChooseCol";
             this.ChooseCol.Size = new System.Drawing.Size(56, 23);
             this.ChooseCol.TabIndex = 305;
@@ -622,7 +622,7 @@ namespace camera
             // UseCol
             // 
             this.UseCol.BackColor = System.Drawing.Color.Red;
-            this.UseCol.Location = new System.Drawing.Point(236, 221);
+            this.UseCol.Location = new System.Drawing.Point(253, 190);
             this.UseCol.Name = "UseCol";
             this.UseCol.Size = new System.Drawing.Size(21, 18);
             this.UseCol.TabIndex = 304;
@@ -631,7 +631,7 @@ namespace camera
             // UseThisCol
             // 
             this.UseThisCol.AutoSize = true;
-            this.UseThisCol.Location = new System.Drawing.Point(109, 223);
+            this.UseThisCol.Location = new System.Drawing.Point(126, 192);
             this.UseThisCol.Name = "UseThisCol";
             this.UseThisCol.Size = new System.Drawing.Size(60, 16);
             this.UseThisCol.TabIndex = 303;
@@ -647,7 +647,7 @@ namespace camera
             "サーモテープ",
             "ランプ点灯モード",
             "ランプ消灯モード"});
-            this.CheckMode.Location = new System.Drawing.Point(134, 190);
+            this.CheckMode.Location = new System.Drawing.Point(96, 12);
             this.CheckMode.Name = "CheckMode";
             this.CheckMode.Size = new System.Drawing.Size(134, 20);
             this.CheckMode.TabIndex = 302;
@@ -655,7 +655,7 @@ namespace camera
             // 
             // SaveBoxData
             // 
-            this.SaveBoxData.Location = new System.Drawing.Point(663, 677);
+            this.SaveBoxData.Location = new System.Drawing.Point(663, 665);
             this.SaveBoxData.Name = "SaveBoxData";
             this.SaveBoxData.Size = new System.Drawing.Size(101, 48);
             this.SaveBoxData.TabIndex = 302;
@@ -710,21 +710,12 @@ namespace camera
             this.AutoGroup.Controls.Add(this.AutoLock);
             this.AutoGroup.Controls.Add(this.CheckLockNum);
             this.AutoGroup.Controls.Add(this.AutoCol);
-            this.AutoGroup.Location = new System.Drawing.Point(775, 659);
+            this.AutoGroup.Location = new System.Drawing.Point(775, 645);
             this.AutoGroup.Name = "AutoGroup";
-            this.AutoGroup.Size = new System.Drawing.Size(172, 108);
+            this.AutoGroup.Size = new System.Drawing.Size(172, 80);
             this.AutoGroup.TabIndex = 308;
             this.AutoGroup.TabStop = false;
             this.AutoGroup.Text = "自動対象設定用";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 50);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 12);
-            this.label3.TabIndex = 308;
-            this.label3.Text = "総数";
             // 
             // label4
             // 
@@ -743,6 +734,15 @@ namespace camera
             this.AutoColNums.TabIndex = 309;
             this.AutoColNums.Text = "5";
             this.AutoColNums.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 50);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 308;
+            this.label3.Text = "総数";
             // 
             // MainScene
             // 
