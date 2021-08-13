@@ -1651,7 +1651,7 @@ namespace camera
             //    CutPic.Controls.RemoveAt(0);
             //}
             int firstLimit = Convert.ToInt32(AutoColNums.Text);
-            int IroAi = 40;
+            int IroAi = 50;
             for (int i = 0; i < CutPic.Width; i++)
             {
                 for (int j = 0; j < CutPic.Height; j++)
