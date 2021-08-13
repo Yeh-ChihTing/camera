@@ -605,6 +605,8 @@ namespace camera
 
                         BoxNameCombo.SelectedIndex = 0;
                     }
+                    //変更の時対象ボックスを一つに戻るようにしたい
+                    //また追加する必要です
 
                     //ChangePic.Image = MasterImage;
                 }
