@@ -1644,7 +1644,7 @@ namespace camera
             MyBoxList.Clear();
             CutPic.Controls.Clear();
             //対象名リセット
-
+            BoxNameList.Clear();
 
             //for (int i = 0; i < CutPic.Controls.Count; i++)
             //{
@@ -1710,6 +1710,7 @@ namespace camera
                             box.MyNumber.Text = BoxNum.ToString(); ;
                             MyBoxList.Add(box);
                             BoxNameCombo.Items.Add(BoxNum.ToString());
+                            BoxNameList.Add(BoxNum.ToString());
                             Rectangle angle = new Rectangle(i, j, w, h);
                             rectList.Add(angle);
                             MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
@@ -1791,6 +1792,7 @@ namespace camera
                                 box.MyNumber.Text = BoxNum.ToString(); ;
                                 MyBoxList.Add(box);
                                 BoxNameCombo.Items.Add(BoxNum.ToString());
+                                BoxNameList.Add(BoxNum.ToString());
                                 Rectangle angle = new Rectangle(i, j, w, h);
                                 rectList.Add(angle);
                                 MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
