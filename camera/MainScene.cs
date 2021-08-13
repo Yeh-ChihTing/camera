@@ -135,8 +135,17 @@ namespace camera
         /// </summary>
         private string SaveDataname;
 
+        /// <summary>
+        ///指定色検査用色選択ＦＬＡＧ
+        /// </summary>
         private bool StarChooseCol = false;
+        /// <summary>
+        ///自動対象用色選択ＦＬＡＧ
+        /// </summary>
         private bool StarChooseAutoCol = false;
+        /// <summary>
+        ///検査用色
+        /// </summary>
         private Color CheckCol;
 
         /// <summary>
@@ -1839,6 +1848,5 @@ namespace camera
                 //StarChooseCol = false;
             }
         }
-
     }
 }
