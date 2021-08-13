@@ -65,7 +65,7 @@ namespace camera
 
         public bool BoxChecked = false;
 
-        public Color UsedCol;
+        public Color UsedCol=Color.FromArgb(255,0,0);
 
         /// <summary>
         /// private

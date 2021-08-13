@@ -611,7 +611,7 @@ namespace camera
             // 
             // ChooseCol
             // 
-            this.ChooseCol.Location = new System.Drawing.Point(191, 188);
+            this.ChooseCol.Location = new System.Drawing.Point(186, 196);
             this.ChooseCol.Name = "ChooseCol";
             this.ChooseCol.Size = new System.Drawing.Size(56, 23);
             this.ChooseCol.TabIndex = 305;
@@ -622,7 +622,7 @@ namespace camera
             // UseCol
             // 
             this.UseCol.BackColor = System.Drawing.Color.Red;
-            this.UseCol.Location = new System.Drawing.Point(253, 190);
+            this.UseCol.Location = new System.Drawing.Point(248, 198);
             this.UseCol.Name = "UseCol";
             this.UseCol.Size = new System.Drawing.Size(21, 18);
             this.UseCol.TabIndex = 304;
@@ -631,7 +631,7 @@ namespace camera
             // UseThisCol
             // 
             this.UseThisCol.AutoSize = true;
-            this.UseThisCol.Location = new System.Drawing.Point(126, 192);
+            this.UseThisCol.Location = new System.Drawing.Point(121, 200);
             this.UseThisCol.Name = "UseThisCol";
             this.UseThisCol.Size = new System.Drawing.Size(60, 16);
             this.UseThisCol.TabIndex = 303;

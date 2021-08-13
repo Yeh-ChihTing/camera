@@ -1651,7 +1651,7 @@ namespace camera
             //    CutPic.Controls.RemoveAt(0);
             //}
             int firstLimit = Convert.ToInt32(AutoColNums.Text);
-
+            int IroAi = 40;
             for (int i = 0; i < CutPic.Width; i++)
             {
                 for (int j = 0; j < CutPic.Height; j++)
@@ -1668,17 +1668,15 @@ namespace camera
                         CB >= B - firstLimit && CB <= B + firstLimit)
                         {
 
-                    
-
                             for (int k = i; k < CutPic.Width; k++)
                             {
                                 int KR = CheackBT.GetPixel(k, j).R;
                                 int KG = CheackBT.GetPixel(k, j).G;
                                 int KB = CheackBT.GetPixel(k, j).B;
 
-                                if (KR >= R - 30 && KR <= R + 30 &&
-                                    KG >= G - 30 && KG <= G + 30 &&
-                                    KB >= B - 50 && KB <= B + 50)
+                                if (KR >= R - IroAi && KR <= R + IroAi &&
+                                    KG >= G - IroAi && KG <= G + IroAi &&
+                                    KB >= B - IroAi && KB <= B + IroAi)
                                 {
                                     w++;
                                 }
@@ -1694,9 +1692,9 @@ namespace camera
                                 int lG = CheackBT.GetPixel(i, l).G;
                                 int lB = CheackBT.GetPixel(i, l).B;
 
-                                if (lR >= R - 30 && lR <= R + 30 &&
-                                    lG >= G - 30 && lG <= G + 30 &&
-                                    lB >= B - 50 && lB <= B + 50)
+                                if (lR >= R - IroAi && lR <= R + IroAi &&
+                                    lG >= G - IroAi && lG <= G + IroAi &&
+                                    lB >= B - IroAi && lB <= B + IroAi)
                                 {
                                     h++;
                                 }
@@ -1705,7 +1703,7 @@ namespace camera
                                     break;
                                 }
                             }
-
+                
                             BoxNum++;
                             MyBox box = new MyBox();
                             CutPic.Controls.Add(box);
@@ -1736,7 +1734,7 @@ namespace camera
 
                             //if (!rectList[r].Contains(i, j))
                             //{
-                 
+
 
                             for (int k = i; k < CutPic.Width; k++)
                             {
@@ -1744,9 +1742,9 @@ namespace camera
                                 int KG = CheackBT.GetPixel(k, j).G;
                                 int KB = CheackBT.GetPixel(k, j).B;
 
-                                if (KR >= R - 30 && KR <= R + 30 &&
-                                    KG >= G - 30 && KG <= G + 30 &&
-                                    KB >= B - 50 && KB <= B + 50)
+                                if (KR >= R - IroAi && KR <= R + IroAi &&
+                                    KG >= G - IroAi && KG <= G + IroAi &&
+                                    KB >= B - IroAi && KB <= B + IroAi)
                                 {
                                     w++;
                                 }
@@ -1762,9 +1760,9 @@ namespace camera
                                 int lG = CheackBT.GetPixel(i, l).G;
                                 int lB = CheackBT.GetPixel(i, l).B;
 
-                                if (lR >= R - 30 && lR <= R + 30 &&
-                                    lG >= G - 30 && lG <= G + 30 &&
-                                    lB >= B - 50 && lB <= B + 50)
+                                if (lR >= R - IroAi && lR <= R + IroAi &&
+                                    lG >= G - IroAi && lG <= G + IroAi &&
+                                    lB >= B - IroAi && lB <= B + IroAi)
                                 {
                                     h++;
                                 }
@@ -1778,10 +1776,10 @@ namespace camera
                             for (int r = 0; r < rectList.Count; r++)
                             {
                                 if (rectList[r].Contains((i + (i + w)) / 2, (j + (j + h)) / 2) ||
-                                    rectList[r].Contains(i + 3, j - 3)||
-                                    rectList[r].Contains(i + 3, j + 3) ||
-                                    rectList[r].Contains(i - 3, j - 3) ||
-                                    rectList[r].Contains(i - 3, j + 3))
+                                    rectList[r].Contains(i + 5, j - 5) ||
+                                    rectList[r].Contains(i + 5, j + 5) ||
+                                    rectList[r].Contains(i - 5, j - 5) ||
+                                    rectList[r].Contains(i - 5, j + 5))
                                 {
                                     w = 0;
                                     h = 0;
@@ -1792,7 +1790,7 @@ namespace camera
 
                             if (canbuild)
                             {
-
+                             
                                 BoxNum++;
                                 MyBox box = new MyBox();
                                 CutPic.Controls.Add(box);
@@ -1820,6 +1818,7 @@ namespace camera
             }
 
             BoxNameCombo.SelectedIndex = 0;
+
         }
 
         private void AutoColSelectBtn_Click(object sender, EventArgs e)
