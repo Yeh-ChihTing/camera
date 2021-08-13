@@ -1643,11 +1643,14 @@ namespace camera
             BoxNameCombo.Items.Clear();
             MyBoxList.Clear();
             CutPic.Controls.Clear();
+            //対象名リセット
+
+
             //for (int i = 0; i < CutPic.Controls.Count; i++)
             //{
             //    CutPic.Controls.RemoveAt(0);
             //}
-
+            int firstLimit = Convert.ToInt32(AutoColNums.Text);
 
             for (int i = 0; i < CutPic.Width; i++)
             {
@@ -1660,9 +1663,9 @@ namespace camera
 
                     if (boxnum == 0)
                     {
-                        if (CR >= R - 5 && CR <= R + 5 &&
-                        CG >= G - 5 && CG <= G + 5 &&
-                        CB >= B - 5 && CB <= B + 5)
+                        if (CR >= R - firstLimit && CR <= R + firstLimit &&
+                        CG >= G - firstLimit && CG <= G + firstLimit &&
+                        CB >= B - firstLimit && CB <= B + firstLimit)
                         {
 
                             for (int l = j; l < CutPic.Height; l++)
@@ -1701,8 +1704,6 @@ namespace camera
                                 }
                             }
 
-                            
-
                             BoxNum++;
                             MyBox box = new MyBox();
                             CutPic.Controls.Add(box);
@@ -1715,6 +1716,9 @@ namespace camera
                             MyBoxList[boxnum].Width = w;
                             MyBoxList[boxnum].Height = h;
                             boxnum++;
+
+                            w = 0;
+                            h = 0;
                         }
 
 
@@ -1722,82 +1726,87 @@ namespace camera
 
                     else if (boxnum < Boxlimit && boxnum != 0)
                     {
-                        if (CR >= R - 5 && CR <= R + 5 &&
-                            CG >= G - 5 && CG <= G + 5 &&
-                            CB >= B - 5 && CB <= B + 5)
+                        if (CR >= R - firstLimit && CR <= R + firstLimit &&
+                            CG >= G - firstLimit && CG <= G + firstLimit &&
+                            CB >= B - firstLimit && CB <= B + firstLimit)
                         {
-                            for (int r = 0; r < rectList.Count; r++)
+
+                            //if (!rectList[r].Contains(i, j))
+                            //{
+                            for (int l = j; l < CutPic.Height; l++)
                             {
-                                if (!rectList[r].Contains(i, j))
+                                int lR = CheackBT.GetPixel(i, l).R;
+                                int lG = CheackBT.GetPixel(i, l).G;
+                                int lB = CheackBT.GetPixel(i, l).B;
+
+                                if (lR >= R - 30 && lR <= R + 30 &&
+                                    lG >= G - 30 && lG <= G + 30 &&
+                                    lB >= B - 50 && lB <= B + 50)
                                 {
-                                    for (int l = j; l < CutPic.Height; l++)
-                                    {
-                                        int lR = CheackBT.GetPixel(i, l).R;
-                                        int lG = CheackBT.GetPixel(i, l).G;
-                                        int lB = CheackBT.GetPixel(i, l).B;
-
-                                        if (lR >= R - 30 && lR <= R + 30 &&
-                                            lG >= G - 30 && lG <= G + 30 &&
-                                            lB >= B - 50 && lB <= B + 50)
-                                        {
-                                            h++;
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
-
-                                    for (int k = i; k < CutPic.Width; k++)
-                                    {
-                                        int KR = CheackBT.GetPixel(k, j).R;
-                                        int KG = CheackBT.GetPixel(k, j).G;
-                                        int KB = CheackBT.GetPixel(k, j).B;
-
-                                        if (KR >= R - 30 && KR <= R + 30 &&
-                                            KG >= G - 30 && KG <= G + 30 &&
-                                            KB >= B - 50 && KB <= B + 50)
-                                        {
-                                            w++;
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
-
-
-                                    if (rectList[r].Contains((i+(i + w)) / 2, (j+(j + h)) / 2))
-                                    {
-                                        w = 0;
-                                        h = 0;
-                                        break;
-                                    }
-                                    else
-                                    {
-
-                                        BoxNum++;
-                                        MyBox box = new MyBox();
-                                        CutPic.Controls.Add(box);
-                                        box.MyNumber.Text = BoxNum.ToString(); ;
-                                        MyBoxList.Add(box);
-                                        BoxNameCombo.Items.Add(BoxNum.ToString());
-                                        Rectangle angle = new Rectangle(i, j, w, h);
-                                        rectList.Add(angle);
-                                        MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
-                                        MyBoxList[boxnum].Width = w;
-                                        MyBoxList[boxnum].Height = h;
-                                        boxnum++;
-                                    }
+                                    h++;
+                                }
+                                else
+                                {
+                                    break;
                                 }
                             }
+
+                            for (int k = i; k < CutPic.Width; k++)
+                            {
+                                int KR = CheackBT.GetPixel(k, j).R;
+                                int KG = CheackBT.GetPixel(k, j).G;
+                                int KB = CheackBT.GetPixel(k, j).B;
+
+                                if (KR >= R - 30 && KR <= R + 30 &&
+                                    KG >= G - 30 && KG <= G + 30 &&
+                                    KB >= B - 50 && KB <= B + 50)
+                                {
+                                    w++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            bool canbuild = true;
+
+                            for (int r = 0; r < rectList.Count; r++)
+                            {
+                                if (rectList[r].Contains((i + (i + w)) / 2, (j + (j + h)) / 2))
+                                {
+                                    w = 0;
+                                    h = 0;
+                                    canbuild = false;
+                                }
+
+                            }
+
+                            if (canbuild)
+                            {
+
+                                BoxNum++;
+                                MyBox box = new MyBox();
+                                CutPic.Controls.Add(box);
+                                box.MyNumber.Text = BoxNum.ToString(); ;
+                                MyBoxList.Add(box);
+                                BoxNameCombo.Items.Add(BoxNum.ToString());
+                                Rectangle angle = new Rectangle(i, j, w, h);
+                                rectList.Add(angle);
+                                MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
+                                MyBoxList[boxnum].Width = w;
+                                MyBoxList[boxnum].Height = h;
+                                boxnum++;
+
+                                w = 0;
+                                h = 0;
+                            }
+
+                            // }
                         }
 
-
                     }
-                    w = 0;
-                    h = 0;
-                   
+
                 }
             }
 

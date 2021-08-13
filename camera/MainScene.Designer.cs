@@ -89,6 +89,10 @@ namespace camera
             this.CheckLockNum = new System.Windows.Forms.TextBox();
             this.AutoColSelectBtn = new System.Windows.Forms.Button();
             this.AutoCol = new System.Windows.Forms.PictureBox();
+            this.AutoGroup = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.AutoColNums = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChangePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
@@ -99,6 +103,7 @@ namespace camera
             this.BoxSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UseCol)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoCol)).BeginInit();
+            this.AutoGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // CameraPic
@@ -285,7 +290,7 @@ namespace camera
             // 
             // DelectBoxBtn
             // 
-            this.DelectBoxBtn.Location = new System.Drawing.Point(762, 594);
+            this.DelectBoxBtn.Location = new System.Drawing.Point(859, 561);
             this.DelectBoxBtn.Name = "DelectBoxBtn";
             this.DelectBoxBtn.Size = new System.Drawing.Size(80, 45);
             this.DelectBoxBtn.TabIndex = 265;
@@ -320,7 +325,7 @@ namespace camera
             // 
             // AddBoxBtn
             // 
-            this.AddBoxBtn.Location = new System.Drawing.Point(664, 594);
+            this.AddBoxBtn.Location = new System.Drawing.Point(859, 510);
             this.AddBoxBtn.Name = "AddBoxBtn";
             this.AddBoxBtn.Size = new System.Drawing.Size(80, 45);
             this.AddBoxBtn.TabIndex = 268;
@@ -375,7 +380,7 @@ namespace camera
             // 
             // SettingNameBtn
             // 
-            this.SettingNameBtn.Location = new System.Drawing.Point(664, 671);
+            this.SettingNameBtn.Location = new System.Drawing.Point(659, 628);
             this.SettingNameBtn.Name = "SettingNameBtn";
             this.SettingNameBtn.Size = new System.Drawing.Size(75, 23);
             this.SettingNameBtn.TabIndex = 282;
@@ -389,7 +394,7 @@ namespace camera
             this.BoxNameCombo.FormattingEnabled = true;
             this.BoxNameCombo.Items.AddRange(new object[] {
             "1"});
-            this.BoxNameCombo.Location = new System.Drawing.Point(828, 671);
+            this.BoxNameCombo.Location = new System.Drawing.Point(823, 628);
             this.BoxNameCombo.Name = "BoxNameCombo";
             this.BoxNameCombo.Size = new System.Drawing.Size(121, 20);
             this.BoxNameCombo.TabIndex = 283;
@@ -398,7 +403,7 @@ namespace camera
             // BoxNameListlabel
             // 
             this.BoxNameListlabel.AutoSize = true;
-            this.BoxNameListlabel.Location = new System.Drawing.Point(745, 677);
+            this.BoxNameListlabel.Location = new System.Drawing.Point(740, 634);
             this.BoxNameListlabel.Name = "BoxNameListlabel";
             this.BoxNameListlabel.Size = new System.Drawing.Size(65, 12);
             this.BoxNameListlabel.TabIndex = 284;
@@ -650,9 +655,9 @@ namespace camera
             // 
             // SaveBoxData
             // 
-            this.SaveBoxData.Location = new System.Drawing.Point(664, 718);
+            this.SaveBoxData.Location = new System.Drawing.Point(663, 677);
             this.SaveBoxData.Name = "SaveBoxData";
-            this.SaveBoxData.Size = new System.Drawing.Size(85, 23);
+            this.SaveBoxData.Size = new System.Drawing.Size(101, 48);
             this.SaveBoxData.TabIndex = 302;
             this.SaveBoxData.Text = "対象情報保存";
             this.SaveBoxData.UseVisualStyleBackColor = true;
@@ -660,7 +665,7 @@ namespace camera
             // 
             // AutoLock
             // 
-            this.AutoLock.Location = new System.Drawing.Point(840, 736);
+            this.AutoLock.Location = new System.Drawing.Point(71, 45);
             this.AutoLock.Name = "AutoLock";
             this.AutoLock.Size = new System.Drawing.Size(94, 23);
             this.AutoLock.TabIndex = 303;
@@ -670,16 +675,16 @@ namespace camera
             // 
             // CheckLockNum
             // 
-            this.CheckLockNum.Location = new System.Drawing.Point(805, 738);
+            this.CheckLockNum.Location = new System.Drawing.Point(36, 47);
             this.CheckLockNum.Name = "CheckLockNum";
             this.CheckLockNum.Size = new System.Drawing.Size(31, 19);
             this.CheckLockNum.TabIndex = 304;
-            this.CheckLockNum.Text = "0";
+            this.CheckLockNum.Text = "1";
             this.CheckLockNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
             // 
             // AutoColSelectBtn
             // 
-            this.AutoColSelectBtn.Location = new System.Drawing.Point(850, 707);
+            this.AutoColSelectBtn.Location = new System.Drawing.Point(80, 18);
             this.AutoColSelectBtn.Name = "AutoColSelectBtn";
             this.AutoColSelectBtn.Size = new System.Drawing.Size(56, 23);
             this.AutoColSelectBtn.TabIndex = 307;
@@ -690,11 +695,54 @@ namespace camera
             // AutoCol
             // 
             this.AutoCol.BackColor = System.Drawing.Color.Red;
-            this.AutoCol.Location = new System.Drawing.Point(912, 709);
+            this.AutoCol.Location = new System.Drawing.Point(142, 20);
             this.AutoCol.Name = "AutoCol";
             this.AutoCol.Size = new System.Drawing.Size(21, 18);
             this.AutoCol.TabIndex = 306;
             this.AutoCol.TabStop = false;
+            // 
+            // AutoGroup
+            // 
+            this.AutoGroup.Controls.Add(this.label4);
+            this.AutoGroup.Controls.Add(this.AutoColNums);
+            this.AutoGroup.Controls.Add(this.label3);
+            this.AutoGroup.Controls.Add(this.AutoColSelectBtn);
+            this.AutoGroup.Controls.Add(this.AutoLock);
+            this.AutoGroup.Controls.Add(this.CheckLockNum);
+            this.AutoGroup.Controls.Add(this.AutoCol);
+            this.AutoGroup.Location = new System.Drawing.Point(775, 659);
+            this.AutoGroup.Name = "AutoGroup";
+            this.AutoGroup.Size = new System.Drawing.Size(172, 108);
+            this.AutoGroup.TabIndex = 308;
+            this.AutoGroup.TabStop = false;
+            this.AutoGroup.Text = "自動対象設定用";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 50);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 308;
+            this.label3.Text = "総数";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 23);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 12);
+            this.label4.TabIndex = 310;
+            this.label4.Text = "色合い";
+            // 
+            // AutoColNums
+            // 
+            this.AutoColNums.Location = new System.Drawing.Point(47, 20);
+            this.AutoColNums.Name = "AutoColNums";
+            this.AutoColNums.Size = new System.Drawing.Size(31, 19);
+            this.AutoColNums.TabIndex = 309;
+            this.AutoColNums.Text = "5";
+            this.AutoColNums.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
             // 
             // MainScene
             // 
@@ -702,10 +750,7 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
-            this.Controls.Add(this.AutoColSelectBtn);
-            this.Controls.Add(this.AutoCol);
-            this.Controls.Add(this.CheckLockNum);
-            this.Controls.Add(this.AutoLock);
+            this.Controls.Add(this.AutoGroup);
             this.Controls.Add(this.SaveBoxData);
             this.Controls.Add(this.BoxSetting);
             this.Controls.Add(this.ClearCheckScene);
@@ -749,6 +794,8 @@ namespace camera
             this.BoxSetting.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UseCol)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoCol)).EndInit();
+            this.AutoGroup.ResumeLayout(false);
+            this.AutoGroup.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -814,6 +861,10 @@ namespace camera
         private System.Windows.Forms.TextBox CheckLockNum;
         private System.Windows.Forms.Button AutoColSelectBtn;
         private System.Windows.Forms.PictureBox AutoCol;
+        private System.Windows.Forms.GroupBox AutoGroup;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox AutoColNums;
+        private System.Windows.Forms.Label label3;
     }
 }
 
