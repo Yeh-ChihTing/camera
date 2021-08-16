@@ -407,38 +407,52 @@ namespace camera
         {
             try
             {
+                //サイズを100%に戻す
                 CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
 
+                //カメラ画像のbitmap取得
                 Bitmap Origin = (Bitmap)CameraPic.Image.Clone();
+                //マスター画像のbitmap取得
                 Bitmap CheackBT = (Bitmap)MasterImage.Clone();
+
+                //各ピクセルRGB値取得用int
                 int OR = 0, OG = 0, OB = 0, CR, CG, CB;
+
+                //検査結果保存用FLAG数列
                 bool[] OkOrFail = new bool[MyBoxList.Count];
+
+                //検査結果保存用FLAG数列初期化
                 for (int i = 0; i < OkOrFail.Length; i++)
                 {
                     OkOrFail[i] = true;
 
                 }
 
+                //不合格あるFALG
                 bool haveFail = false;
 
+                //結果結果表示をクリア
                 CheckPerList.Items.Clear();
 
+                //対象数ループ
                 for (int k = 0; k < MyBoxList.Count; k++)
                 {
-
+                    //対象位置とサイズ取得
                     int X = MyBoxList[k].Location.X;
                     int SizeX = X + (MyBoxList[k].Width);
                     int Y = MyBoxList[k].Location.Y;
                     int SizeY = Y + (MyBoxList[k].Height);
 
+                    //正しい数計算用int
                     int RightNum = 0;
 
-
-
+                    //対象範囲のbitmap生成
                     Bitmap bmp = new Bitmap(MyBoxList[k].Width, MyBoxList[k].Height);
 
+                    //グラフィック処理用
                     Graphics g = Graphics.FromImage(bmp);
 
+                    //
                     Rectangle srcRect = new Rectangle(X, Y, MyBoxList[k].Width, MyBoxList[k].Height);
                     //描画する部分の範囲を決定する
                     Rectangle desRect = new Rectangle(0, 0, MyBoxList[k].Width, MyBoxList[k].Width);
@@ -448,9 +462,11 @@ namespace camera
                     //Graphicsオブジェクトのリソースを解放する
                     g.Dispose();
 
+                    //対象ボックスの塗る用DRAWBOXを表示
                     MyBoxList[k].Drawbox.Visible = true;
-                    //PictureBox1に表示する
+                    //DRAWBOX塗った以外部分を背景画像にする
                     MyBoxList[k].Drawbox.Image = bmp;
+                    //DRAWBOXの位置とサイズ初期化
                     MyBoxList[k].Drawbox.Location = new System.Drawing.Point(3, 3);
                     MyBoxList[k].Drawbox.Width = MyBoxList[k].Width - 6;
                     MyBoxList[k].Drawbox.Height = MyBoxList[k].Height - 6;
