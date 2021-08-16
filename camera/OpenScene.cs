@@ -25,8 +25,10 @@ namespace camera
 
         public OpenScene()
         {
+            this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             ListOfAttachedCameras();
+
         }
 
         //Webカメラを起動
@@ -35,6 +37,7 @@ namespace camera
             if (CameraNames.Count > 0)
             {
                 MainScene main = new MainScene();
+                main.StartPosition = FormStartPosition.CenterScreen;
                 main.Owner = this;
                 main.Cmode = MainScene.CamMode.WebCam;
                 main.WebCamNum = WebCamSelect.SelectedIndex;
@@ -53,6 +56,7 @@ namespace camera
         private void StartnetCamera_Click(object sender, EventArgs e)
         {
             MainScene main = new MainScene();
+            main.StartPosition = FormStartPosition.CenterScreen;
             main.Owner = this;
             main.Cmode = MainScene.CamMode.NetCam;
             //main.CamTypeName = "http://"+UserID.Text+":"+ PassWord.Text+"@"+IpAdress.Text+ "/axis-cgi/mjpg/video.cgi";
@@ -88,7 +92,6 @@ namespace camera
         //使用できるWEBカメラリストを取得
         public void ListOfAttachedCameras()
         {
-            var cameras = new List<string>();
             var attributes = new MediaAttributes(1);
             attributes.Set(CaptureDeviceAttributeKeys.SourceType.Guid, CaptureDeviceAttributeKeys.SourceTypeVideoCapture.Guid);
             var devices = MediaFactory.EnumDeviceSources(attributes);

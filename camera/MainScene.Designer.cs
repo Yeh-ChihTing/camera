@@ -93,6 +93,7 @@ namespace camera
             this.label4 = new System.Windows.Forms.Label();
             this.AutoColNums = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.CleanObj = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChangePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
@@ -108,6 +109,7 @@ namespace camera
             // 
             // CameraPic
             // 
+            this.CameraPic.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CameraPic.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.CameraPic.InitialImage = null;
             this.CameraPic.Location = new System.Drawing.Point(12, 12);
@@ -126,6 +128,7 @@ namespace camera
             // 
             // ChangePic
             // 
+            this.ChangePic.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ChangePic.BackColor = System.Drawing.Color.Transparent;
             this.ChangePic.ErrorImage = ((System.Drawing.Image)(resources.GetObject("ChangePic.ErrorImage")));
             this.ChangePic.InitialImage = null;
@@ -214,7 +217,8 @@ namespace camera
             // 
             // GetPicBtn
             // 
-            this.GetPicBtn.Location = new System.Drawing.Point(663, 484);
+            this.GetPicBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.GetPicBtn.Location = new System.Drawing.Point(800, 499);
             this.GetPicBtn.Name = "GetPicBtn";
             this.GetPicBtn.Size = new System.Drawing.Size(75, 23);
             this.GetPicBtn.TabIndex = 262;
@@ -224,6 +228,7 @@ namespace camera
             // 
             // CheckBtn
             // 
+            this.CheckBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CheckBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.CheckBtn.ForeColor = System.Drawing.Color.Black;
             this.CheckBtn.Location = new System.Drawing.Point(773, 69);
@@ -290,7 +295,8 @@ namespace camera
             // 
             // DelectBoxBtn
             // 
-            this.DelectBoxBtn.Location = new System.Drawing.Point(858, 538);
+            this.DelectBoxBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.DelectBoxBtn.Location = new System.Drawing.Point(752, 556);
             this.DelectBoxBtn.Name = "DelectBoxBtn";
             this.DelectBoxBtn.Size = new System.Drawing.Size(80, 45);
             this.DelectBoxBtn.TabIndex = 265;
@@ -300,7 +306,8 @@ namespace camera
             // 
             // SavePicBtn
             // 
-            this.SavePicBtn.Location = new System.Drawing.Point(760, 484);
+            this.SavePicBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SavePicBtn.Location = new System.Drawing.Point(881, 499);
             this.SavePicBtn.Name = "SavePicBtn";
             this.SavePicBtn.Size = new System.Drawing.Size(75, 23);
             this.SavePicBtn.TabIndex = 266;
@@ -310,6 +317,7 @@ namespace camera
             // 
             // CSComboBox
             // 
+            this.CSComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CSComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CSComboBox.FormattingEnabled = true;
             this.CSComboBox.Items.AddRange(new object[] {
@@ -317,7 +325,7 @@ namespace camera
             "200%",
             "400%",
             "800%"});
-            this.CSComboBox.Location = new System.Drawing.Point(663, 551);
+            this.CSComboBox.Location = new System.Drawing.Point(663, 501);
             this.CSComboBox.Name = "CSComboBox";
             this.CSComboBox.Size = new System.Drawing.Size(121, 20);
             this.CSComboBox.TabIndex = 267;
@@ -325,7 +333,8 @@ namespace camera
             // 
             // AddBoxBtn
             // 
-            this.AddBoxBtn.Location = new System.Drawing.Point(859, 484);
+            this.AddBoxBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.AddBoxBtn.Location = new System.Drawing.Point(666, 556);
             this.AddBoxBtn.Name = "AddBoxBtn";
             this.AddBoxBtn.Size = new System.Drawing.Size(80, 45);
             this.AddBoxBtn.TabIndex = 268;
@@ -335,6 +344,7 @@ namespace camera
             // 
             // panel1
             // 
+            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.CutPic);
             this.panel1.Location = new System.Drawing.Point(12, 399);
@@ -344,8 +354,9 @@ namespace camera
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(664, 536);
+            this.label1.Location = new System.Drawing.Point(664, 486);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 12);
             this.label1.TabIndex = 277;
@@ -380,7 +391,8 @@ namespace camera
             // 
             // SettingNameBtn
             // 
-            this.SettingNameBtn.Location = new System.Drawing.Point(659, 605);
+            this.SettingNameBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SettingNameBtn.Location = new System.Drawing.Point(667, 637);
             this.SettingNameBtn.Name = "SettingNameBtn";
             this.SettingNameBtn.Size = new System.Drawing.Size(75, 23);
             this.SettingNameBtn.TabIndex = 282;
@@ -390,11 +402,12 @@ namespace camera
             // 
             // BoxNameCombo
             // 
+            this.BoxNameCombo.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BoxNameCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.BoxNameCombo.FormattingEnabled = true;
             this.BoxNameCombo.Items.AddRange(new object[] {
             "1"});
-            this.BoxNameCombo.Location = new System.Drawing.Point(823, 605);
+            this.BoxNameCombo.Location = new System.Drawing.Point(821, 639);
             this.BoxNameCombo.Name = "BoxNameCombo";
             this.BoxNameCombo.Size = new System.Drawing.Size(121, 20);
             this.BoxNameCombo.TabIndex = 283;
@@ -402,8 +415,9 @@ namespace camera
             // 
             // BoxNameListlabel
             // 
+            this.BoxNameListlabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BoxNameListlabel.AutoSize = true;
-            this.BoxNameListlabel.Location = new System.Drawing.Point(740, 611);
+            this.BoxNameListlabel.Location = new System.Drawing.Point(750, 644);
             this.BoxNameListlabel.Name = "BoxNameListlabel";
             this.BoxNameListlabel.Size = new System.Drawing.Size(65, 12);
             this.BoxNameListlabel.TabIndex = 284;
@@ -411,6 +425,7 @@ namespace camera
             // 
             // CheckLoopBtn
             // 
+            this.CheckLoopBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CheckLoopBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.CheckLoopBtn.ForeColor = System.Drawing.Color.Black;
             this.CheckLoopBtn.Location = new System.Drawing.Point(838, 2);
@@ -427,6 +442,7 @@ namespace camera
             // 
             // MinText
             // 
+            this.MinText.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MinText.Location = new System.Drawing.Point(719, 12);
             this.MinText.MaxLength = 2;
             this.MinText.Name = "MinText";
@@ -437,6 +453,7 @@ namespace camera
             // 
             // SecText
             // 
+            this.SecText.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SecText.Location = new System.Drawing.Point(771, 12);
             this.SecText.MaxLength = 2;
             this.SecText.Name = "SecText";
@@ -447,6 +464,7 @@ namespace camera
             // 
             // HourText
             // 
+            this.HourText.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.HourText.Location = new System.Drawing.Point(667, 12);
             this.HourText.MaxLength = 2;
             this.HourText.Name = "HourText";
@@ -457,6 +475,7 @@ namespace camera
             // 
             // HourLabel
             // 
+            this.HourLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.HourLabel.AutoSize = true;
             this.HourLabel.Location = new System.Drawing.Point(697, 12);
             this.HourLabel.Name = "HourLabel";
@@ -466,6 +485,7 @@ namespace camera
             // 
             // MinLabel
             // 
+            this.MinLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MinLabel.AutoSize = true;
             this.MinLabel.Location = new System.Drawing.Point(750, 12);
             this.MinLabel.Name = "MinLabel";
@@ -475,6 +495,7 @@ namespace camera
             // 
             // SecLabel
             // 
+            this.SecLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SecLabel.AutoSize = true;
             this.SecLabel.Location = new System.Drawing.Point(809, 12);
             this.SecLabel.Name = "SecLabel";
@@ -484,6 +505,7 @@ namespace camera
             // 
             // CheckPerList
             // 
+            this.CheckPerList.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CheckPerList.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.CheckPerList.FormattingEnabled = true;
             this.CheckPerList.ItemHeight = 20;
@@ -494,6 +516,7 @@ namespace camera
             // 
             // AllPercentShow
             // 
+            this.AllPercentShow.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.AllPercentShow.AutoSize = true;
             this.AllPercentShow.Location = new System.Drawing.Point(667, 97);
             this.AllPercentShow.Name = "AllPercentShow";
@@ -565,6 +588,7 @@ namespace camera
             // 
             // ClearCheckScene
             // 
+            this.ClearCheckScene.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ClearCheckScene.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.ClearCheckScene.Location = new System.Drawing.Point(859, 69);
             this.ClearCheckScene.Name = "ClearCheckScene";
@@ -576,6 +600,7 @@ namespace camera
             // 
             // BoxSetting
             // 
+            this.BoxSetting.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BoxSetting.Controls.Add(this.ChooseCol);
             this.BoxSetting.Controls.Add(this.UseCol);
             this.BoxSetting.Controls.Add(this.UseThisCol);
@@ -655,9 +680,10 @@ namespace camera
             // 
             // SaveBoxData
             // 
-            this.SaveBoxData.Location = new System.Drawing.Point(663, 665);
+            this.SaveBoxData.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SaveBoxData.Location = new System.Drawing.Point(864, 543);
             this.SaveBoxData.Name = "SaveBoxData";
-            this.SaveBoxData.Size = new System.Drawing.Size(101, 48);
+            this.SaveBoxData.Size = new System.Drawing.Size(75, 32);
             this.SaveBoxData.TabIndex = 302;
             this.SaveBoxData.Text = "対象情報保存";
             this.SaveBoxData.UseVisualStyleBackColor = true;
@@ -665,7 +691,7 @@ namespace camera
             // 
             // AutoLock
             // 
-            this.AutoLock.Location = new System.Drawing.Point(71, 45);
+            this.AutoLock.Location = new System.Drawing.Point(80, 44);
             this.AutoLock.Name = "AutoLock";
             this.AutoLock.Size = new System.Drawing.Size(94, 23);
             this.AutoLock.TabIndex = 303;
@@ -675,7 +701,7 @@ namespace camera
             // 
             // CheckLockNum
             // 
-            this.CheckLockNum.Location = new System.Drawing.Point(36, 47);
+            this.CheckLockNum.Location = new System.Drawing.Point(47, 45);
             this.CheckLockNum.Name = "CheckLockNum";
             this.CheckLockNum.Size = new System.Drawing.Size(31, 19);
             this.CheckLockNum.TabIndex = 304;
@@ -703,6 +729,7 @@ namespace camera
             // 
             // AutoGroup
             // 
+            this.AutoGroup.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.AutoGroup.Controls.Add(this.label4);
             this.AutoGroup.Controls.Add(this.AutoColNums);
             this.AutoGroup.Controls.Add(this.label3);
@@ -710,9 +737,9 @@ namespace camera
             this.AutoGroup.Controls.Add(this.AutoLock);
             this.AutoGroup.Controls.Add(this.CheckLockNum);
             this.AutoGroup.Controls.Add(this.AutoCol);
-            this.AutoGroup.Location = new System.Drawing.Point(775, 645);
+            this.AutoGroup.Location = new System.Drawing.Point(663, 679);
             this.AutoGroup.Name = "AutoGroup";
-            this.AutoGroup.Size = new System.Drawing.Size(172, 80);
+            this.AutoGroup.Size = new System.Drawing.Size(281, 80);
             this.AutoGroup.TabIndex = 308;
             this.AutoGroup.TabStop = false;
             this.AutoGroup.Text = "自動対象設定用";
@@ -738,11 +765,22 @@ namespace camera
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 50);
+            this.label3.Location = new System.Drawing.Point(9, 49);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 308;
             this.label3.Text = "総数";
+            // 
+            // CleanObj
+            // 
+            this.CleanObj.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.CleanObj.Location = new System.Drawing.Point(866, 592);
+            this.CleanObj.Name = "CleanObj";
+            this.CleanObj.Size = new System.Drawing.Size(75, 23);
+            this.CleanObj.TabIndex = 309;
+            this.CleanObj.Text = "全対象クリア";
+            this.CleanObj.UseVisualStyleBackColor = true;
+            this.CleanObj.Click += new System.EventHandler(this.CleanObj_Click);
             // 
             // MainScene
             // 
@@ -750,6 +788,7 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.CleanObj);
             this.Controls.Add(this.AutoGroup);
             this.Controls.Add(this.SaveBoxData);
             this.Controls.Add(this.BoxSetting);
@@ -865,6 +904,7 @@ namespace camera
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox AutoColNums;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button CleanObj;
     }
 }
 

@@ -26,14 +26,17 @@ namespace camera
         /// カメラ横幅 
         /// </summary>
         public static readonly int Cam_Width = 640;
+
         /// <summary>
         /// カメラ縦幅
         /// </summary>
         public static readonly int Cam_Height = 360;
+
         /// <summary>
         /// 今のIMAGEを取る
         /// </summary>
         public Image GetCutPicNow = null;
+
         /// <summary>
         /// カメラサイズモード
         /// </summary>
@@ -59,23 +62,27 @@ namespace camera
         /// カカメラモード宣言
         /// </summary>
         public CamMode Cmode;
-        //public int bx, by, bw, bh;
+
         /// <summary>
         /// 今の倍率
         /// </summary>
         public int BMul = 1;
+
         /// <summary>
         /// Webカメラの番号
         /// </summary>
         public int WebCamNum = 0;
+
         /// <summary>
         /// カメラの名前
         /// </summary>
         public string CamTypeName;
+
         /// <summary>
         /// percent値計算用
         /// </summary>
         public double percentOfSusses = 0;
+
         /// <summary>
         /// 粋名リスト
         /// </summary>
@@ -87,22 +94,27 @@ namespace camera
         /// カメラ画面処理用
         /// </summary>
         private Mat img = new Mat();
+
         /// <summary>
         /// カメラ画面取得
         /// </summary>
         private VideoCapture vc;
+
         /// <summary>
         /// 検査用写真用空間
         /// </summary>
         private Image MasterImage = null;
+
         /// <summary>
         /// 一つ目の粋の宣言
         /// </summary>
         private MyBox box1;
+
         /// <summary>
         ///粋数
         /// </summary>
         private int BoxNum = 1;
+
         /// <summary>
         ///粋リスト
         /// </summary>
@@ -122,14 +134,17 @@ namespace camera
         ///音声プレイヤー
         /// </summary>
         private System.Media.SoundPlayer Player = null;
+
         /// <summary>
         ///合格音
         /// </summary>
         private string SussesSound = @"Sound\Answer.wav";
+
         /// <summary>
         ///不合格音
         /// </summary>
         private string FailSound = @"Sound\Wrong.wav";
+
         /// <summary>
         ///現在使用しているマスタ画像名
         /// </summary>
@@ -139,14 +154,21 @@ namespace camera
         ///指定色検査用色選択ＦＬＡＧ
         /// </summary>
         private bool StarChooseCol = false;
+
         /// <summary>
         ///自動対象用色選択ＦＬＡＧ
         /// </summary>
         private bool StarChooseAutoCol = false;
+
         /// <summary>
         ///検査用色
         /// </summary>
         private Color CheckCol;
+
+        /// <summary>
+        ///マスタ画像名を記録用
+        /// </summary>
+        private string NowName;
 
         /// <summary>
         ///初期化
@@ -516,7 +538,7 @@ namespace camera
             {
                 using (FileStream fileStream = File.OpenRead(ofd.FileName))
                 {
-
+                   
                     // 画像データの検証なしで読み込む
                     Image image = Image.FromStream(fileStream, true, true);
 
@@ -607,7 +629,23 @@ namespace camera
                     }
                     //変更の時対象ボックスを一つに戻るようにしたい
                     //また追加する必要です
-
+                    if (NowName == ""|| NowName == ofd.FileName)
+                    {
+                        NowName = ofd.FileName;
+                    }
+                    else
+                    {
+                        if (MyBoxList.Count > 1)
+                        {
+                            for (int i = 1; i < MyBoxList.Count; i++)
+                            {
+                                MyBoxList.RemoveAt(i);
+                            }
+                            CutPic.Controls.Clear();
+                            CutPic.Controls.Add(MyBoxList[0]);
+                        }
+                        NowName = ofd.FileName;
+                    }
                     //ChangePic.Image = MasterImage;
                 }
 
@@ -1849,6 +1887,19 @@ namespace camera
                 //Mdown.Y = e.Y;
                 //StarChooseCol = false;
             }
+        }
+
+        //対象オブジェクトを一つに戻すボタン
+        private void CleanObj_Click(object sender, EventArgs e)
+        {
+            int MyboxNums = MyBoxList.Count;
+
+            for (int i = (MyboxNums - 1); i > 0; i--)
+            {
+                MyBoxList.RemoveAt(i);
+                CutPic.Controls.RemoveAt(i);
+            }
+
         }
     }
 }
