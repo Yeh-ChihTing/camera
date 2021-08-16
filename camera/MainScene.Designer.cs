@@ -821,7 +821,6 @@ namespace camera
             this.Text = "画像検査";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainScene_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainScene_MouseClick);
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChangePic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).EndInit();

@@ -23,12 +23,12 @@ namespace camera
         //public変数
 
         /// <summary>
-        /// カメラ横幅 
+        /// カメラ横幅640 
         /// </summary>
         public static readonly int Cam_Width = 640;
 
         /// <summary>
-        /// カメラ縦幅
+        /// カメラ縦幅360
         /// </summary>
         public static readonly int Cam_Height = 360;
 
@@ -176,7 +176,6 @@ namespace camera
         public MainScene()
         {
             InitializeComponent();
-            //this.Owner = null;
         }
 
         /// <summary>
@@ -187,39 +186,61 @@ namespace camera
             /// <summary>
             /// 初期化
             /// </summary>
+            
+            //画像サイズ100%に設定
             CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
+
+            //最初の対象ボックス生成
             box1 = new MyBox();
+
+            //対象ボックスをCutPicの子にする
             CutPic.Controls.Add(box1);
+
+            //CutPicをpanel1の子にする
             panel1.Controls.Add(CutPic);
+
+            //panel1をこのフォームの子にする
             this.Controls.Add(panel1);
+
+            //対象ボックスをボックスリストに加入
             MyBoxList.Add(box1);
+
+            //コンボボックスの選択したインデックスを0にする
             BoxNameCombo.SelectedIndex = 0;
+
+            //対象ボックスの色をLightSeaGreenにする
             MyBoxList[0]._borderColor = Color.LightSeaGreen;
             MyBoxList[0].Invalidate();
+
+            //色合いの数値を初期化
             RedTrack.Value = MyBoxList[0].Red;
             GreenTrack.Value = MyBoxList[0].Green;
             BlueTrack.Value = MyBoxList[0].Blue;
             RSetText.Text = RedTrack.Value.ToString();
             GSetText.Text = GreenTrack.Value.ToString();
             BSetText.Text = BlueTrack.Value.ToString();
+
+            //合格パーセントの数値を初期化
             int BoxPercent = MyBoxList[BoxNameCombo.SelectedIndex].MySPercent;
             SetSusscePercent.Text = BoxPercent.ToString();
-            CheckMode.SelectedIndex = 0;
 
+            //モードを初期化
+            CheckMode.SelectedIndex = 0;
+   
             /// <summary>
             /// 初期化END
             /// </summary>
 
 
             /// <summary>
-            /// SaveDataフォルタ存在検査
+            /// SaveDataフォルタ存在検査　存在しないなら作る
             /// </summary>
             if (!Directory.Exists("SaveData"))
             {
                 Directory.CreateDirectory("SaveData");
             }
             /// <summary>
-            /// Pic
+            /// Picフォルタ存在検査　存在しないなら作る
             /// </summary>
             if (!Directory.Exists("Pic"))
             {
@@ -240,7 +261,7 @@ namespace camera
                     //CamHeight = CameraPic.Height;
                     //byte[,] data = new byte[CamWidth, CamHeight];
 
-
+                    //WEBカメラモード
                     if (Cmode == CamMode.WebCam)
                     {
 
@@ -252,6 +273,7 @@ namespace camera
                         }
 
                     }
+                    //ネットワークカメラモード
                     else if (Cmode == CamMode.NetCam)
                     {
                         //using (vc = new VideoCapture("http://root:root@169.254.154.96/axis-cgi/mjpg/video.cgi")) ;
@@ -263,13 +285,9 @@ namespace camera
                         }
                     }
 
+                    //カメラ画像表示ループ
                     while (true)
                     {
-
-                        //if (StartCam)
-                        //{
-
-                        //vc.Read(img);
                         img = vc.RetrieveMat();
                         CameraPic.Image = img.ToBitmap();
                         // }
@@ -282,7 +300,6 @@ namespace camera
             {
 
             }
-
 
         }
 
@@ -311,6 +328,7 @@ namespace camera
         /// </summary>
         private void Check_Click(object sender, EventArgs e)
         {
+            //チェック用関数
             Check();
         }
 
@@ -319,21 +337,30 @@ namespace camera
         /// </summary>
         private void CheckLoopBtn_Click(object sender, EventArgs e)
         {
-
+            //起動可能の時
             if (LoopBtnFlag)
             {
-
+                //ボタンの文字の変更
                 CheckLoopBtn.Text = "停止";
+
+                //ボタンの色の変更
                 CheckLoopBtn.BackColor = Color.Pink;
-                //Cheack();
+
+                //指定したループタイムの計算
                 LoopFrame = (Convert.ToInt32(HourText.Text) * 36000) + (Convert.ToInt32(MinText.Text) * 6000)
                     + (Convert.ToInt32(SecText.Text) * 1000);
+                
+                //指定時間が0ではないの時
                 if (LoopFrame != 0)
                 {
+                    //ループタイマー起動
                     LoopTimer.Enabled = true;
+                    //ループ時間設定
                     LoopTimer.Interval = LoopFrame;
+                    //一回目のチェック
                     Check();
                 }
+                //指定時間が0の時
                 else
                 {
                     MessageBox.Show("0間隔連続チェックはできないです、時間を入力してください");
@@ -341,14 +368,16 @@ namespace camera
                     CheckLoopBtn.Text = "連続チェック";
                     CheckLoopBtn.BackColor = SystemColors.Control;
                 }
-
-
             }
 
+            //起動中の時
             else
             {
+                //ループタイマーを閉じる
                 LoopTimer.Enabled = false;
+                //ボタンの文字の変更
                 CheckLoopBtn.Text = "連続チェック";
+                //ボタンの色の変更
                 CheckLoopBtn.BackColor = SystemColors.Control;
                 this.BackColor = SystemColors.Control;
                 for (int i = 0; i < MyBoxList.Count; i++)
@@ -358,7 +387,7 @@ namespace camera
                 }
             }
 
-
+            //ループFLAGの切り替え
             LoopBtnFlag = !LoopBtnFlag;
         }
 
@@ -367,6 +396,7 @@ namespace camera
         /// </summary>
         private void LoopTimer_Tick(object sender, EventArgs e)
         {
+            //検査関数
             Check();
         }
 
@@ -542,25 +572,37 @@ namespace camera
                     // 画像データの検証なしで読み込む
                     Image image = Image.FromStream(fileStream, true, true);
 
+                    //マスタイメージをimageにする
                     MasterImage = image;
 
-                    //
+                    //CutPicイメージをマスターイメージ
                     CutPic.Image = MasterImage;
 
+                    //使用データ名記録
                     SaveDataname = ofd.FileName;
 
-                    //対象情報データある時の処理
+                    //データ名を副名以外取る
                     string[] name = SaveDataname.Split('.');
+                    //対象状態データ名
                     string dataSpace = name[0] + ".bat";
+
+                    //対象状態データ存在の時
                     if (File.Exists(dataSpace))
                     {
+                        //現在対象情報をクリア
                         MyBoxList.Clear();
                         BoxNameCombo.Items.Clear();
                         CutPic.Controls.Clear();
                         BoxNameList.Clear();
+
+                        //読み込みカウンター
                         int line_cnt = 0;
+                        //読む文字一時置く用
                         string line;
+                        //読むデータ保存リスト
                         List<string> DataList = new List<string>();
+
+                        //データ読む
                         using (StreamReader sr = new StreamReader(dataSpace))
                         {
                             // ファイルの内容を1行ずつ読み込み
@@ -573,29 +615,32 @@ namespace camera
                             }
                         }
 
+                        //対象数取得
                         int nums = Convert.ToInt32(DataList[0]);
 
+                        //対象数に応じるループ
                         for (int i = 0; i < nums; i++)
                         {
+                            //新しいボックス生成
                             MyBox box = new MyBox();
                             CutPic.Controls.Add(box);
-                            //name
+                            //名前を読む
                             string[] names = DataList[(i * 8) + 1].Split(':');
                             box.MyNumber.Text = names[1];
                             BoxNameList.Add(names[1]);
                             MyBoxList.Add(box);
                             BoxNameCombo.Items.Add(names[1]);
-                            //pos
+                            //位置を読む
                             string[] Posstr = DataList[(i * 8) + 2].Split(':', ',');
                             int PosX = Convert.ToInt32(Posstr[1]);
                             int PosY = Convert.ToInt32(Posstr[2]);
                             box.Location = new System.Drawing.Point(PosX, PosY);
-                            //size
+                            //サイズを読む
                             string[] Size = DataList[(i * 8) + 3].Split(':', ',');
                             int w = Convert.ToInt32(Size[1]);
                             int h = Convert.ToInt32(Size[2]);
                             box.Size = new System.Drawing.Size(w, h);
-                            //BoxCheck
+                            //色指定チェックボックスFLAG
                             string Checked = DataList[(i * 8) + 4];
                             if (Checked == "BoxCheckedFalse")
                             {
@@ -605,7 +650,7 @@ namespace camera
                             {
                                 box.BoxChecked = true;
                             }
-                            //RGB
+                            //色合いの値
                             string[] col = DataList[(i * 8) + 5].Split(':', ',');
                             int SR = Convert.ToInt32(col[1]);
                             int SG = Convert.ToInt32(col[2]);
@@ -613,28 +658,33 @@ namespace camera
                             box.Red = SR;
                             box.Green = SG;
                             box.Blue = SB;
-                            //%
+                            //合格パーセント
                             string[] SPercent = DataList[(i * 8) + 6].Split(':', ',');
                             box.MySPercent = Convert.ToInt32(SPercent[1]);
-                            //Mode
+                            //モード
                             string[] Smode = DataList[(i * 8) + 7].Split(':', ',');
                             box.MyBoxMode = (MyBox.BoxMode)Convert.ToInt32(Smode[1]);
-                            //checkBox
+                            //指定色用色
                             string[] SCheckBoxCol = DataList[(i * 8) + 8].Split(':', ',');
                             box.UsedCol = Color.FromArgb(Convert.ToInt32(SCheckBoxCol[1]), Convert.ToInt32(SCheckBoxCol[2])
                                 , Convert.ToInt32(SCheckBoxCol[3]));
                         }
 
+                        //コンボボックスのインデックスを0にする
                         BoxNameCombo.SelectedIndex = 0;
                     }
-                    //変更の時対象ボックスを一つに戻るようにしたい
-                    //また追加する必要です
+                    //変更の時対象ボックスを一つに戻る
+
+                    //変更してないと今マスタ画像選択してない
                     if (NowName == ""|| NowName == ofd.FileName)
                     {
+                        //データ名を記録
                         NowName = ofd.FileName;
                     }
+                    //新のマスタ画像選択した時
                     else
                     {
+                        //1以外の対象ボックスをクリア
                         if (MyBoxList.Count > 1)
                         {
                             for (int i = 1; i < MyBoxList.Count; i++)
@@ -644,6 +694,8 @@ namespace camera
                             CutPic.Controls.Clear();
                             CutPic.Controls.Add(MyBoxList[0]);
                         }
+
+                        //データ名を記録
                         NowName = ofd.FileName;
                     }
                     //ChangePic.Image = MasterImage;
@@ -651,6 +703,7 @@ namespace camera
 
             }
 
+            //現在のマスタイメージの記録
             GetCutPicNow = CutPic.Image;
 
         }
@@ -660,24 +713,27 @@ namespace camera
         /// </summary>
         private void SavePicBtn_Click(object sender, EventArgs e)
         {
+            //セーフデータ宣言
             SaveFileDialog sfd = new SaveFileDialog();
+            //データ名(また自分で変更)
             sfd.FileName = "newMaster";
+            //データ形式
             sfd.Filter = "JPEG形式|*.jpg";
 
+            //保存位置
             string dc = Directory.GetCurrentDirectory() + @"\Pic";
             sfd.InitialDirectory = dc;
 
-
-
+            //保存クリックしたら
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-
                     //img.SaveImage(sfd.FileName);
                     Bitmap bmp = new Bitmap(img.ToBitmap());
                     bmp.Save(sfd.FileName, ImageFormat.Jpeg);
 
+                    //CutPicまた選択してないなら自動に保存した画像をマスタ画像にする
                     if (CutPic.Image == null)
                     {
                         CutPic.Image = bmp;
@@ -686,10 +742,12 @@ namespace camera
                         GetCutPicNow = CutPic.Image;
                     }
 
+                    //保存したデータ名を記録
                     SaveDataname = sfd.FileName;
                 }
                 catch (NullReferenceException a)
                 {
+                    //エーラ表示
                     MessageBox.Show(a.ToString());
                 }
             }
@@ -700,32 +758,41 @@ namespace camera
         /// </summary>
         private void CSComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
+            //背景色を戻す
             this.BackColor = SystemColors.Control;
+
+            //各対象のDRAWBOXを非表示
             for (int i = 0; i < MyBoxList.Count; i++)
             {
                 MyBoxList[i].Drawbox.Visible = false;
-                //MyBoxList[i].Drawbox.BackColor = Color.Transparent;
             }
 
             try
             {
-                //100%
+                //100%モード
                 if (CSComboBox.SelectedIndex == (int)CutSize.OnehundredPer)
                 {
+                    //サイズを640*360にする
                     CutPic.Width = Cam_Width;
                     CutPic.Height = Cam_Height;
 
+                    //マスタ画像存在確認
                     if (MasterImage != null)
                     {
+                        //各対象位置とサイズ取得用数列
                         double[] bx = new double[MyBoxList.Count];
                         double[] by = new double[MyBoxList.Count];
                         double[] bw = new double[MyBoxList.Count];
                         double[] bh = new double[MyBoxList.Count];
 
+                        //現在各対象ボックスのステータス取得
                         GetNowBoxStatus(bx, by, bw, bh);
                         // Image GetCutPic = CutPic.Image;
+
+                        //CutPicのイメージサイズを640*360にする
                         CutPic.Image = new Bitmap(CutPic.Width, CutPic.Height);
 
+                        //100％サイズの画像を描画する
                         using (var bmp = new Bitmap(GetCutPicNow))
                         using (var g = Graphics.FromImage(CutPic.Image))
                         {
@@ -735,6 +802,7 @@ namespace camera
                             g.DrawImage(bmp, 0, 0, Cam_Width, Cam_Height);
                         }
 
+                        //各対象をサイズ変更後の位置とサイズ計算
                         for (int i = 0; i < MyBoxList.Count; i++)
                         {
                             double x, y;
@@ -745,36 +813,32 @@ namespace camera
                             MyBoxList[i].Height = (int)Math.Round(bh[i] / BMul);
 
                         }
-                        //box1.Location = new System.Drawing.Point(bx / 2, by / 2);
-                        //box1.Width = bw / 2;
-                        //box1.Height = bh / 2;
 
                     }
 
+                    //掛け率設定
                     BMul = 1;
-                    //for (int i = 0; i < MyBoxList.Count; i++)
-                    //{
-                    //    MyBoxList[i].setBottonRight(BMul);
-                    //}
 
                 }
 
                 //200%
                 if (CSComboBox.SelectedIndex == (int)CutSize.TwohundredPer)
                 {
+                    //各対象位置とサイズ取得用数列
                     double[] bx = new double[MyBoxList.Count];
                     double[] by = new double[MyBoxList.Count];
                     double[] bw = new double[MyBoxList.Count];
                     double[] bh = new double[MyBoxList.Count];
 
+                    //現在各対象ボックスのステータス取得
                     GetNowBoxStatus(bx, by, bw, bh);
 
-
+                    //CutPicのイメージサイズを1280*720にする
                     CutPic.Width = Cam_Width * 2;
                     CutPic.Height = Cam_Height * 2;
-
                     CutPic.Image = new Bitmap(CutPic.Width, CutPic.Height);
 
+                    //200％サイズの画像を描画する
                     using (var bmp = new Bitmap(GetCutPicNow))
                     using (var g = Graphics.FromImage(CutPic.Image))
                     {
@@ -788,8 +852,10 @@ namespace camera
                               GraphicsUnit.Pixel);
                     }
 
+                    //各対象をサイズ変更後の位置とサイズ計算
                     for (int i = 0; i < MyBoxList.Count; i++)
                     {
+                        //100%から変更
                         if (BMul == 1)
                         {
 
@@ -798,6 +864,7 @@ namespace camera
                             MyBoxList[i].Height = (int)bh[i] * 2;
                         }
 
+                        //400%から変更
                         if (BMul == 4)
                         {
                             double x, y;
@@ -808,6 +875,7 @@ namespace camera
                             MyBoxList[i].Height = (int)Math.Round(bh[i] / 2);
                         }
 
+                        //800%から変更
                         if (BMul == 8)
                         {
                             double x, y;
@@ -819,29 +887,30 @@ namespace camera
                         }
 
                     }
+
+                    //掛け率設定
                     BMul = 2;
-                    //for (int i = 0; i < MyBoxList.Count; i++)
-                    //{
-                    //    MyBoxList[i].setBottonRight(BMul);
-                    //}
+
                 }
 
                 //400%
                 if (CSComboBox.SelectedIndex == (int)CutSize.FourhundredPer)
                 {
+                    //各対象位置とサイズ取得用数列
                     double[] bx = new double[MyBoxList.Count];
                     double[] by = new double[MyBoxList.Count];
                     double[] bw = new double[MyBoxList.Count];
                     double[] bh = new double[MyBoxList.Count];
 
+                    // 現在各対象ボックスのステータス取得
                     GetNowBoxStatus(bx, by, bw, bh);
 
-                    //Image GetCutPic = CutPic.Image;
+                    //CutPicのイメージサイズを2560*1440にする
                     CutPic.Width = Cam_Width * 4;
                     CutPic.Height = Cam_Height * 4;
-
                     CutPic.Image = new Bitmap(CutPic.Width, CutPic.Height);
 
+                    //400％サイズの画像を描画する
                     using (var bmp = new Bitmap(GetCutPicNow))
                     using (var g = Graphics.FromImage(CutPic.Image))
                     {
@@ -855,8 +924,10 @@ namespace camera
                               GraphicsUnit.Pixel);
                     }
 
+                    //各対象をサイズ変更後の位置とサイズ計算
                     for (int i = 0; i < MyBoxList.Count; i++)
                     {
+                        //100%から変更
                         if (BMul == 1)
                         {
                             MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 4, (int)by[i] * 4);
@@ -864,6 +935,7 @@ namespace camera
                             MyBoxList[i].Height = (int)bh[i] * 4;
                         }
 
+                        //200%から変更
                         if (BMul == 2)
                         {
                             MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 2, (int)by[i] * 2);
@@ -871,6 +943,7 @@ namespace camera
                             MyBoxList[i].Height = (int)bh[i] * 2;
                         }
 
+                        //800%から変更
                         if (BMul == 8)
                         {
                             double x, y;
@@ -883,30 +956,29 @@ namespace camera
 
                     }
 
+                    //掛け率設定
                     BMul = 4;
-                    //for (int i = 0; i < MyBoxList.Count; i++)
-                    //{
-                    //    MyBoxList[i].setBottonRight(BMul);
-                    //}
+
                 }
 
                 //800%
                 if (CSComboBox.SelectedIndex == (int)CutSize.EighthundredPer)
                 {
+                    //各対象位置とサイズ取得用数列
                     double[] bx = new double[MyBoxList.Count];
                     double[] by = new double[MyBoxList.Count];
                     double[] bw = new double[MyBoxList.Count];
                     double[] bh = new double[MyBoxList.Count];
 
-
+                    //現在各対象ボックスのステータス取得
                     GetNowBoxStatus(bx, by, bw, bh);
 
-                    //Image GetCutPic = CutPic.Image;
+                    //CutPicのイメージサイズを5120*2880にする
                     CutPic.Width = Cam_Width * 8;
                     CutPic.Height = Cam_Height * 8;
-
                     CutPic.Image = new Bitmap(CutPic.Width, CutPic.Height);
 
+                    //800％サイズの画像を描画する
                     using (var bmp = new Bitmap(GetCutPicNow))
                     using (var g = Graphics.FromImage(CutPic.Image))
                     {
@@ -920,8 +992,10 @@ namespace camera
                               GraphicsUnit.Pixel);
                     }
 
+                    //各対象をサイズ変更後の位置とサイズ計算
                     for (int i = 0; i < MyBoxList.Count; i++)
                     {
+                        //100%から変更
                         if (BMul == 1)
                         {
                             MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 8, (int)by[i] * 8);
@@ -929,6 +1003,7 @@ namespace camera
                             MyBoxList[i].Height = (int)bh[i] * 8;
                         }
 
+                        //200%から変更
                         if (BMul == 2)
                         {
                             MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 4, (int)by[i] * 4);
@@ -936,6 +1011,7 @@ namespace camera
                             MyBoxList[i].Height = (int)bh[i] * 4;
                         }
 
+                        //400%から変更
                         if (BMul == 4)
                         {
                             MyBoxList[i].Location = new System.Drawing.Point((int)bx[i] * 2, (int)by[i] * 2);
@@ -945,11 +1021,9 @@ namespace camera
 
                     }
 
+                    //掛け率設定
                     BMul = 8;
-                    //for (int i = 0; i < MyBoxList.Count; i++)
-                    //{
-                    //    MyBoxList[i].setBottonRight(BMul);
-                    //}
+   
                 }
             }
             catch
@@ -959,10 +1033,11 @@ namespace camera
         }
 
         /// <summary>
-        ///粋の位置とサイズを取得
+        ///対象の位置とサイズを取得
         /// </summary>
         public void GetNowBoxStatus(double[] x, double[] y, double[] w, double[] h)
         {
+            //x軸　ｙ軸　横(w) 縦(h)
             for (int i = 0; i < MyBoxList.Count; i++)
             {
                 x[i] = MyBoxList[i].Location.X;
@@ -973,88 +1048,97 @@ namespace camera
         }
 
         /// <summary>
-        ///粋の増加ボタン
+        ///対象の増加ボタン
         /// </summary>
         private void AddBox_Click(object sender, EventArgs e)
         {
+            //対象数++
             BoxNum++;
+            //新しいボックス生成
             MyBox box = new MyBox();
+            //ボックスの親をCutPicにする
             CutPic.Controls.Add(box);
-            box.MyNumber.Text = BoxNum.ToString(); ;
+            //ボックスのの番号を書く
+            box.MyNumber.Text = BoxNum.ToString();
+            //ボックスリストに加入
             MyBoxList.Add(box);
+            //コンボボックスに加入
             BoxNameCombo.Items.Add(BoxNum.ToString());
+            //BoxNameList.Add(BoxNum.ToString());
         }
 
         /// <summary>
-        ///粋の消すボタン
+        ///対象の消すボタン
         /// </summary>
         private void DelectBox_Click(object sender, EventArgs e)
         {
-            //GetCutPic();
-            //Graphics g = Graphics.FromImage(BoxList[0]);
+            //対象ボックスは一個以上の時消す
             if (MyBoxList.Count > 1)
             {
+                //選択した対象ボックス消す
                 MyBoxList.RemoveAt(BoxNameCombo.SelectedIndex);
                 CutPic.Controls.RemoveAt(BoxNameCombo.SelectedIndex);
+                //ボックス数量減る
                 BoxNum--;
 
+                //対象名付けているボックス存在しないの時
                 if (BoxNameList.Count == 0)
                 {
+                    //コンボボックスをクリア
                     BoxNameCombo.Items.Clear();
+
+                    //数字１から対象ボックスに名を付ける
                     for (int i = 0; i < BoxNum; i++)
                     {
                         MyBoxList[i].MyNumber.Text = (i + 1).ToString();
                         BoxNameCombo.Items.Add((i + 1).ToString());
                     }
                 }
+                //既に名を付けるボックス存在の時
                 else
                 {
+                   
                     if (BoxNameCombo.SelectedIndex < BoxNameList.Count)
                     {
+                        //選択した対象名を名前リストから消す
                         BoxNameList.RemoveAt(BoxNameCombo.SelectedIndex);
                     }
+
+                    //コンボボックスクリア
                     BoxNameCombo.Items.Clear();
 
+                    //対象数ループ
                     for (int i = 0; i < BoxNum; i++)
                     {
-
-                        if (i < BoxNameList.Count - 1 && BoxNameList[i] != "")
+                        //対象名は空白ではないの時
+                        if ( BoxNameList[i] != "")
                         {
-
-                            if (i < BoxNameList.Count - 1)
-                            {
-                                MyBoxList[i].MyNumber.Text = BoxNameList[i];
-                                BoxNameCombo.Items.Add(BoxNameList[i]);
-                            }
-                            else
-                            {
-                                MyBoxList[i].MyNumber.Text = (i + 1).ToString();
-                                BoxNameCombo.Items.Add((i + 1).ToString());
-                            }
+                            //名前を入れる
+                            MyBoxList[i].MyNumber.Text = BoxNameList[i];
+                            BoxNameCombo.Items.Add(BoxNameList[i]);
+                            //if (i < BoxNameList.Count - 1)
+                            //{
+                            //    MyBoxList[i].MyNumber.Text = BoxNameList[i];
+                            //    BoxNameCombo.Items.Add(BoxNameList[i]);
+                            //}
+                            //else
+                            //{
+                            //    MyBoxList[i].MyNumber.Text = (i + 1).ToString();
+                            //    BoxNameCombo.Items.Add((i + 1).ToString());
+                            //}
                         }
+                        //対象名は空白の時
                         else
                         {
+                            //数字を入れる
                             MyBoxList[i].MyNumber.Text = (i + 1).ToString();
                             BoxNameCombo.Items.Add((i + 1).ToString());
                         }
                     }
 
-
                 }
+                //コンボボックスのインデックスを0にする
                 BoxNameCombo.SelectedIndex = 0;
-                //for (int i = 0; i < MyBoxList.Count; i++)
-                //{
-
-                //    Bitmap bmpC = new Bitmap(CutPic.Width, CutPic.Height);
-                //    Graphics gc = Graphics.FromImage(bmpC);
-
-                //    Rectangle CutRect = new Rectangle(0, 0, CutPic.Width, CutPic.Height);
-                //    gc.DrawImage(CutPic.Image, CutRect, CutRect, GraphicsUnit.Pixel);
-                //    gc.DrawRectangle(Pens.Blue, MyBoxList[i]);
-                //    CutPic.Image = bmpC;
-                //}
-
-
             }
             //BoxList.Clear();
         }
@@ -1064,209 +1148,250 @@ namespace camera
         /// </summary>
         private void SaveDataOnCsv(bool[] ok)
         {
+            //今日の日を取得
             DateTime dt = new DateTime();
             dt = DateTime.Now;
+            //データ名
             string Path = "SaveData/" + dt.Year + "." + dt.Month + "." + dt.Day + "監視データ.csv";
-            //DataTable dt;
             StreamWriter sw;
+
+            //データ存在確認
             if (!File.Exists(Path))
             {
                 sw = new StreamWriter(Path, false, Encoding.GetEncoding("utf-8"));
+
+                //今の時間を書く
                 sw.WriteLine(DateTime.Now);
+
+                //チェック項目数ループ
                 for (int i = 0; i < ok.Length; i++)
                 {
+                    //対象名リストは０なら
                     if (BoxNameList.Count == 0)
                     {
+                        //合格
                         if (ok[i])
                         {
+                            //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.Samontape)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "温度正常");
                             }
+                            //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "点灯");
                             }
+                            //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "消灯");
                             }
                         }
+                        //不合格
                         else
                         {
+                            //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "温度高");
                             }
+                            //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "消灯");
                             }
+                            //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "点灯");
                             }
                         }
                     }
+                    //対象名あるなら
                     else
                     {
+                        //合格
                         if (ok[i])
                         {
+                            //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
                                 sw.WriteLine(BoxNameList[i] + "," + "温度正常");
                             }
+                            //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
                                 sw.WriteLine(BoxNameList[i] + "," + "点灯");
                             }
+                            //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "," + "消灯");
+                                sw.WriteLine(BoxNameList[i] + ","  + "消灯");
                             }
 
                         }
+                        //不合格
                         else
                         {
+                            //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
                                 sw.WriteLine(BoxNameList[i] + "," + "温度高");
                             }
+                            //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "," + "消灯");
+                                sw.WriteLine(BoxNameList[i] + ","  + "消灯");
                             }
+                            //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "," + "点灯");
+                                sw.WriteLine(BoxNameList[i] + ","  + "点灯");
                             }
                         }
                     }
                 }
             }
+
+            //既に保存データ存在の場合
             else
             {
-                // Excel.Application excelApp;
-
-
+                //ファイル開く
                 sw = File.AppendText(Path);
-
-                //excelApp =new Excel.Application();
-
-
-                ////Excel 起動しているなら終了したいです
-                //if (!excelApp.Visible)
-                //{
-                //    excelApp.Quit();
-                //}
-
+                //現在時間を書く
 
                 sw.WriteLine(DateTime.Now);
+
+                //チェック項目数ループ
                 for (int i = 0; i < ok.Length; i++)
                 {
+                    //対象名リストは０なら
                     if (BoxNameList.Count == 0)
                     {
+                        //合格
                         if (ok[i])
                         {
+                            //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.Samontape)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "温度正常");
                             }
+                            //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "点灯");
                             }
+                            //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "消灯");
                             }
                         }
+                        //不合格
                         else
                         {
+                            //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "温度高");
                             }
+                            //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "消灯");
                             }
+                            //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
                                 sw.WriteLine((i + 1).ToString() + "," + "点灯");
                             }
                         }
                     }
+                    //対象名あるなら
                     else
                     {
+                        //合格
                         if (ok[i])
                         {
+                            //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
                                 sw.WriteLine(BoxNameList[i] + "," + "温度正常");
                             }
+                            //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
                                 sw.WriteLine(BoxNameList[i] + "," + "点灯");
                             }
+                            //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "," + "消灯");
+                                sw.WriteLine(BoxNameList[i] + ","  + "消灯");
                             }
 
                         }
+                        //不合格
                         else
                         {
+                            //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
                                 sw.WriteLine(BoxNameList[i] + "," + "温度高");
                             }
+                            //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "," + "消灯");
+                                sw.WriteLine(BoxNameList[i] + "," + "消灯");
                             }
+                            //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "," + "点灯");
+                                sw.WriteLine(BoxNameList[i] + ","  + "点灯");
                             }
                         }
                     }
                 }
             }
-
+            //保存終了
             sw.Close();
         }
 
         /// <summary>
-        ///粋名設定ボタン
+        ///対象名設定ボタン
         /// </summary>
         private void SettingName_Click(object sender, EventArgs e)
         {
+            //設定ボックスフォーム宣言
             SettingBoxName SBN = new SettingBoxName();
             SBN.Owner = this;
+
+            //ボックス数を渡す
             SBN.Boxnum = MyBoxList.Count;
 
-            //if (Boxname.Count != 0)
-            //{
-            //    for (int i = 0; i < Boxname.Count; i++)
-            //    {
-            //        SBN.TextBox[i].Text = Boxname[i];
-            //    }
-            //}
             SBN.ShowDialog();
 
-
+            //名前リストをクリア
             BoxNameList.Clear();
+            //コンボボックスをクリア
             BoxNameCombo.Items.Clear();
+
+            //書いた名前の設定
             for (int i = 0; i < SBN.TextBox.Count; i++)
             {
+                //ボックス名リストに追加
                 BoxNameList.Add(SBN.TextBox[i].Text);
+
+                //入力している
                 if (SBN.TextBox[i].Text != "")
                 {
+
                     BoxNameCombo.Items.Add(SBN.TextBox[i].Text);
                     MyBoxList[i].MyNumber.Text = SBN.TextBox[i].Text;
 
                 }
+
+                //空白の場合
                 else
                 {
                     BoxNameCombo.Items.Add((i + 1).ToString());
@@ -1274,39 +1399,53 @@ namespace camera
                 }
             }
 
+            //ボックスコンボボックスのインデックス0にします
             BoxNameCombo.SelectedIndex = 0;
 
         }
 
         /// <summary>
-        ///粋選択したイベント
+        ///対象選択したイベント
         /// </summary>
         private void BoxNameCombo_SelectedValueChanged(object sender, EventArgs e)
         {
+            //全対象ボックスの色を青いにする
             for (int i = 0; i < MyBoxList.Count; i++)
             {
                 MyBoxList[i]._borderColor = Color.Blue;
                 MyBoxList[i].Invalidate();
             }
-            MyBoxList[BoxNameCombo.SelectedIndex]._borderColor = Color.LightSeaGreen;
 
+            //選択した対象ボックスの色をLightSeaGreenにする
+            MyBoxList[BoxNameCombo.SelectedIndex]._borderColor = Color.LightSeaGreen;
             MyBoxList[BoxNameCombo.SelectedIndex].Invalidate();
+
+            //選択した対象ボックスのRGB色合い値を取得
             RedTrack.Value = MyBoxList[BoxNameCombo.SelectedIndex].Red;
             GreenTrack.Value = MyBoxList[BoxNameCombo.SelectedIndex].Green;
             BlueTrack.Value = MyBoxList[BoxNameCombo.SelectedIndex].Blue;
 
+            //RGBテキストボックス設定
             RSetText.Text = RedTrack.Value.ToString();
             GSetText.Text = GreenTrack.Value.ToString();
             BSetText.Text = BlueTrack.Value.ToString();
 
+            //選択した対象ボックスの合格パーセント
+            //取得
             int BoxPercent = MyBoxList[BoxNameCombo.SelectedIndex].MySPercent;
+            //設定
             SetSusscePercent.Text = BoxPercent.ToString();
+           
+            //選択した対象ボックスのモード取得そして設定
             CheckMode.SelectedIndex = (int)MyBoxList[BoxNameCombo.SelectedIndex].MyBoxMode;
 
+            //選択した対象ボックスの指定色使用FALG取得そして設定
             UseThisCol.Checked = MyBoxList[BoxNameCombo.SelectedIndex].BoxChecked;
 
+            //Group名を現在選択した対象ボックスの名前に設定
             BoxSetting.Text = BoxNameCombo.SelectedItem.ToString() + "の設定";
 
+            //選択した対象ボックスの指定色取得そして設定
             UseCol.BackColor = MyBoxList[BoxNameCombo.SelectedIndex].UsedCol;
         }
 
@@ -1315,73 +1454,47 @@ namespace camera
         /// </summary>
 
         /// <summary>
-        ///R値変更
+        ///色合いの値R（赤）スライドしたイベント
         /// </summary>
         private void RedTrack_ValueChanged(object sender, EventArgs e)
         {
-
+            //対象ボックスの赤色合い量設定
             MyBoxList[BoxNameCombo.SelectedIndex].Red = RedTrack.Value;
-
         }
 
         /// <summary>
-        ///G値変更
+        ///色合いの値G（緑）スライドしたイベント
         /// </summary>
         private void GreenTrack_ValueChanged(object sender, EventArgs e)
         {
-
+            //対象ボックスの緑色合い量設定
             MyBoxList[BoxNameCombo.SelectedIndex].Green = GreenTrack.Value;
 
         }
 
         /// <summary>
-        ///B値変更
+        ///色合いの値B（青い）スライドしたイベント
         /// </summary>
         private void BlueTrack_ValueChanged(object sender, EventArgs e)
         {
-
+            //対象ボックスの青い色合い量設定
             MyBoxList[BoxNameCombo.SelectedIndex].Blue = BlueTrack.Value;
 
         }
 
-        /// <summary>
-        ///RGB値の変更END
-        /// </summary>
 
         /// <summary>
-        ///formにマウスクリック
-        /// </summary>
-        private void MainScene_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        ///入力を数字に限定する関数
-        /// </summary>
-        private void OnlyInputNum(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-               (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        ///色合いの値（赤）入力したイベント
+        ///色合いの値R（赤）入力したイベント
         /// </summary>
         private void RSetText_TextChanged(object sender, EventArgs e)
         {
+            //入力テキストボックス取得
             TextBox text = (TextBox)sender;
+
+            //テキストボックスに空白ではない
             if (text.Text != "")
             {
+                //数字は０以下255以上の時
                 if (Convert.ToInt32(text.Text) < 0 || Convert.ToInt32(text.Text) > 255)
                 {
                     MessageBox.Show("0~255にしてください");
@@ -1396,22 +1509,26 @@ namespace camera
                 }
                 else
                 {
+                    //対象ボックスの赤色合い量設定
                     RedTrack.Value = Convert.ToInt32(text.Text);
-
                 }
             }
         }
 
         /// <summary>
-        ///色合いの値（緑）入力したイベント
+        ///色合いの値G（緑）入力したイベント
         /// </summary>
         private void GSetText_TextChanged(object sender, EventArgs e)
         {
+            //入力テキストボックス取得
             TextBox text = (TextBox)sender;
+
+            //テキストボックスに空白ではない
             if (text.Text != "")
             {
                 if (Convert.ToInt32(text.Text) < 0 || Convert.ToInt32(text.Text) > 255)
                 {
+                    //数字は０以下255以上の時
                     MessageBox.Show("0~255にしてください");
                     if (Convert.ToInt32(text.Text) > 255)
                     {
@@ -1424,20 +1541,24 @@ namespace camera
                 }
                 else
                 {
+                    //対象ボックスの緑色合い量設定
                     GreenTrack.Value = Convert.ToInt32(text.Text);
-
                 }
             }
         }
 
         /// <summary>
-        ///色合いの値（青）入力したイベント
+        ///色合いの値B（青）入力したイベント
         /// </summary>
         private void BSetText_TextChanged(object sender, EventArgs e)
         {
+            //入力テキストボックス取得
             TextBox text = (TextBox)sender;
+
+            //テキストボックスに空白ではない
             if (text.Text != "")
             {
+                //数字は０以下255以上の時
                 if (Convert.ToInt32(text.Text) < 0 || Convert.ToInt32(text.Text) > 255)
                 {
                     MessageBox.Show("0~255にしてください");
@@ -1452,19 +1573,49 @@ namespace camera
                 }
                 else
                 {
+                    //対象ボックスの青い色合い量設定
                     BlueTrack.Value = Convert.ToInt32(text.Text);
                 }
             }
         }
 
         /// <summary>
+        ///RGB値の変更END
+        /// </summary>
+
+
+        /// <summary>
+        ///入力を数字に限定する関数
+        /// </summary>
+        private void OnlyInputNum(object sender, KeyPressEventArgs e)
+        {
+            //数字の時
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+               (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            //数字以外の時
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+
+        /// <summary>
         ///成功パーセント設定入力したイベント
         /// </summary>
         private void SetSusscePercent_TextChanged(object sender, EventArgs e)
         {
+            //入力テキストボックス取得
             TextBox text = (TextBox)sender;
+
+            //テキストボックスに空白ではない
             if (text.Text != "")
             {
+                //数字は０以下100以上の時
                 if (Convert.ToInt32(text.Text) < 0 || Convert.ToInt32(text.Text) > 100)
                 {
                     MessageBox.Show("0~100にしてください");
@@ -1479,6 +1630,7 @@ namespace camera
                 }
                 else
                 {
+                    //パーセントを設定
                     MyBoxList[BoxNameCombo.SelectedIndex].MySPercent = Convert.ToInt32(text.Text);
                 }
             }
@@ -1489,8 +1641,10 @@ namespace camera
         /// </summary>
         private void ClearCheckScene_Click(object sender, EventArgs e)
         {
-
+            //背景色戻す
             this.BackColor = SystemColors.Control;
+
+            //対象ボックスの合格部分緑を塗る用pictureboxを非表示
             for (int i = 0; i < MyBoxList.Count; i++)
             {
                 MyBoxList[i].Drawbox.Visible = false;
@@ -1503,6 +1657,7 @@ namespace camera
         /// </summary>
         private void CheckMode_SelectedValueChanged(object sender, EventArgs e)
         {
+            //モード変更
             MyBoxList[BoxNameCombo.SelectedIndex].MyBoxMode = (MyBox.BoxMode)CheckMode.SelectedIndex;
         }
 
@@ -1511,12 +1666,17 @@ namespace camera
         /// </summary>
         private void MainScene_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //閉める時に対象ボックス情報保存確認
             DialogResult result = MessageBox.Show("対象情報を保存しますか？ ", "", MessageBoxButtons.YesNo);
+
+            //保存したいなら
             if (result == DialogResult.Yes)
             {
+                //対象ボックス情報保存関数
                 SaveBoxSetting();
             }
 
+            //親フォーム表示
             this.Owner.Visible = true;
 
         }
@@ -1526,32 +1686,56 @@ namespace camera
         /// </summary>
         private void SaveBoxSetting()
         {
+            //CutPicは画像存在確認
             if (CutPic.Image != null)
             {
+                //現画像データ名取得
                 string[] name = SaveDataname.Split('.');
+                //保存データ名
                 string Path = name[0] + ".bat";
+
+                //保存データ名NULL確認
                 if (SaveDataname != "")
                 {
                     using (StreamWriter sw = new StreamWriter(Path, false, Encoding.GetEncoding("utf-8")))
                     {
+                        //対象ボックス数量書く
                         sw.WriteLine(BoxNum.ToString());
                         for (int i = 0; i < BoxNum; i++)
                         {
+                            //対象ボックス名書く
                             sw.WriteLine("name:" + BoxNameCombo.Items[i].ToString());
+
+                            //対象ボックス位置書く
                             sw.WriteLine("pos:" + MyBoxList[i].Location.X + "," + MyBoxList[i].Location.Y);
+
+                            //対象ボックスサイズ書く
                             sw.WriteLine("size:" + MyBoxList[i].Width + "," + MyBoxList[i].Height);
+
+                            //対象ボックス指定色使用チェック状態書く
                             sw.WriteLine("BoxChecked" + MyBoxList[i].BoxChecked);
 
+                            //対象ボックスRGB
+                            //RGB取得
                             int _赤 = MyBoxList[i].Red;
                             int _緑 = MyBoxList[i].Green;
                             int _青 = MyBoxList[i].Blue;
+                            //対象ボックスRGB書く
                             sw.WriteLine("RGB:" + _赤.ToString() + "," + _緑.ToString() + "," + _青.ToString());
 
+                            //合格パーセント
+                            //パーセント取得
                             int _パーセント = MyBoxList[i].MySPercent;
+                            //パーセント書く
                             sw.WriteLine("%:" + _パーセント.ToString());
+
+                            //対象ボックスモード書く
                             sw.WriteLine("Mode:" + ((int)MyBoxList[i].MyBoxMode).ToString());
 
+                            //対象ボックス指定色
+                            //指定色取得
                             Color Col = MyBoxList[i].UsedCol;
+                            //指定色書く
                             sw.WriteLine("CheckCol:" + Col.R + "," + Col.G + "," + Col.B);
 
                         }
@@ -1573,9 +1757,13 @@ namespace camera
         /// </summary>
         private void SaveBoxData_Click(object sender, EventArgs e)
         {
+            //保存とかの質問のMessageBox
             DialogResult result = MessageBox.Show("対象情報を保存しますか？ ", "", MessageBoxButtons.YesNo);
+
+            //保存したいなら
             if (result == DialogResult.Yes)
             {
+                //ボックス情報の保存関数
                 SaveBoxSetting();
             }
         }
@@ -1585,10 +1773,12 @@ namespace camera
         /// </summary>
         private void UseThisCol_CheckedChanged(object sender, EventArgs e)
         {
+            //指定色チェック使用FALGをTRUEする
             if (UseThisCol.Checked)
             {
                 MyBoxList[BoxNameCombo.SelectedIndex].BoxChecked = true;
             }
+            //指定色チェック使用FALGをFALSEする
             else
             {
                 MyBoxList[BoxNameCombo.SelectedIndex].BoxChecked = false;
@@ -1600,6 +1790,7 @@ namespace camera
         /// </summary>
         private void ChooseCol_Click(object sender, EventArgs e)
         {
+            //指定色ボックス検査色選択FLAGをTRUEする
             StarChooseCol = true;
         }
 
@@ -1608,50 +1799,62 @@ namespace camera
         /// </summary>
         private void AutoLock_Click(object sender, EventArgs e)
         {
+            //マスター画像bitmap取得
             Bitmap CheackBT = (Bitmap)MasterImage.Clone();
+            //目標色設定
             int R = AutoCol.BackColor.R;
             int G = AutoCol.BackColor.G;
             int B = AutoCol.BackColor.B;
-            int boxnum = 0;
+            ////ボックス番号
+            //int boxnum = 0;
+            //ボックス数
             int Boxlimit = Convert.ToInt32(CheckLockNum.Text);
-            BoxNum = 0;
+            //ボックス番号
+            BoxNum = 1;
+            //横縦計算用int
             int w = 0, h = 0;
+            //ボックス判定用四角保存リスト
             List<Rectangle> rectList = new List<Rectangle>();
+
+            //現存ボックスクリア
             BoxNameCombo.Items.Clear();
             MyBoxList.Clear();
             CutPic.Controls.Clear();
             //対象名リセット
             BoxNameList.Clear();
 
-            //for (int i = 0; i < CutPic.Controls.Count; i++)
-            //{
-            //    CutPic.Controls.RemoveAt(0);
-            //}
+            //最初の位置探す用色合い基準
             int firstLimit = Convert.ToInt32(AutoColNums.Text);
+            //横幅測量基準色合い
             int IroAi = 50;
 
+            //検索ループ
             for (int i = 0; i < CutPic.Width; i++)
             {
                 for (int j = 0; j < CutPic.Height; j++)
                 {
-
+                    //検索したピクセルのRGB取得
                     int CR = CheackBT.GetPixel(i, j).R;
                     int CG = CheackBT.GetPixel(i, j).G;
                     int CB = CheackBT.GetPixel(i, j).B;
 
-                    if (boxnum == 0)
+                    //最初の対象ボックス
+                    if (BoxNum == 1)
                     {
+                        //ボックスの左上の点を取得条件
                         if (CR >= R - firstLimit && CR <= R + firstLimit &&
                         CG >= G - firstLimit && CG <= G + firstLimit &&
                         CB >= B - firstLimit && CB <= B + firstLimit)
                         {
-
+                            //横幅計算
                             for (int k = i; k < CutPic.Width; k++)
                             {
+                                //左上の点の右の点の色RGBを取得
                                 int KR = CheackBT.GetPixel(k, j).R;
                                 int KG = CheackBT.GetPixel(k, j).G;
                                 int KB = CheackBT.GetPixel(k, j).B;
 
+                                //右に行って色合い以内ならば横幅(w)++
                                 if (KR >= R - IroAi && KR <= R + IroAi &&
                                     KG >= G - IroAi && KG <= G + IroAi &&
                                     KB >= B - IroAi && KB <= B + IroAi)
@@ -1660,16 +1863,19 @@ namespace camera
                                 }
                                 else
                                 {
+                                    //違いますなら計算終了
                                     break;
                                 }
                             }
 
+                            //縦幅計算
                             for (int l = j; l < CutPic.Height; l++)
                             {
+                                //左上の点の下の点の色RGBを取得
                                 int lR = CheackBT.GetPixel(i, l).R;
                                 int lG = CheackBT.GetPixel(i, l).G;
                                 int lB = CheackBT.GetPixel(i, l).B;
-
+                                //下に行って色合い以内ならば縦幅(h)++
                                 if (lR >= R - IroAi && lR <= R + IroAi &&
                                     lG >= G - IroAi && lG <= G + IroAi &&
                                     lB >= B - IroAi && lB <= B + IroAi)
@@ -1678,47 +1884,60 @@ namespace camera
                                 }
                                 else
                                 {
+                                    //違いますなら計算終了
                                     break;
                                 }
                             }
-                
-                            BoxNum++;
-                            MyBox box = new MyBox();
-                            CutPic.Controls.Add(box);
-                            box.MyNumber.Text = BoxNum.ToString(); ;
-                            MyBoxList.Add(box);
-                            BoxNameCombo.Items.Add(BoxNum.ToString());
-                            BoxNameList.Add(BoxNum.ToString());
-                            Rectangle angle = new Rectangle(i, j, w, h);
-                            rectList.Add(angle);
-                            MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
-                            MyBoxList[boxnum].Width = w;
-                            MyBoxList[boxnum].Height = h;
-                            boxnum++;
 
+                            ////ボックス番号++
+                            //BoxNum++;
+                            //対象ボックス生成
+                            MyBox box = new MyBox();
+                            //対象ボックスをCutPicの子にする
+                            CutPic.Controls.Add(box);
+                            //ボックス番号テキスト
+                            box.MyNumber.Text = BoxNum.ToString();
+                            //ボックスリストに追加
+                            MyBoxList.Add(box);
+                            //ボックスコンボボックスに追加
+                            BoxNameCombo.Items.Add(BoxNum.ToString());
+                            ////ボックス名リストに追加
+                            //BoxNameList.Add(BoxNum.ToString());
+                            //ボックス判定用四角生成
+                            Rectangle angle = new Rectangle(i, j, w, h);
+                            //判定用四角をリストに追加
+                            rectList.Add(angle);
+                            //対象ボックスの位置とサイズ設定
+                            MyBoxList[BoxNum-1].Location = new System.Drawing.Point(i, j);
+                            MyBoxList[BoxNum-1].Width = w;
+                            MyBoxList[BoxNum-1].Height = h;
+                            //ボックス計数器++
+                            BoxNum++;
+
+                            //横縦計算用intを0にする
                             w = 0;
                             h = 0;
                         }
 
                     }
 
-                    else if (boxnum < Boxlimit && boxnum != 0)
+                    //二個目以降の対象ボックス
+                    else if (BoxNum <= Boxlimit && BoxNum != 1)
                     {
                         if (CR >= R - firstLimit && CR <= R + firstLimit &&
                             CG >= G - firstLimit && CG <= G + firstLimit &&
                             CB >= B - firstLimit && CB <= B + firstLimit)
                         {
 
-                            //if (!rectList[r].Contains(i, j))
-                            //{
-
-
+                            //横幅計算
                             for (int k = i; k < CutPic.Width; k++)
                             {
+                                //左上の点の右の点の色RGBを取得
                                 int KR = CheackBT.GetPixel(k, j).R;
                                 int KG = CheackBT.GetPixel(k, j).G;
                                 int KB = CheackBT.GetPixel(k, j).B;
 
+                                //右に行って色合い以内ならば横幅(w)++
                                 if (KR >= R - IroAi && KR <= R + IroAi &&
                                     KG >= G - IroAi && KG <= G + IroAi &&
                                     KB >= B - IroAi && KB <= B + IroAi)
@@ -1727,16 +1946,20 @@ namespace camera
                                 }
                                 else
                                 {
+                                    //違いますなら計算終了
                                     break;
                                 }
                             }
 
+                            //縦幅計算
                             for (int l = j; l < CutPic.Height; l++)
                             {
+                                //左上の点の下の点の色RGBを取得
                                 int lR = CheackBT.GetPixel(i, l).R;
                                 int lG = CheackBT.GetPixel(i, l).G;
                                 int lB = CheackBT.GetPixel(i, l).B;
 
+                                //下に行って色合い以内ならば縦幅(h)++
                                 if (lR >= R - IroAi && lR <= R + IroAi &&
                                     lG >= G - IroAi && lG <= G + IroAi &&
                                     lB >= B - IroAi && lB <= B + IroAi)
@@ -1745,11 +1968,15 @@ namespace camera
                                 }
                                 else
                                 {
+                                    //違いますなら計算終了
                                     break;
                                 }
                             }
+
+                            //生成必要判定FLAG
                             bool canbuild = true;
 
+                            //生成済みの対象と判定　同じ場所なら生成必要ない
                             for (int r = 0; r < rectList.Count; r++)
                             {
                                 if (rectList[r].Contains((i + (i + w)) / 2, (j + (j + h)) / 2) ||
@@ -1765,35 +1992,52 @@ namespace camera
 
                             }
 
+                            //生成必要
                             if (canbuild)
                             {
                              
-                                BoxNum++;
+                                ////ボックス番号++
+                                //BoxNum++;
+                                //対象ボックス生成
                                 MyBox box = new MyBox();
+                                //対象ボックスをCutPicの子にする
                                 CutPic.Controls.Add(box);
-                                box.MyNumber.Text = BoxNum.ToString(); ;
+                                //ボックス番号テキスト
+                                box.MyNumber.Text = BoxNum.ToString();
+                                //ボックスリストに追加
                                 MyBoxList.Add(box);
+                                //ボックスコンボボックスに対象ボックス名追加
                                 BoxNameCombo.Items.Add(BoxNum.ToString());
-                                BoxNameList.Add(BoxNum.ToString());
+                                ////ボックス名リストに追加
+                                //BoxNameList.Add(BoxNum.ToString());
+                                //ボックス判定用四角生成
                                 Rectangle angle = new Rectangle(i, j, w, h);
+                                //判定用四角をリストに追加
                                 rectList.Add(angle);
-                                MyBoxList[boxnum].Location = new System.Drawing.Point(i, j);
-                                MyBoxList[boxnum].Width = w;
-                                MyBoxList[boxnum].Height = h;
-                                boxnum++;
-
+                                //対象ボックスの位置とサイズ設定
+                                MyBoxList[BoxNum-1].Location = new System.Drawing.Point(i, j);
+                                MyBoxList[BoxNum-1].Width = w;
+                                MyBoxList[BoxNum-1].Height = h;
+                                //ボックス計数器++
+                                if (BoxNum != Boxlimit)
+                                {
+                                    BoxNum++;
+                                }
+                                
+                                //横縦計算用intを0にする
                                 w = 0;
                                 h = 0;
+                          
                             }
 
-                            // }
+                            
                         }
 
                     }
 
                 }
             }
-
+            //ボックスコンボボックスのインデックス0にします
             BoxNameCombo.SelectedIndex = 0;
 
         }
@@ -1803,6 +2047,7 @@ namespace camera
         /// </summary>
         private void AutoColSelectBtn_Click(object sender, EventArgs e)
         {
+            //自動対象検索用色選択FLAGをTRUEにする
             StarChooseAutoCol = true;
         }
 
@@ -1813,37 +2058,28 @@ namespace camera
         {
             try
             {
+                //指定色ボックス検査色
                 if (StarChooseCol)
                 {
+                    //マスターが画像bitmap取得
                     Bitmap bmp = new Bitmap(CutPic.Image);
+                    //マウス指す場所色を取得そして設定
                     Color color = bmp.GetPixel(e.X, e.Y);
-                    //RNums.Text = color.R.ToString();
-                    //GNums.Text = color.G.ToString();
-                    //BNums.Text = color.B.ToString();
-
                     UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
                     MyBoxList[BoxNameCombo.SelectedIndex].UsedCol = CheckCol = color;
-
-                    //Mdown.X = e.X;
-                    //Mdown.Y = e.Y;
+                    //選択FLAG閉める
                     StarChooseCol = false;
                 }
 
+                //自動対象検索用色
                 if (StarChooseAutoCol)
                 {
+                    //マスターが画像bitmap取得
                     Bitmap bmp = new Bitmap(CutPic.Image);
+                    //マウス指す場所色を取得そして設定
                     Color color = bmp.GetPixel(e.X, e.Y);
-                    //RNums.Text = color.R.ToString();
-                    //GNums.Text = color.G.ToString();
-                    //BNums.Text = color.B.ToString();
-
                     AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-                    MyBoxList[BoxNameCombo.SelectedIndex].UsedCol = CheckCol = color;
-
-                    //Mdown.X = e.X;
-                    //Mdown.Y = e.Y;
+                    //選択FLAG閉める
                     StarChooseAutoCol = false;
                 }
             }
@@ -1858,47 +2094,48 @@ namespace camera
         /// </summary>
         private void CutPic_MouseMove(object sender, MouseEventArgs e)
         {
+            //指定色ボックス検査色
             if (StarChooseCol)
             {
+                //マスターが画像bitmap取得
                 Bitmap bmp = new Bitmap(CutPic.Image);
+                //マウス指す場所色を取得そして表示
                 Color color = bmp.GetPixel(e.X, e.Y);
-                //RNums.Text = color.R.ToString();
-                //GNums.Text = color.G.ToString();
-                //BNums.Text = color.B.ToString();
-
                 UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-                //Mdown.X = e.X;
-                //Mdown.Y = e.Y;
-                //StarChooseCol = false;
             }
-
+            //自動対象検索用色
             if (StarChooseAutoCol)
             {
+                //マスターが画像bitmap取得
                 Bitmap bmp = new Bitmap(CutPic.Image);
+                //マウス指す場所色を取得そして表示
                 Color color = bmp.GetPixel(e.X, e.Y);
-                //RNums.Text = color.R.ToString();
-                //GNums.Text = color.G.ToString();
-                //BNums.Text = color.B.ToString();
-
                 AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
-
-                //Mdown.X = e.X;
-                //Mdown.Y = e.Y;
-                //StarChooseCol = false;
             }
         }
 
-        //対象オブジェクトを一つに戻すボタン
+        /// <summary>
+        /// 対象ボックスを一つに戻すボタン
+        /// </summary>
         private void CleanObj_Click(object sender, EventArgs e)
         {
+            //ボックス数量を取る
             int MyboxNums = MyBoxList.Count;
 
+            //最後の一つから消す
             for (int i = (MyboxNums - 1); i > 0; i--)
             {
                 MyBoxList.RemoveAt(i);
                 CutPic.Controls.RemoveAt(i);
+                BoxNameCombo.Items.RemoveAt(i);
+
+                if (BoxNameList.Count > 1)
+                {
+                    BoxNameList.RemoveAt(i);
+                }   
+                
             }
+            BoxNum = 1;
 
         }
     }
