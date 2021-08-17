@@ -191,7 +191,7 @@ namespace camera
         {
             // 描画をクリア
             this.Refresh();
-
+           
             base.OnSizeChanged(e);
         }
 

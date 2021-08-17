@@ -63,9 +63,11 @@ namespace camera
         //Load
         private void SettingBoxName_Load(object sender, EventArgs e)
         {
+            //最初のテキストとラベルの位置を取得
             LPoint = Nums.Location;
             TPoint = Boxname.Location;
 
+            //必要の数量生成ループ
             for (int i = 1; i < Boxnum; i++)
             {
                 LPoint = BuildNewlabel(LPoint, (i + 1).ToString(), LabelList);
@@ -73,11 +75,15 @@ namespace camera
                 TPoint = BuildNewTextBox(TPoint, null, TextBox);
             }
 
+            //メインシーンを取得
             MainScene main = (MainScene)this.Owner;
+
+            //既に名前ある対象名を取得
             if (main.BoxNameList.Count != 0)
             {
-                for(int i = 0; i < main.BoxNameList.Count; i++)
+                for (int i = 0; i < main.BoxNameList.Count; i++)
                 {
+
                     TextBox[i].Text = main.BoxNameList[i];
                 }
             }
@@ -86,8 +92,7 @@ namespace camera
         //完成ボタン
         private void CompleteBtn_Click(object sender, EventArgs e)
         {
-            
-
+            //このフォームを終了
             this.Close();
         }
     }

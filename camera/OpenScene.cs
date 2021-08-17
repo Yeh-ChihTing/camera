@@ -25,8 +25,12 @@ namespace camera
 
         public OpenScene()
         {
-            this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
+
+            //フォーム位置を画面の真中にする
+            this.StartPosition = FormStartPosition.CenterScreen;
+
+            //使用できるカメラデバイス検索関数
             ListOfAttachedCameras();
 
         }
@@ -36,14 +40,26 @@ namespace camera
         {
             if (CameraNames.Count > 0)
             {
+                //新しいメインシーン宣言
                 MainScene main = new MainScene();
+
+                //メインシーンフォーム位置を画面の真中にする
                 main.StartPosition = FormStartPosition.CenterScreen;
+
+                //このフォームの子にする
                 main.Owner = this;
+
+                //カメラモード設定
                 main.Cmode = MainScene.CamMode.WebCam;
+
+                //使用するカメラ番号
                 main.WebCamNum = WebCamSelect.SelectedIndex;
+
+                //メインシーン表示
                 main.Show();
-                       
+
                 //this.Close();
+                //このフォームを隠し
                 this.Visible = false;
             }
             else
@@ -55,13 +71,26 @@ namespace camera
         //ネットワークカメラを起動
         private void StartnetCamera_Click(object sender, EventArgs e)
         {
+            //新しいメインシーン宣言
             MainScene main = new MainScene();
+
+            //メインシーンフォーム位置を画面の真中にする
             main.StartPosition = FormStartPosition.CenterScreen;
+
+            //このフォームの子にする
             main.Owner = this;
+
+            //カメラモード設定
             main.Cmode = MainScene.CamMode.NetCam;
+
+            //ネットワークカメラアドレス設定
             //main.CamTypeName = "http://"+UserID.Text+":"+ PassWord.Text+"@"+IpAdress.Text+ "/axis-cgi/mjpg/video.cgi";
-            main.CamTypeName = "http://" + UserID.Text + ":" + PassWord.Text + "@" + IpAdress.Text + "/"+CGIConment.Text;
+            main.CamTypeName = "http://" + UserID.Text + ":" + PassWord.Text + "@" + IpAdress.Text + "/" + CGIConment.Text;
+
+            //メインシーン表示
             main.Show();
+
+            //このフォームを隠し
             this.Visible = false;
         }
 
@@ -69,16 +98,18 @@ namespace camera
         private void OpenScene_Load(object sender, EventArgs e)
         {
             //使用できるWEBカメラ表示
-            for(int i = 0; i < CameraNames.Count; i++)
+            for (int i = 0; i < CameraNames.Count; i++)
             {
                 WebCamSelect.Items.Add(CameraNames[i]);
             }
 
-            if (CameraNames.Count > 0) 
+            //使用できるWEBカメラ0ではない
+            if (CameraNames.Count > 0)
             {
                 WebCamSelect.SelectedIndex = 0;
                 //WebCamSelect.DropDownStyle = ComboBoxStyle.DropDownList;
             }
+            //使用できるWEBカメラ0です
             else
             {
 
@@ -88,7 +119,7 @@ namespace camera
             }
 
         }
-    
+
         //使用できるWEBカメラリストを取得
         public void ListOfAttachedCameras()
         {
@@ -101,6 +132,7 @@ namespace camera
                 CameraNames.Add(friendlyName);
             }
             //return cameras.ToArray();
-        }   
+        }
+
     }
 }

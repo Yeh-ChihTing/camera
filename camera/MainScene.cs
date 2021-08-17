@@ -437,6 +437,7 @@ namespace camera
                 //対象数ループ
                 for (int k = 0; k < MyBoxList.Count; k++)
                 {
+                    
                     //対象位置とサイズ取得
                     int X = MyBoxList[k].Location.X;
                     int SizeX = X + (MyBoxList[k].Width);
