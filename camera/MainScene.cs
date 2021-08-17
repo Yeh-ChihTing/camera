@@ -181,7 +181,6 @@ namespace camera
         //変数宣言END
 
 
-
         /// <summary>
         ///初期化
         /// </summary>

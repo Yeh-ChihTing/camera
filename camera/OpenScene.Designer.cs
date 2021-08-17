@@ -170,7 +170,7 @@ namespace camera
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "OpenScene";
-            this.Text = "OpenScene";
+            this.Text = "カメラ選択と設定";
             this.Load += new System.EventHandler(this.OpenScene_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

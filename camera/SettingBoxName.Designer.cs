@@ -74,7 +74,7 @@ namespace camera
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingBoxName";
-            this.Text = "粋の名前を設定";
+            this.Text = "対象名設定";
             this.Load += new System.EventHandler(this.SettingBoxName_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
