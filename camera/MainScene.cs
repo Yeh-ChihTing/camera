@@ -416,7 +416,7 @@ namespace camera
                 Bitmap CheackBT = (Bitmap)MasterImage.Clone();
 
                 //各ピクセルRGB値取得用int
-                int OR = 0, OG = 0, OB = 0, CR, CG, CB;
+                int OR = 0, OG = 0, OB = 0, CR=0, CG=0, CB=0;
 
                 //検査結果保存用FLAG数列
                 bool[] OkOrFail = new bool[MyBoxList.Count];
@@ -471,26 +471,33 @@ namespace camera
                     MyBoxList[k].Drawbox.Width = MyBoxList[k].Width - 6;
                     MyBoxList[k].Drawbox.Height = MyBoxList[k].Height - 6;
 
+                    //対象内内部検査ループXからY
                     for (int i = X; i < SizeX; i++)
                     {
                         for (int j = Y; j < SizeY; j++)
                         {
+                            //カメラ画像のピクセル色を取得
 
+                            OR = Origin.GetPixel(i, j).R;
+                            OG = Origin.GetPixel(i, j).G;
+                            OB = Origin.GetPixel(i, j).B;
+
+                            //指定色使用しないならマスタ画像からピクセル色を取得
                             if (!MyBoxList[k].BoxChecked)
                             {
-                                OR = Origin.GetPixel(i, j).R;
-                                OG = Origin.GetPixel(i, j).G;
-                                OB = Origin.GetPixel(i, j).B;
+                                CR = CheackBT.GetPixel(i, j).R;
+                                CG = CheackBT.GetPixel(i, j).G;
+                                CB = CheackBT.GetPixel(i, j).B;
                             }
+                            //指定色を取得
                             else
                             {
-                                OR = CheckCol.R;
-                                OG = CheckCol.G;
-                                OB = CheckCol.B;
+                                CR = CheckCol.R;
+                                CG = CheckCol.G;
+                                CB = CheckCol.B;
                             }
-                            CR = CheackBT.GetPixel(i, j).R;
-                            CG = CheackBT.GetPixel(i, j).G;
-                            CB = CheackBT.GetPixel(i, j).B;
+
+                            //カメラ画像のピクセル色はマスタ画像のピクセル色が指定色と範囲内ならば合格
                             if ((CR <= OR + MyBoxList[k].Red && CR >= OR - MyBoxList[k].Red) &&
                                 (CG <= OG + MyBoxList[k].Green && CG >= OG - MyBoxList[k].Green) &&
                                 (CB <= OB + MyBoxList[k].Blue && CB >= OB - MyBoxList[k].Blue))
@@ -501,6 +508,7 @@ namespace camera
                                 MyBoxList[k].ChangeColor(Color.Blue);
                                 RightNum++;
                             }
+                            //不合格
                             else
                             {
                                 //haveFail = true;
@@ -512,30 +520,39 @@ namespace camera
 
                     }
 
+                    //drawboxに緑ではない部分背景画像にする
                     MyBoxList[k].Drawbox.Image = bmp;
+                    //合格した部分のパーセント計算
                     percentOfSusses = ((double)RightNum / ((double)MyBoxList[k].Width * (double)MyBoxList[k].Height)) * 100.0;
+                    //計算した結果をINTに転換
                     int Getpercent = (int)percentOfSusses;
+                    //対象ボックスの合格基準を取得
                     int BoxPercent = MyBoxList[k].MySPercent;
 
+                    //対象名あるの時
                     if (BoxNameList.Count > 0)
                     {
+                        //命名あるなら名前表示
                         if (BoxNameList[k] != "")
                         {
                             CheckPerList.Items.Add(BoxNameList[k] + " : " + Getpercent.ToString() + "%"
                                 + "/ " + BoxPercent.ToString() + "%" + " 一致");
                         }
+                        //命名してないなら番号表示
                         else
                         {
                             CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
                                 + "/" + BoxPercent.ToString() + "%" + " 一致");
                         }
                     }
+                    //対象名ないのとき対象番号表示
                     else
                     {
                         CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
                                 + "/" + BoxPercent.ToString() + "%" + " 一致");
                     }
                     // GetPercent.Text = Getpercent.ToString();
+                    //合格パーセント以下の時不合格
                     if (percentOfSusses < BoxPercent)
                     {
                         MyBoxList[k].ChangeColor(Color.Red);
@@ -546,6 +563,7 @@ namespace camera
 
                 }
 
+                //合格音　背景緑に変換
                 if (!haveFail)
                 {
                     if (LoopBtnFlag)
@@ -557,6 +575,7 @@ namespace camera
                     //DrawCheak();
                     //Ans.Text = "OK";
                 }
+                //不合格音　背景赤に変換
                 else
                 {
                     Player = new System.Media.SoundPlayer(FailSound);
@@ -565,6 +584,7 @@ namespace camera
                     //Ans.Text = "FAIL";
                 }
 
+                //CSVに保存
                 SaveDataOnCsv(OkOrFail);
             }
             catch
@@ -700,15 +720,32 @@ namespace camera
                     //新のマスタ画像選択した時
                     else
                     {
-                        //1以外の対象ボックスをクリア
-                        if (MyBoxList.Count > 1)
+                        //状態保存データないの画像なら対象ボックス1個にします
+                        if (!File.Exists(dataSpace))
                         {
-                            for (int i = 1; i < MyBoxList.Count; i++)
+                            //1以外の対象ボックスをクリアそして初期化
+                            if (MyBoxList.Count > 1)
                             {
-                                MyBoxList.RemoveAt(i);
+                                for (int i = 1; i < MyBoxList.Count; i++)
+                                {
+                                    MyBoxList.RemoveAt(i);
+
+                                }
+                                //ボックス数1に戻す
+                                BoxNum = 1;
+
+                                CutPic.Controls.Clear();
+                                CutPic.Controls.Add(MyBoxList[0]);
+                                MyBoxList[0].Name = "";
+
+                                //ボックス名リストのクリア
+                                BoxNameList.Clear();
+
+                                //コンボボックスの初期化
+                                BoxNameCombo.Items.Clear();
+                                BoxNameCombo.Items.Add("1");
+                                BoxNameCombo.SelectedIndex = 0;
                             }
-                            CutPic.Controls.Clear();
-                            CutPic.Controls.Add(MyBoxList[0]);
                         }
 
                         //データ名を記録

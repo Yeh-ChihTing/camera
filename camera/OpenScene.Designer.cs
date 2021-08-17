@@ -40,11 +40,13 @@ namespace camera
             this.StartWebCamera = new System.Windows.Forms.Button();
             this.SelectcamText = new System.Windows.Forms.Label();
             this.WebCamSelect = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.CGIConment = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // StartnetCamera
             // 
-            this.StartnetCamera.Location = new System.Drawing.Point(111, 89);
+            this.StartnetCamera.Location = new System.Drawing.Point(103, 114);
             this.StartnetCamera.Name = "StartnetCamera";
             this.StartnetCamera.Size = new System.Drawing.Size(88, 23);
             this.StartnetCamera.TabIndex = 282;
@@ -105,7 +107,7 @@ namespace camera
             // 
             // StartWebCamera
             // 
-            this.StartWebCamera.Location = new System.Drawing.Point(167, 152);
+            this.StartWebCamera.Location = new System.Drawing.Point(167, 163);
             this.StartWebCamera.Name = "StartWebCamera";
             this.StartWebCamera.Size = new System.Drawing.Size(83, 23);
             this.StartWebCamera.TabIndex = 283;
@@ -116,7 +118,7 @@ namespace camera
             // SelectcamText
             // 
             this.SelectcamText.AutoSize = true;
-            this.SelectcamText.Location = new System.Drawing.Point(27, 140);
+            this.SelectcamText.Location = new System.Drawing.Point(27, 151);
             this.SelectcamText.Name = "SelectcamText";
             this.SelectcamText.Size = new System.Drawing.Size(75, 12);
             this.SelectcamText.TabIndex = 284;
@@ -126,16 +128,35 @@ namespace camera
             // 
             this.WebCamSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.WebCamSelect.FormattingEnabled = true;
-            this.WebCamSelect.Location = new System.Drawing.Point(29, 155);
+            this.WebCamSelect.Location = new System.Drawing.Point(29, 166);
             this.WebCamSelect.Name = "WebCamSelect";
             this.WebCamSelect.Size = new System.Drawing.Size(121, 20);
             this.WebCamSelect.TabIndex = 285;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(23, 92);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(24, 12);
+            this.label1.TabIndex = 287;
+            this.label1.Text = "CGI";
+            // 
+            // CGIConment
+            // 
+            this.CGIConment.Location = new System.Drawing.Point(53, 89);
+            this.CGIConment.Name = "CGIConment";
+            this.CGIConment.Size = new System.Drawing.Size(197, 19);
+            this.CGIConment.TabIndex = 286;
+            this.CGIConment.Text = "cgi-bin/camera?resolution=640";
             // 
             // OpenScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(323, 209);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.CGIConment);
             this.Controls.Add(this.WebCamSelect);
             this.Controls.Add(this.SelectcamText);
             this.Controls.Add(this.StartWebCamera);
@@ -168,5 +189,7 @@ namespace camera
         private System.Windows.Forms.Button StartWebCamera;
         private System.Windows.Forms.Label SelectcamText;
         private System.Windows.Forms.ComboBox WebCamSelect;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox CGIConment;
     }
 }

@@ -60,7 +60,7 @@ namespace camera
             main.Owner = this;
             main.Cmode = MainScene.CamMode.NetCam;
             //main.CamTypeName = "http://"+UserID.Text+":"+ PassWord.Text+"@"+IpAdress.Text+ "/axis-cgi/mjpg/video.cgi";
-            main.CamTypeName = "http://" + UserID.Text + ":" + PassWord.Text + "@" + IpAdress.Text + "/cgi-bin/camera?resolution=640";
+            main.CamTypeName = "http://" + UserID.Text + ":" + PassWord.Text + "@" + IpAdress.Text + "/"+CGIConment.Text;
             main.Show();
             this.Visible = false;
         }
