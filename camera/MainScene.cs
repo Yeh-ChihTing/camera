@@ -517,7 +517,7 @@ namespace camera
                     //グラフィック処理用
                     Graphics g = Graphics.FromImage(bmp);
 
-                    //
+                    //描画する部分の位置を決定する
                     Rectangle srcRect = new Rectangle(X, Y, MyBoxList[k].Width, MyBoxList[k].Height);
 
                     //描画する部分の範囲を決定する
