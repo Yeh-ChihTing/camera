@@ -33,6 +33,8 @@ namespace camera
             //使用できるカメラデバイス検索関数
             ListOfAttachedCameras();
 
+            //拡大ボタン機能OFF
+            this.MaximizeBox = !this.MaximizeBox;
         }
 
         //Webカメラを起動

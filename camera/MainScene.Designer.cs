@@ -33,7 +33,6 @@ namespace camera
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScene));
             this.CameraPic = new System.Windows.Forms.PictureBox();
             this.PColor = new System.Windows.Forms.Panel();
-            this.ChangePic = new System.Windows.Forms.PictureBox();
             this.RedTrack = new System.Windows.Forms.TrackBar();
             this.Rtracktext = new System.Windows.Forms.Label();
             this.数値変化チェック = new System.Windows.Forms.Timer(this.components);
@@ -94,8 +93,8 @@ namespace camera
             this.AutoColNums = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.CleanObj = new System.Windows.Forms.Button();
+            this.CheckSetting = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChangePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BlueTrack)).BeginInit();
@@ -105,6 +104,7 @@ namespace camera
             ((System.ComponentModel.ISupportInitialize)(this.UseCol)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoCol)).BeginInit();
             this.AutoGroup.SuspendLayout();
+            this.CheckSetting.SuspendLayout();
             this.SuspendLayout();
             // 
             // CameraPic
@@ -125,19 +125,6 @@ namespace camera
             this.PColor.Name = "PColor";
             this.PColor.Size = new System.Drawing.Size(39, 32);
             this.PColor.TabIndex = 7;
-            // 
-            // ChangePic
-            // 
-            this.ChangePic.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ChangePic.BackColor = System.Drawing.Color.Transparent;
-            this.ChangePic.ErrorImage = ((System.Drawing.Image)(resources.GetObject("ChangePic.ErrorImage")));
-            this.ChangePic.InitialImage = null;
-            this.ChangePic.Location = new System.Drawing.Point(1, 2);
-            this.ChangePic.Name = "ChangePic";
-            this.ChangePic.Size = new System.Drawing.Size(240, 160);
-            this.ChangePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.ChangePic.TabIndex = 8;
-            this.ChangePic.TabStop = false;
             // 
             // RedTrack
             // 
@@ -218,9 +205,9 @@ namespace camera
             // GetPicBtn
             // 
             this.GetPicBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.GetPicBtn.Location = new System.Drawing.Point(800, 499);
+            this.GetPicBtn.Location = new System.Drawing.Point(6, 45);
             this.GetPicBtn.Name = "GetPicBtn";
-            this.GetPicBtn.Size = new System.Drawing.Size(75, 23);
+            this.GetPicBtn.Size = new System.Drawing.Size(79, 23);
             this.GetPicBtn.TabIndex = 262;
             this.GetPicBtn.Text = "画像を選択";
             this.GetPicBtn.UseVisualStyleBackColor = true;
@@ -296,9 +283,9 @@ namespace camera
             // DelectBoxBtn
             // 
             this.DelectBoxBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.DelectBoxBtn.Location = new System.Drawing.Point(752, 556);
+            this.DelectBoxBtn.Location = new System.Drawing.Point(96, 84);
             this.DelectBoxBtn.Name = "DelectBoxBtn";
-            this.DelectBoxBtn.Size = new System.Drawing.Size(80, 45);
+            this.DelectBoxBtn.Size = new System.Drawing.Size(75, 45);
             this.DelectBoxBtn.TabIndex = 265;
             this.DelectBoxBtn.Text = "対象消去";
             this.DelectBoxBtn.UseVisualStyleBackColor = true;
@@ -307,7 +294,7 @@ namespace camera
             // SavePicBtn
             // 
             this.SavePicBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SavePicBtn.Location = new System.Drawing.Point(881, 499);
+            this.SavePicBtn.Location = new System.Drawing.Point(96, 45);
             this.SavePicBtn.Name = "SavePicBtn";
             this.SavePicBtn.Size = new System.Drawing.Size(75, 23);
             this.SavePicBtn.TabIndex = 266;
@@ -325,7 +312,7 @@ namespace camera
             "200%",
             "400%",
             "800%"});
-            this.CSComboBox.Location = new System.Drawing.Point(663, 501);
+            this.CSComboBox.Location = new System.Drawing.Point(67, 11);
             this.CSComboBox.Name = "CSComboBox";
             this.CSComboBox.Size = new System.Drawing.Size(121, 20);
             this.CSComboBox.TabIndex = 267;
@@ -334,7 +321,7 @@ namespace camera
             // AddBoxBtn
             // 
             this.AddBoxBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.AddBoxBtn.Location = new System.Drawing.Point(666, 556);
+            this.AddBoxBtn.Location = new System.Drawing.Point(5, 84);
             this.AddBoxBtn.Name = "AddBoxBtn";
             this.AddBoxBtn.Size = new System.Drawing.Size(80, 45);
             this.AddBoxBtn.TabIndex = 268;
@@ -356,7 +343,7 @@ namespace camera
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(664, 486);
+            this.label1.Location = new System.Drawing.Point(3, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 12);
             this.label1.TabIndex = 277;
@@ -392,9 +379,9 @@ namespace camera
             // SettingNameBtn
             // 
             this.SettingNameBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SettingNameBtn.Location = new System.Drawing.Point(667, 637);
+            this.SettingNameBtn.Location = new System.Drawing.Point(6, 133);
             this.SettingNameBtn.Name = "SettingNameBtn";
-            this.SettingNameBtn.Size = new System.Drawing.Size(75, 23);
+            this.SettingNameBtn.Size = new System.Drawing.Size(79, 23);
             this.SettingNameBtn.TabIndex = 282;
             this.SettingNameBtn.Text = "対象名設定";
             this.SettingNameBtn.UseVisualStyleBackColor = true;
@@ -407,7 +394,7 @@ namespace camera
             this.BoxNameCombo.FormattingEnabled = true;
             this.BoxNameCombo.Items.AddRange(new object[] {
             "1"});
-            this.BoxNameCombo.Location = new System.Drawing.Point(821, 639);
+            this.BoxNameCombo.Location = new System.Drawing.Point(158, 135);
             this.BoxNameCombo.Name = "BoxNameCombo";
             this.BoxNameCombo.Size = new System.Drawing.Size(121, 20);
             this.BoxNameCombo.TabIndex = 283;
@@ -417,7 +404,7 @@ namespace camera
             // 
             this.BoxNameListlabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BoxNameListlabel.AutoSize = true;
-            this.BoxNameListlabel.Location = new System.Drawing.Point(750, 644);
+            this.BoxNameListlabel.Location = new System.Drawing.Point(87, 140);
             this.BoxNameListlabel.Name = "BoxNameListlabel";
             this.BoxNameListlabel.Size = new System.Drawing.Size(65, 12);
             this.BoxNameListlabel.TabIndex = 284;
@@ -681,7 +668,7 @@ namespace camera
             // SaveBoxData
             // 
             this.SaveBoxData.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SaveBoxData.Location = new System.Drawing.Point(864, 543);
+            this.SaveBoxData.Location = new System.Drawing.Point(188, 40);
             this.SaveBoxData.Name = "SaveBoxData";
             this.SaveBoxData.Size = new System.Drawing.Size(75, 32);
             this.SaveBoxData.TabIndex = 302;
@@ -774,7 +761,7 @@ namespace camera
             // CleanObj
             // 
             this.CleanObj.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.CleanObj.Location = new System.Drawing.Point(866, 592);
+            this.CleanObj.Location = new System.Drawing.Point(188, 95);
             this.CleanObj.Name = "CleanObj";
             this.CleanObj.Size = new System.Drawing.Size(75, 23);
             this.CleanObj.TabIndex = 309;
@@ -782,15 +769,33 @@ namespace camera
             this.CleanObj.UseVisualStyleBackColor = true;
             this.CleanObj.Click += new System.EventHandler(this.CleanObj_Click);
             // 
+            // CheckSetting
+            // 
+            this.CheckSetting.Controls.Add(this.label1);
+            this.CheckSetting.Controls.Add(this.CleanObj);
+            this.CheckSetting.Controls.Add(this.GetPicBtn);
+            this.CheckSetting.Controls.Add(this.DelectBoxBtn);
+            this.CheckSetting.Controls.Add(this.SaveBoxData);
+            this.CheckSetting.Controls.Add(this.SavePicBtn);
+            this.CheckSetting.Controls.Add(this.CSComboBox);
+            this.CheckSetting.Controls.Add(this.AddBoxBtn);
+            this.CheckSetting.Controls.Add(this.SettingNameBtn);
+            this.CheckSetting.Controls.Add(this.BoxNameCombo);
+            this.CheckSetting.Controls.Add(this.BoxNameListlabel);
+            this.CheckSetting.Location = new System.Drawing.Point(663, 492);
+            this.CheckSetting.Name = "CheckSetting";
+            this.CheckSetting.Size = new System.Drawing.Size(286, 170);
+            this.CheckSetting.TabIndex = 310;
+            this.CheckSetting.TabStop = false;
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
-            this.Controls.Add(this.CleanObj);
+            this.Controls.Add(this.CheckSetting);
             this.Controls.Add(this.AutoGroup);
-            this.Controls.Add(this.SaveBoxData);
             this.Controls.Add(this.BoxSetting);
             this.Controls.Add(this.ClearCheckScene);
             this.Controls.Add(this.AllPercentShow);
@@ -802,19 +807,9 @@ namespace camera
             this.Controls.Add(this.SecText);
             this.Controls.Add(this.MinText);
             this.Controls.Add(this.CheckLoopBtn);
-            this.Controls.Add(this.BoxNameListlabel);
-            this.Controls.Add(this.BoxNameCombo);
-            this.Controls.Add(this.SettingNameBtn);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.AddBoxBtn);
-            this.Controls.Add(this.CSComboBox);
-            this.Controls.Add(this.SavePicBtn);
-            this.Controls.Add(this.DelectBoxBtn);
             this.Controls.Add(this.CheckBtn);
-            this.Controls.Add(this.GetPicBtn);
             this.Controls.Add(this.CameraPic);
-            this.Controls.Add(this.ChangePic);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainScene";
@@ -822,7 +817,6 @@ namespace camera
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainScene_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChangePic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BlueTrack)).EndInit();
@@ -834,6 +828,8 @@ namespace camera
             ((System.ComponentModel.ISupportInitialize)(this.AutoCol)).EndInit();
             this.AutoGroup.ResumeLayout(false);
             this.AutoGroup.PerformLayout();
+            this.CheckSetting.ResumeLayout(false);
+            this.CheckSetting.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -843,7 +839,6 @@ namespace camera
 
         private System.Windows.Forms.PictureBox CameraPic;
         private System.Windows.Forms.Panel PColor;
-        private System.Windows.Forms.PictureBox ChangePic;
         private System.Windows.Forms.Label Rtracktext;
         private System.Windows.Forms.Timer 数値変化チェック;
         private System.Windows.Forms.Label Gtracktext;
@@ -904,6 +899,7 @@ namespace camera
         private System.Windows.Forms.TextBox AutoColNums;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button CleanObj;
+        private System.Windows.Forms.GroupBox CheckSetting;
     }
 }
 
