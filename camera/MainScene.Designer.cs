@@ -90,10 +90,15 @@ namespace camera
             this.AutoCol = new System.Windows.Forms.PictureBox();
             this.AutoGroup = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.AutoColNums = new System.Windows.Forms.TextBox();
+            this.AutoColRedNums = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.CleanObj = new System.Windows.Forms.Button();
             this.CheckSetting = new System.Windows.Forms.GroupBox();
+            this.AutoColGreenNums = new System.Windows.Forms.TextBox();
+            this.AutoColBlueNums = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -697,7 +702,7 @@ namespace camera
             // 
             // AutoColSelectBtn
             // 
-            this.AutoColSelectBtn.Location = new System.Drawing.Point(80, 18);
+            this.AutoColSelectBtn.Location = new System.Drawing.Point(188, 43);
             this.AutoColSelectBtn.Name = "AutoColSelectBtn";
             this.AutoColSelectBtn.Size = new System.Drawing.Size(56, 23);
             this.AutoColSelectBtn.TabIndex = 307;
@@ -708,7 +713,7 @@ namespace camera
             // AutoCol
             // 
             this.AutoCol.BackColor = System.Drawing.Color.Red;
-            this.AutoCol.Location = new System.Drawing.Point(142, 20);
+            this.AutoCol.Location = new System.Drawing.Point(250, 45);
             this.AutoCol.Name = "AutoCol";
             this.AutoCol.Size = new System.Drawing.Size(21, 18);
             this.AutoCol.TabIndex = 306;
@@ -717,8 +722,13 @@ namespace camera
             // AutoGroup
             // 
             this.AutoGroup.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.AutoGroup.Controls.Add(this.label7);
+            this.AutoGroup.Controls.Add(this.label6);
+            this.AutoGroup.Controls.Add(this.label5);
+            this.AutoGroup.Controls.Add(this.AutoColBlueNums);
+            this.AutoGroup.Controls.Add(this.AutoColGreenNums);
             this.AutoGroup.Controls.Add(this.label4);
-            this.AutoGroup.Controls.Add(this.AutoColNums);
+            this.AutoGroup.Controls.Add(this.AutoColRedNums);
             this.AutoGroup.Controls.Add(this.label3);
             this.AutoGroup.Controls.Add(this.AutoColSelectBtn);
             this.AutoGroup.Controls.Add(this.AutoLock);
@@ -740,14 +750,14 @@ namespace camera
             this.label4.TabIndex = 310;
             this.label4.Text = "色合い";
             // 
-            // AutoColNums
+            // AutoColRedNums
             // 
-            this.AutoColNums.Location = new System.Drawing.Point(47, 20);
-            this.AutoColNums.Name = "AutoColNums";
-            this.AutoColNums.Size = new System.Drawing.Size(31, 19);
-            this.AutoColNums.TabIndex = 309;
-            this.AutoColNums.Text = "5";
-            this.AutoColNums.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
+            this.AutoColRedNums.Location = new System.Drawing.Point(73, 20);
+            this.AutoColRedNums.Name = "AutoColRedNums";
+            this.AutoColRedNums.Size = new System.Drawing.Size(31, 19);
+            this.AutoColRedNums.TabIndex = 309;
+            this.AutoColRedNums.Text = "5";
+            this.AutoColRedNums.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
             // 
             // label3
             // 
@@ -787,6 +797,49 @@ namespace camera
             this.CheckSetting.Size = new System.Drawing.Size(286, 170);
             this.CheckSetting.TabIndex = 310;
             this.CheckSetting.TabStop = false;
+            // 
+            // AutoColGreenNums
+            // 
+            this.AutoColGreenNums.Location = new System.Drawing.Point(148, 20);
+            this.AutoColGreenNums.Name = "AutoColGreenNums";
+            this.AutoColGreenNums.Size = new System.Drawing.Size(31, 19);
+            this.AutoColGreenNums.TabIndex = 311;
+            this.AutoColGreenNums.Text = "5";
+            // 
+            // AutoColBlueNums
+            // 
+            this.AutoColBlueNums.Location = new System.Drawing.Point(224, 20);
+            this.AutoColBlueNums.Name = "AutoColBlueNums";
+            this.AutoColBlueNums.Size = new System.Drawing.Size(31, 19);
+            this.AutoColBlueNums.TabIndex = 312;
+            this.AutoColBlueNums.Text = "5";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(54, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(13, 12);
+            this.label5.TabIndex = 313;
+            this.label5.Text = "R";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(129, 23);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(13, 12);
+            this.label6.TabIndex = 314;
+            this.label6.Text = "G";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(205, 23);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 12);
+            this.label7.TabIndex = 315;
+            this.label7.Text = "B";
             // 
             // MainScene
             // 
@@ -896,10 +949,15 @@ namespace camera
         private System.Windows.Forms.PictureBox AutoCol;
         private System.Windows.Forms.GroupBox AutoGroup;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox AutoColNums;
+        private System.Windows.Forms.TextBox AutoColRedNums;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button CleanObj;
         private System.Windows.Forms.GroupBox CheckSetting;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox AutoColBlueNums;
+        private System.Windows.Forms.TextBox AutoColGreenNums;
     }
 }
 

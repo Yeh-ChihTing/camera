@@ -886,17 +886,41 @@ namespace camera
                     Bitmap bmp = new Bitmap(img.ToBitmap());
                     bmp.Save(sfd.FileName, ImageFormat.Jpeg);
 
-                    //CutPicまた選択してないなら自動に保存した画像をマスタ画像にする
-                    if (CutPic.Image == null)
-                    {
-                        CutPic.Image = bmp;
-                        MasterImage = CutPic.Image;
+                    //保存した画像をマスタ画像にする
+                    CutPic.Image = bmp;
+                    MasterImage = CutPic.Image;
+                    GetCutPicNow = CutPic.Image;
 
-                        GetCutPicNow = CutPic.Image;
+
+                    //1以外の対象ボックスをクリアそして初期化
+                    if (MyBoxList.Count > 1)
+                    {
+                        for (int i = 1; i < MyBoxList.Count; i++)
+                        {
+                            MyBoxList.RemoveAt(i);
+
+                        }
+                        //ボックス数1に戻す
+                        BoxNum = 1;
+
+                        //対象ボックス初期化
+                        CutPic.Controls.Clear();
+                        CutPic.Controls.Add(MyBoxList[0]);
+                        MyBoxList[0].Name = "";
+
+                        //ボックス名リストのクリア
+                        BoxNameList.Clear();
+
+                        //コンボボックスの初期化
+                        BoxNameCombo.Items.Clear();
+                        BoxNameCombo.Items.Add("1");
+                        BoxNameCombo.SelectedIndex = 0;
                     }
 
                     //保存したデータ名を記録
                     SaveDataname = sfd.FileName;
+
+
                 }
                 catch (NullReferenceException a)
                 {
@@ -1986,6 +2010,8 @@ namespace camera
         private void AutoLock_Click(object sender, EventArgs e)
         {
 
+            CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
+
             //マスター画像bitmap取得
             Bitmap CheackBT = (Bitmap)MasterImage.Clone();
 
@@ -2017,7 +2043,9 @@ namespace camera
             BoxNameList.Clear();
 
             //最初の位置探す用色合い基準
-            int firstLimit = Convert.ToInt32(AutoColNums.Text);
+            int firstLimitR = Convert.ToInt32(AutoColRedNums.Text);
+            int firstLimitG = Convert.ToInt32(AutoColGreenNums.Text);
+            int firstLimitB = Convert.ToInt32(AutoColBlueNums.Text);
 
             //横幅測量基準色合い
             int IroAi = 50;
@@ -2036,9 +2064,9 @@ namespace camera
                     if (BoxNum == 1)
                     {
                         //ボックスの左上の点を取得条件
-                        if (CR >= R - firstLimit && CR <= R + firstLimit &&
-                        CG >= G - firstLimit && CG <= G + firstLimit &&
-                        CB >= B - firstLimit && CB <= B + firstLimit)
+                        if (CR >= R - firstLimitR && CR <= R + firstLimitR &&
+                        CG >= G - firstLimitG && CG <= G + firstLimitG &&
+                        CB >= B - firstLimitB && CB <= B + firstLimitB)
                         {
                             //横幅計算
                             for (int k = i; k < CutPic.Width; k++)
@@ -2127,9 +2155,9 @@ namespace camera
                     //二個目以降の対象ボックス
                     else if (BoxNum <= Boxlimit && BoxNum != 1)
                     {
-                        if (CR >= R - firstLimit && CR <= R + firstLimit &&
-                            CG >= G - firstLimit && CG <= G + firstLimit &&
-                            CB >= B - firstLimit && CB <= B + firstLimit)
+                        if (CR >= R - firstLimitR && CR <= R + firstLimitR &&
+                            CG >= G - firstLimitG && CG <= G + firstLimitG &&
+                            CB >= B - firstLimitB && CB <= B + firstLimitB)
                         {
 
                             //横幅計算
@@ -2233,7 +2261,6 @@ namespace camera
                                 //横縦計算用intを0にする
                                 w = 0;
                                 h = 0;
-
                             }
 
                         }
@@ -2243,8 +2270,12 @@ namespace camera
                 }
 
             }
-            //ボックスコンボボックスのインデックス0にします
-            BoxNameCombo.SelectedIndex = 0;
+
+            if (BoxNameCombo.Items.Count >0)
+            {
+                //ボックスコンボボックスのインデックス0にします
+                BoxNameCombo.SelectedIndex = 0;
+            }
 
         }
 
