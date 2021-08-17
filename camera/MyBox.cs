@@ -75,8 +75,8 @@ namespace camera
         public bool BoxChecked = false;
         
         /// <summary>
-        /// 色合い使用色
-        /// </summary>
+        /// 色合い使用色　最小は255の赤に設定
+        /// </summary>　
         public Color UsedCol=Color.FromArgb(255,0,0);
 
         /// <summary>
@@ -216,39 +216,36 @@ namespace camera
 
             ResizeDirection cursorPos = ResizeDirection.None;
            
-            //上の判定
-            //if ((resizeDirection & ResizeDirection.Top) == ResizeDirection.Top)
-            //{
+            //上の判定ボックス生成
             Rectangle topRect = new Rectangle(0, -5, this.Width, 10);
+            //当たり判定
             if (topRect.Contains(e.Location))
             {
                 cursorPos |= ResizeDirection.Top;
             }
-            // }
-            // 左の判定
-            //if ((resizeDirection & ResizeDirection.Left) == ResizeDirection.Left)
-            //{
+
+
+
+            // 左の判定ボックス生成
             Rectangle leftRect = new Rectangle(-5, 0, 10, this.Height);
+            //当たり判定
             if (leftRect.Contains(e.Location))
             {
                 cursorPos |= ResizeDirection.Left;
             }
-            // }
 
-            // 下の判定
-            //if ((resizeDirection & ResizeDirection.Bottom) == ResizeDirection.Bottom)
-            //{
+
+            // 下の判定ボックス生成
             Rectangle bottomRect = new Rectangle(0, this.Height - 10, this.Width, this.Height);
+            //当たり判定
             if (bottomRect.Contains(e.Location))
             {
                 cursorPos |= ResizeDirection.Bottom;
             }
-            //  }
-
-            // 右の判定
-            //if ((resizeDirection & ResizeDirection.Right) == ResizeDirection.Right)
-            //{
+  
+            // 右の判定ボックス生成
             Rectangle rightRect = new Rectangle(this.Width - 10, 0, this.Width, this.Height);
+            //当たり判定
             if (rightRect.Contains(e.Location))
             {
                 cursorPos |= ResizeDirection.Right;
@@ -302,17 +299,17 @@ namespace camera
                 this.Cursor = Cursors.SizeWE;
             }
 
+            //最初のカーソル戻す
             else
             {
                 this.Cursor = defaultCursor;
             }
 
 
-       
-
+            //マウスクリック(左)　サイズ変更
             if (e.Button == MouseButtons.Left)
             {
-
+                //クリックした時のマウス位置取得
                 int diffX = e.X - OriginPoint.X;
                 int diffY = e.Y - OriginPoint.Y;
 
@@ -407,7 +404,7 @@ namespace camera
 
                 else
                 {
-                    
+                    //サイズ変更していないなら移動許可します
                     if (!ReSize)
                     {
                         if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
@@ -525,6 +522,7 @@ namespace camera
             this.Cursor = defaultCursor;
         }
 
+        //マウスアップ
         private void MyBox_MouseUp(object sender, MouseEventArgs e)
         {
             this.Capture = false;
