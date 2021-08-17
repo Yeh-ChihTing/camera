@@ -2049,35 +2049,38 @@ namespace camera
                             //生成必要
                             if (canbuild)
                             {
-                             
-                                ////ボックス番号++
-                                //BoxNum++;
-                                //対象ボックス生成
-                                MyBox box = new MyBox();
-                                //対象ボックスをCutPicの子にする
-                                CutPic.Controls.Add(box);
-                                //ボックス番号テキスト
-                                box.MyNumber.Text = BoxNum.ToString();
-                                //ボックスリストに追加
-                                MyBoxList.Add(box);
-                                //ボックスコンボボックスに対象ボックス名追加
-                                BoxNameCombo.Items.Add(BoxNum.ToString());
-                                ////ボックス名リストに追加
-                                //BoxNameList.Add(BoxNum.ToString());
-                                //ボックス判定用四角生成
-                                Rectangle angle = new Rectangle(i, j, w, h);
-                                //判定用四角をリストに追加
-                                rectList.Add(angle);
-                                //対象ボックスの位置とサイズ設定
-                                MyBoxList[BoxNum-1].Location = new System.Drawing.Point(i, j);
-                                MyBoxList[BoxNum-1].Width = w;
-                                MyBoxList[BoxNum-1].Height = h;
-                                //ボックス計数器++
-                                if (BoxNum != Boxlimit)
+                                //ボックス数量は指定数量を超えるか判定
+                                if (MyBoxList.Count < Boxlimit)
                                 {
-                                    BoxNum++;
+                                    ////ボックス番号++
+                                    //BoxNum++;
+                                    //対象ボックス生成
+                                    MyBox box = new MyBox();
+                                    //対象ボックスをCutPicの子にする
+                                    CutPic.Controls.Add(box);
+                                    //ボックス番号テキスト
+                                    box.MyNumber.Text = BoxNum.ToString();
+                                    //ボックスリストに追加
+                                    MyBoxList.Add(box);
+                                    //ボックスコンボボックスに対象ボックス名追加
+                                    BoxNameCombo.Items.Add(BoxNum.ToString());
+                                    ////ボックス名リストに追加
+                                    //BoxNameList.Add(BoxNum.ToString());
+                                    //ボックス判定用四角生成
+                                    Rectangle angle = new Rectangle(i, j, w, h);
+                                    //判定用四角をリストに追加
+                                    rectList.Add(angle);
+                                    //対象ボックスの位置とサイズ設定
+                                    MyBoxList[BoxNum - 1].Location = new System.Drawing.Point(i, j);
+                                    MyBoxList[BoxNum - 1].Width = w;
+                                    MyBoxList[BoxNum - 1].Height = h;
+                                    //ボックス計数器++
+                                    if (BoxNum != Boxlimit)
+                                    {
+                                        BoxNum++;
+                                    }
+
                                 }
-                                
                                 //横縦計算用intを0にする
                                 w = 0;
                                 h = 0;
