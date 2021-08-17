@@ -611,20 +611,20 @@ namespace camera
                         if (BoxNameList[k] != "")
                         {
                             CheckPerList.Items.Add(BoxNameList[k] + " : " + Getpercent.ToString() + "%"
-                                + "/ " + BoxPercent.ToString() + "%" + " 一致");
+                                + "/ " + BoxPercent.ToString() + "%" + " 一致なら合格");
                         }
                         //命名してないなら番号表示
                         else
                         {
                             CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
-                                + "/" + BoxPercent.ToString() + "%" + " 一致");
+                                + "/" + BoxPercent.ToString() + "%" + " 一致なら合格");
                         }
                     }
                     //対象名ないのとき対象番号表示
                     else
                     {
                         CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
-                                + "/" + BoxPercent.ToString() + "%" + " 一致");
+                                + "/" + BoxPercent.ToString() + "%" + " 一致なら合格");
                     }
 
                     // GetPercent.Text = Getpercent.ToString();
