@@ -1001,7 +1001,6 @@ namespace camera
         /// </summary>
         private void SavePicBtn_Click(object sender, EventArgs e)
         {
-            //Yeh-ChitTing
             //セーフデータ宣言
             SaveFileDialog sfd = new SaveFileDialog();
 
@@ -1011,7 +1010,6 @@ namespace camera
             //データ形式
             sfd.Filter = "JPEG形式|*.jpg";
             
-
             //保存位置
             string dc = Directory.GetCurrentDirectory() + @"\Pic";
             sfd.InitialDirectory = dc;
