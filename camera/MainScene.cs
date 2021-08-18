@@ -702,35 +702,7 @@ namespace camera
 
                     //対象ボックスの合格基準を取得
                     int BoxPercent = MyBoxList[k].MySPercent;
-
-                    //対象名あるの時
-                    if (BoxNameList.Count > 0)
-                    {
-                        
-                        //命名あるなら名前表示
-                        if (BoxNameList[k] != "")
-                        {
-                            CheckPerList.Items.Add(BoxNameList[k] + " : " + Getpercent.ToString() + "%"
-                                + "/ " + BoxPercent.ToString() + "%" + " 一致なら合格");
-                            if (!OkOrFail[k])
-                            {
-                                
-                            }
-                        }
-                        //命名してないなら番号表示
-                        else
-                        {
-                            CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
-                                + "/" + BoxPercent.ToString() + "%" + " 一致なら合格");
-                        }
-                    }
-                    //対象名ないのとき対象番号表示
-                    else
-                    {
-                        CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
-                                + "/" + BoxPercent.ToString() + "%" + " 一致なら合格");
-                    }
-
+                   
                     // GetPercent.Text = Getpercent.ToString();
                     //合格パーセント以下の時不合格
                     if (percentOfSusses < BoxPercent)
@@ -743,6 +715,54 @@ namespace camera
 
                         //数列中に不合格を記録
                         OkOrFail[k] = false;
+                    }
+
+                    //対象名あるの時
+                    if (BoxNameList.Count > 0)
+                    {
+
+                        //命名あるなら名前表示
+                        if (BoxNameList[k] != "")
+                        {
+                            if (OkOrFail[k])
+                            {
+                                CheckPerList.Items.Add(BoxNameList[k] + " : " + Getpercent.ToString() + "%"
+                                + "/ " + BoxPercent.ToString() + "%" + " 一致");
+                            }
+                            else
+                            {
+                                CheckPerList.Items.Add(BoxNameList[k] + " : " + Getpercent.ToString() + "%"
+                               + "/ " + BoxPercent.ToString() + "%" + " 不一致");
+                            }
+                        }
+                        //命名してないなら番号表示
+                        else
+                        {
+                            if (OkOrFail[k])
+                            {
+                                CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
+                                + "/" + BoxPercent.ToString() + "%" + " 一致");
+                            }
+                            else
+                            {
+                                CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
+                                + "/" + BoxPercent.ToString() + "%" + " 不一致");
+                            }
+                        }
+                    }
+                    //対象名ないのとき対象番号表示
+                    else
+                    {
+                        if (OkOrFail[k])
+                        {
+                            CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
+                                + "/" + BoxPercent.ToString() + "%" + " 一致");
+                        }
+                        else
+                        {
+                            CheckPerList.Items.Add((k + 1).ToString() + " : " + Getpercent.ToString() + "%"
+                                + "/" + BoxPercent.ToString() + "%" + "不一致");
+                        }
                     }
 
                 }
@@ -854,6 +874,7 @@ namespace camera
 
                         //対象数取得
                         int nums = Convert.ToInt32(DataList[0]);
+                        BoxNum = nums;
 
                         //対象数に応じるループ
                         for (int i = 0; i < nums; i++)
@@ -1445,6 +1466,7 @@ namespace camera
                     }
 
                 }
+
                 //コンボボックスのインデックスを0にする
                 BoxNameCombo.SelectedIndex = 0;
             }
@@ -1504,17 +1526,17 @@ namespace camera
                             //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "温度高");
+                                sw.WriteLine((i + 1).ToString() + "," + "温度高" + "," + "問題あり");
                             }
                             //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "消灯");
+                                sw.WriteLine((i + 1).ToString() + "," + "消灯" + "," + "問題あり");
                             }
                             //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "点灯");
+                                sw.WriteLine((i + 1).ToString() + "," + "点灯" + "," + "問題あり");
                             }
                         }
                     }
@@ -1547,17 +1569,17 @@ namespace camera
                             //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "温度高");
+                                sw.WriteLine(BoxNameList[i] + "," + "温度高" + "," + "問題あり");
                             }
                             //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine(BoxNameList[i] + ","  + "消灯");
+                                sw.WriteLine(BoxNameList[i] + ","  + "消灯" + "," + "問題あり");
                             }
                             //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine(BoxNameList[i] + ","  + "点灯");
+                                sw.WriteLine(BoxNameList[i] + ","  + "点灯" + "," + "問題あり");
                             }
                         }
                     }
@@ -1604,17 +1626,17 @@ namespace camera
                             //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "温度高");
+                                sw.WriteLine((i + 1).ToString() + "," + "温度高" + "," + "問題あり");
                             }
                             //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "消灯");
+                                sw.WriteLine((i + 1).ToString() + "," + "消灯" + "," + "問題あり");
                             }
                             //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "点灯");
+                                sw.WriteLine((i + 1).ToString() + "," + "点灯" + "," + "問題あり");
                             }
                         }
                     }
@@ -1647,17 +1669,17 @@ namespace camera
                             //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "温度高");
+                                sw.WriteLine(BoxNameList[i] + "," + "温度高" + "," + "問題あり");
                             }
                             //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "消灯");
+                                sw.WriteLine(BoxNameList[i] + "," + "消灯" + "," + "問題あり");
                             }
                             //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine(BoxNameList[i] + ","  + "点灯");
+                                sw.WriteLine(BoxNameList[i] + ","  + "点灯" + "," + "問題あり");
                             }
                         }
                     }
