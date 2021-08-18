@@ -56,12 +56,13 @@ namespace camera
             // Drawbox
             // 
             this.Drawbox.BackColor = System.Drawing.Color.Transparent;
-            this.Drawbox.Location = new System.Drawing.Point(3, 3);
+            this.Drawbox.Location = new System.Drawing.Point(3, 6);
             this.Drawbox.Name = "Drawbox";
             this.Drawbox.Size = new System.Drawing.Size(144, 144);
             this.Drawbox.TabIndex = 4;
             this.Drawbox.TabStop = false;
             this.Drawbox.Visible = false;
+            this.Drawbox.Click += new System.EventHandler(this.Drawbox_Click);
             this.Drawbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drawbox_MouseDown);
             this.Drawbox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drawbox_MouseMove);
             // 
@@ -76,6 +77,7 @@ namespace camera
             this.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.Name = "MyBox";
             this.SizeChanged += new System.EventHandler(this.MyBox_SizeChanged);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MyBox_MouseUp);

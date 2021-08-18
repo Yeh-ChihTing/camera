@@ -529,5 +529,21 @@ namespace camera
             ReSize = false;
         }
 
+        private void MyBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            MainScene main = (MainScene)this.Parent.Parent.Parent;
+
+            main.NowBox = MyNum;
+            int num = main.NowBox;
+            main.ClickBoxNum.Text = num.ToString();
+        }
+
+        private void Drawbox_Click(object sender, EventArgs e)
+        {
+            MainScene main = (MainScene)this.Parent.Parent.Parent;
+
+            main.NowBox = MyNum;
+            //main.label8.Text = MyNum.ToString();
+        }
     }
 }

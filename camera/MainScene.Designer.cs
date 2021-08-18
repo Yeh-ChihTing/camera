@@ -89,16 +89,17 @@ namespace camera
             this.AutoColSelectBtn = new System.Windows.Forms.Button();
             this.AutoCol = new System.Windows.Forms.PictureBox();
             this.AutoGroup = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.AutoColBlueNums = new System.Windows.Forms.TextBox();
+            this.AutoColGreenNums = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.AutoColRedNums = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.CleanObj = new System.Windows.Forms.Button();
             this.CheckSetting = new System.Windows.Forms.GroupBox();
-            this.AutoColGreenNums = new System.Windows.Forms.TextBox();
-            this.AutoColBlueNums = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.ClickBoxNum = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -741,6 +742,49 @@ namespace camera
             this.AutoGroup.TabStop = false;
             this.AutoGroup.Text = "自動対象設定用";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(205, 23);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 12);
+            this.label7.TabIndex = 315;
+            this.label7.Text = "B";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(129, 23);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(13, 12);
+            this.label6.TabIndex = 314;
+            this.label6.Text = "G";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(54, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(13, 12);
+            this.label5.TabIndex = 313;
+            this.label5.Text = "R";
+            // 
+            // AutoColBlueNums
+            // 
+            this.AutoColBlueNums.Location = new System.Drawing.Point(224, 20);
+            this.AutoColBlueNums.Name = "AutoColBlueNums";
+            this.AutoColBlueNums.Size = new System.Drawing.Size(31, 19);
+            this.AutoColBlueNums.TabIndex = 312;
+            this.AutoColBlueNums.Text = "5";
+            // 
+            // AutoColGreenNums
+            // 
+            this.AutoColGreenNums.Location = new System.Drawing.Point(148, 20);
+            this.AutoColGreenNums.Name = "AutoColGreenNums";
+            this.AutoColGreenNums.Size = new System.Drawing.Size(31, 19);
+            this.AutoColGreenNums.TabIndex = 311;
+            this.AutoColGreenNums.Text = "5";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -781,6 +825,7 @@ namespace camera
             // 
             // CheckSetting
             // 
+            this.CheckSetting.Controls.Add(this.ClickBoxNum);
             this.CheckSetting.Controls.Add(this.label1);
             this.CheckSetting.Controls.Add(this.CleanObj);
             this.CheckSetting.Controls.Add(this.GetPicBtn);
@@ -798,48 +843,16 @@ namespace camera
             this.CheckSetting.TabIndex = 310;
             this.CheckSetting.TabStop = false;
             // 
-            // AutoColGreenNums
+            // ClickBoxNum
             // 
-            this.AutoColGreenNums.Location = new System.Drawing.Point(148, 20);
-            this.AutoColGreenNums.Name = "AutoColGreenNums";
-            this.AutoColGreenNums.Size = new System.Drawing.Size(31, 19);
-            this.AutoColGreenNums.TabIndex = 311;
-            this.AutoColGreenNums.Text = "5";
-            // 
-            // AutoColBlueNums
-            // 
-            this.AutoColBlueNums.Location = new System.Drawing.Point(224, 20);
-            this.AutoColBlueNums.Name = "AutoColBlueNums";
-            this.AutoColBlueNums.Size = new System.Drawing.Size(31, 19);
-            this.AutoColBlueNums.TabIndex = 312;
-            this.AutoColBlueNums.Text = "5";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(54, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(13, 12);
-            this.label5.TabIndex = 313;
-            this.label5.Text = "R";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(129, 23);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(13, 12);
-            this.label6.TabIndex = 314;
-            this.label6.Text = "G";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(205, 23);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 12);
-            this.label7.TabIndex = 315;
-            this.label7.Text = "B";
+            this.ClickBoxNum.AutoSize = true;
+            this.ClickBoxNum.Location = new System.Drawing.Point(196, 158);
+            this.ClickBoxNum.Name = "ClickBoxNum";
+            this.ClickBoxNum.Size = new System.Drawing.Size(74, 12);
+            this.ClickBoxNum.TabIndex = 311;
+            this.ClickBoxNum.Text = "ClickBoxNum";
+            this.ClickBoxNum.Visible = false;
+            this.ClickBoxNum.TextChanged += new System.EventHandler(this.ClickBoxNum_TextChanged);
             // 
             // MainScene
             // 
@@ -958,6 +971,7 @@ namespace camera
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox AutoColBlueNums;
         private System.Windows.Forms.TextBox AutoColGreenNums;
+        public System.Windows.Forms.Label ClickBoxNum;
     }
 }
 
