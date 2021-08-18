@@ -458,7 +458,7 @@ namespace camera
                     CheckLoopBtn.BackColor = Color.Pink;
 
                     //指定したループタイムの計算
-                    LoopFrame = (Convert.ToInt32(HourText.Text) * 36000) + (Convert.ToInt32(MinText.Text) * 6000)
+                    LoopFrame = (Convert.ToInt32(HourText.Text) * 3600000) + (Convert.ToInt32(MinText.Text) * 60000)
                         + (Convert.ToInt32(SecText.Text) * 1000);
 
                     //指定時間が0ではないの時
@@ -1977,6 +1977,10 @@ namespace camera
                     }
 
                 }
+
+                //選択対象を前頭1に戻る
+                NowBox = 1;
+                ClickBoxNum.Text = NowBox.ToString();
 
             }
         }
