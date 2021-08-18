@@ -100,6 +100,7 @@ namespace camera
             this.CleanObj = new System.Windows.Forms.Button();
             this.CheckSetting = new System.Windows.Forms.GroupBox();
             this.ClickBoxNum = new System.Windows.Forms.Label();
+            this.CrossTimeLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -155,6 +156,7 @@ namespace camera
             // 数値変化チェック
             // 
             this.数値変化チェック.Enabled = true;
+            this.数値変化チェック.Interval = 1000;
             this.数値変化チェック.Tick += new System.EventHandler(this._数値変化チェック_Tick);
             // 
             // Gtracktext
@@ -499,6 +501,7 @@ namespace camera
             // CheckPerList
             // 
             this.CheckPerList.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.CheckPerList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.CheckPerList.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.CheckPerList.FormattingEnabled = true;
             this.CheckPerList.ItemHeight = 20;
@@ -506,6 +509,7 @@ namespace camera
             this.CheckPerList.Name = "CheckPerList";
             this.CheckPerList.Size = new System.Drawing.Size(252, 124);
             this.CheckPerList.TabIndex = 292;
+            this.CheckPerList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.CheckPerList_DrawItem);
             // 
             // AllPercentShow
             // 
@@ -854,12 +858,22 @@ namespace camera
             this.ClickBoxNum.Visible = false;
             this.ClickBoxNum.TextChanged += new System.EventHandler(this.ClickBoxNum_TextChanged);
             // 
+            // CrossTimeLabel
+            // 
+            this.CrossTimeLabel.AutoSize = true;
+            this.CrossTimeLabel.Location = new System.Drawing.Point(668, 38);
+            this.CrossTimeLabel.Name = "CrossTimeLabel";
+            this.CrossTimeLabel.Size = new System.Drawing.Size(65, 12);
+            this.CrossTimeLabel.TabIndex = 311;
+            this.CrossTimeLabel.Text = "経過時間：0";
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.CrossTimeLabel);
             this.Controls.Add(this.CheckSetting);
             this.Controls.Add(this.AutoGroup);
             this.Controls.Add(this.BoxSetting);
@@ -972,6 +986,7 @@ namespace camera
         private System.Windows.Forms.TextBox AutoColBlueNums;
         private System.Windows.Forms.TextBox AutoColGreenNums;
         public System.Windows.Forms.Label ClickBoxNum;
+        private System.Windows.Forms.Label CrossTimeLabel;
     }
 }
 

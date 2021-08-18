@@ -529,21 +529,36 @@ namespace camera
             ReSize = false;
         }
 
+        //マウスクリックした時にメインシーンのNOWBOX番号を変更(ボックス本体)
         private void MyBox_MouseClick(object sender, MouseEventArgs e)
         {
+            //メインシーン宣言
             MainScene main = (MainScene)this.Parent.Parent.Parent;
 
-            main.NowBox = MyNum;
-            int num = main.NowBox;
-            main.ClickBoxNum.Text = num.ToString();
+
+            //連続チェック中にはしない
+            if (!main.LoopCheckLock)
+            {
+                main.NowBox = MyNum;
+                int num = main.NowBox;
+                main.ClickBoxNum.Text = num.ToString();
+            }
         }
 
+        //マウスクリックした時にメインシーンのNOWBOX番号を変更(DRAWBOX)
         private void Drawbox_Click(object sender, EventArgs e)
         {
+            //メインシーン宣言
             MainScene main = (MainScene)this.Parent.Parent.Parent;
 
-            main.NowBox = MyNum;
-            //main.label8.Text = MyNum.ToString();
+            //連続チェック中にはしない
+            if (!main.LoopCheckLock)
+            {
+                main.NowBox = MyNum;
+                int num = main.NowBox;
+                main.ClickBoxNum.Text = num.ToString();
+            }
+
         }
     }
 }

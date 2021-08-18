@@ -91,8 +91,15 @@ namespace camera
         /// </summary>
         public List<string> BoxNameList = new List<string>();
 
-
+        /// <summary>
+        ///今クリックした対象番号
+        /// </summary>
         public int NowBox;
+
+        /// <summary>
+        ///連続チェックLCOK用FLAG
+        /// </summary>
+        public bool LoopCheckLock = false;
         //private変数
 
         /// <summary>
@@ -176,13 +183,25 @@ namespace camera
         private string NowName;
 
         /// <summary>
-        ///連続チェックLCOK用FLAG
+        ///起動経過時間
         /// </summary>
-        private bool LoopCheckLock = false;
+        private int CrossTime = 0;
 
-
+        /// <summary>
+        ///チェック実行中FLAG
+        /// </summary>
         private bool OneTimeCheck = true;
+
+        /// <summary>
+        ///自動対象検索実行中FLAG
+        /// </summary>
         private bool OneTimeAuto = true;
+
+        /// <summary>
+        ///結果取得リスト
+        /// </summary>
+        List<bool> GetAnser = new List<bool>();
+
         //変数宣言END
 
 
@@ -350,6 +369,41 @@ namespace camera
             //青
             Btracktext.Text = BlueTrack.Value.ToString();
             BSetText.Text = BlueTrack.Value.ToString();
+
+            //連続チェック起動中に経過時間計算
+            if (LoopCheckLock)
+            {
+                //経過時間秒数++
+                CrossTime++;
+
+                //経過時間の表示と計算
+                //一分以下
+                if (CrossTime < 60)
+                {
+                    CrossTimeLabel.Text = "経過時間：" +
+                        CrossTime.ToString() + "　秒";
+                }
+                //一時間以下
+                else if (CrossTime >= 60 && CrossTime < 3600)
+                {
+                    int Min = CrossTime / 60;
+                    int Sec = CrossTime % 60;
+                    CrossTimeLabel.Text = "経過時間：" +
+                        Min.ToString() + "　分　" +
+                        Sec.ToString() + "　秒";
+                }
+                //一時間以上
+                else if (CrossTime >= 3600)
+                {
+                    int Hour = CrossTime / 3600;
+                    int Min = (CrossTime % 3600)/60;
+                    int Sec = (CrossTime % 3600) % 60;
+                    CrossTimeLabel.Text = "経過時間：" +
+                        Hour.ToString() + "　時　" +
+                        Min.ToString() + "　分　" +
+                        Sec.ToString() + "　秒";
+                }
+            }
            
         }
 
@@ -394,22 +448,27 @@ namespace camera
                 //指定時間が0ではないの時
                 if (LoopFrame != 0)
                 {
-                    //他のボタンLCOK
-                    LoopCheckLock = true;
+                    //起動経過時間初期化
+                    CrossTime = 0;
 
                     //各ボタングループ操作LOCK
                     BoxSetting.Enabled = false;
                     CheckSetting.Enabled = false;
                     AutoGroup.Enabled = false;
 
-                    //ループタイマー起動
-                    LoopTimer.Enabled = true;
-
                     //ループ時間設定
                     LoopTimer.Interval = LoopFrame;
 
+                    //ループタイマー起動
+                    LoopTimer.Enabled = true;
+
+                    //他のボタンLCOK
+                    LoopCheckLock = true;
+
                     //一回目のチェック
                     Check();
+
+                   
                 }
                 //指定時間が0の時
                 else
@@ -622,11 +681,17 @@ namespace camera
                     //対象名あるの時
                     if (BoxNameList.Count > 0)
                     {
+                        
+
                         //命名あるなら名前表示
                         if (BoxNameList[k] != "")
                         {
                             CheckPerList.Items.Add(BoxNameList[k] + " : " + Getpercent.ToString() + "%"
                                 + "/ " + BoxPercent.ToString() + "%" + " 一致なら合格");
+                            if (!OkOrFail[k])
+                            {
+                                
+                            }
                         }
                         //命名してないなら番号表示
                         else
@@ -682,6 +747,16 @@ namespace camera
                     //背景赤に変換
                     this.BackColor = Color.Red;
                     //Ans.Text = "FAIL";
+                }
+
+                if (GetAnser.Count > 1)
+                {
+                    GetAnser.Clear();
+                }
+
+                for (int i = 0; i < OkOrFail.Length; i++)
+                {
+                    GetAnser.Add(OkOrFail[i]);
                 }
 
                 //CSVに保存
@@ -2437,6 +2512,29 @@ namespace camera
         private void ClickBoxNum_TextChanged(object sender, EventArgs e)
         {
             BoxNameCombo.SelectedIndex = NowBox - 1;
+        }
+
+        /// <summary>
+        /// 結果リスト色付け
+        /// </summary>
+        private void CheckPerList_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            //赤ブラシ
+            var Redbrush = new SolidBrush(Color.Red);
+            //黒ブラシ
+            var Blackbrush = new SolidBrush(Color.Black);
+
+            //合格
+            if (GetAnser[e.Index])
+            {
+                e.Graphics.DrawString(CheckPerList.Items[1].ToString(), e.Font, Blackbrush, e.Bounds, StringFormat.GenericDefault);
+            }
+            //不合格
+            else
+            {
+                e.Graphics.DrawString(CheckPerList.Items[0].ToString(), e.Font, Redbrush, e.Bounds, StringFormat.GenericDefault);
+            }
+
         }
     }
 }
