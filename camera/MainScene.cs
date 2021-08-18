@@ -934,6 +934,9 @@ namespace camera
                             string[] SCheckBoxCol = DataList[(i * 8) + 8].Split(':', ',');
                             box.UsedCol = Color.FromArgb(Convert.ToInt32(SCheckBoxCol[1]), Convert.ToInt32(SCheckBoxCol[2])
                                 , Convert.ToInt32(SCheckBoxCol[3]));
+
+                            //ボックス番号を付け
+                            box.MyNum = i + 1;
                         }
 
                         //コンボボックスのインデックスを0にする
@@ -968,6 +971,7 @@ namespace camera
                                 CutPic.Controls.Clear();
                                 CutPic.Controls.Add(MyBoxList[0]);
                                 MyBoxList[0].Name = "";
+                                MyBoxList[0].MyNumber.Text = "1";
 
                                 //ボックス名リストのクリア
                                 BoxNameList.Clear();
@@ -1041,6 +1045,7 @@ namespace camera
                         CutPic.Controls.Clear();
                         CutPic.Controls.Add(MyBoxList[0]);
                         MyBoxList[0].Name = "";
+                        MyBoxList[0].MyNumber.Text = "1";
 
                         //ボックス名リストのクリア
                         BoxNameList.Clear();
