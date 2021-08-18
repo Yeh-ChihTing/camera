@@ -328,16 +328,18 @@ namespace camera
                             MessageBox.Show("このカメラは使用できない");
                         }
                     }
-
-                    //カメラ画像表示ループ
-                    while (true)
+                    if (vc.ConvertRgb)
                     {
-                        //取得した画像をMATに変換
-                        img = vc.RetrieveMat();
+                        //カメラ画像表示ループ
+                        while (true)
+                        {
+                            //取得した画像をMATに変換
+                            img = vc.RetrieveMat();
 
-                        //変換したMatをbitmapに変換そしてカメライメージとして表示
-                        CameraPic.Image = img.ToBitmap();
-                        // }
+                            //変換したMatをbitmapに変換そしてカメライメージとして表示
+                            CameraPic.Image = img.ToBitmap();
+                            // }
+                        }
                     }
 
                 });
@@ -404,6 +406,8 @@ namespace camera
                         Sec.ToString() + "　秒";
                 }
             }
+
+            
            
         }
 
@@ -703,7 +707,6 @@ namespace camera
                     if (BoxNameList.Count > 0)
                     {
                         
-
                         //命名あるなら名前表示
                         if (BoxNameList[k] != "")
                         {
@@ -2584,20 +2587,21 @@ namespace camera
             //黒ブラシ
             var Blackbrush = new SolidBrush(Color.Black);
 
-            if (GetAnser.Count > 1)
+            if (GetAnser.Count >= 1)
             {
                 //合格
                 if (GetAnser[e.Index])
                 {
-                    e.Graphics.DrawString(CheckPerList.Items[1].ToString(), e.Font, Blackbrush, e.Bounds, StringFormat.GenericDefault);
+                    e.Graphics.DrawString(CheckPerList.Items[e.Index].ToString(), e.Font, Blackbrush, e.Bounds, StringFormat.GenericDefault);
                 }
                 //不合格
                 else
                 {
-                    e.Graphics.DrawString(CheckPerList.Items[0].ToString(), e.Font, Redbrush, e.Bounds, StringFormat.GenericDefault);
+                    e.Graphics.DrawString(CheckPerList.Items[e.Index].ToString(), e.Font, Redbrush, e.Bounds, StringFormat.GenericDefault);
                 }
             }
 
         }
+
     }
 }
