@@ -1001,7 +1001,7 @@ namespace camera
         /// </summary>
         private void SavePicBtn_Click(object sender, EventArgs e)
         {
-
+            //Yeh-ChitTing
             //セーフデータ宣言
             SaveFileDialog sfd = new SaveFileDialog();
 
