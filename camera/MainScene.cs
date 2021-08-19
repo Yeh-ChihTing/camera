@@ -2004,6 +2004,9 @@ namespace camera
 
                 }
 
+                CheckPerList.Items.Clear();
+                GetAnser.Clear();
+
                 //選択対象を前頭1に戻る
                 NowBox = 1;
                 ClickBoxNum.Text = NowBox.ToString();
