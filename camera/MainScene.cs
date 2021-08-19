@@ -484,6 +484,11 @@ namespace camera
                         //一回目のチェック
                         Check();
 
+                        //時間の入力を変更不可能
+                        HourText.ReadOnly = true;
+                        MinText.ReadOnly = true;
+                        SecText.ReadOnly = true;
+
 
                     }
                     //指定時間が0の時
@@ -533,7 +538,7 @@ namespace camera
                 CheckLoopBtn.Text = "連続チェック";
 
                 //ボタンの色の変更
-                CheckLoopBtn.BackColor = SystemColors.Control;
+                CheckLoopBtn.BackColor = Color.FromArgb(128,255,128);
 
                 //ボタン背景色の変更
                 this.BackColor = SystemColors.Control;
@@ -544,6 +549,11 @@ namespace camera
                     MyBoxList[i].Drawbox.Visible = false;
                     //MyBoxList[i].Drawbox.BackColor = Color.Transparent;
                 }
+
+                //時間の入力を変更可能
+                HourText.ReadOnly = false;
+                MinText.ReadOnly = false;
+                SecText.ReadOnly = false;
             }
 
             //CutPicイメージ存在確認
@@ -1058,7 +1068,118 @@ namespace camera
                     //保存したデータ名を記録
                     SaveDataname = sfd.FileName;
 
+                    //上書きの時に対象状態ファイルを消す
+                   
+                    string[] getname = SaveDataname.Split('.');
+                    string Batname = getname[0] + ".bat";
+                    if (File.Exists(Batname))
+                    {
+                        DialogResult DeleteBat = MessageBox.Show("同じ名の対象状態データあります、削除しますか", "", MessageBoxButtons.YesNo);
+                        if (DeleteBat == DialogResult.Yes)
+                        {
+                            File.Delete(Batname);
+                        }
+                        else
+                        {
+                            //現在対象情報をクリア
+                            MyBoxList.Clear();
+                            BoxNameCombo.Items.Clear();
+                            CutPic.Controls.Clear();
+                            BoxNameList.Clear();
 
+                            //読み込みカウンター
+                            int line_cnt = 0;
+                            //読む文字一時置く用
+                            string line;
+                            //読むデータ保存リスト
+                            List<string> DataList = new List<string>();
+
+                            //データ読む
+                            using (StreamReader sr = new StreamReader(Batname))
+                            {
+                                // ファイルの内容を1行ずつ読み込み
+                                while ((line = sr.ReadLine()) != null)
+                                {
+                                    line_cnt++;
+                                    //Console.WriteLine("{0}行目:{1}", line_cnt, line);
+                                    // Listに追加
+                                    DataList.Add(line);
+                                }
+                            }
+
+                            //対象数取得
+                            int nums = Convert.ToInt32(DataList[0]);
+                            BoxNum = nums;
+
+                            //対象数に応じるループ
+                            for (int i = 0; i < nums; i++)
+                            {
+                                //新しいボックス生成
+                                MyBox box = new MyBox();
+                                CutPic.Controls.Add(box);
+
+                                //名前を読む
+                                string[] names = DataList[(i * 8) + 1].Split(':');
+                                box.MyNumber.Text = names[1];
+                                BoxNameList.Add(names[1]);
+                                MyBoxList.Add(box);
+                                BoxNameCombo.Items.Add(names[1]);
+
+                                //位置を読む
+                                string[] Posstr = DataList[(i * 8) + 2].Split(':', ',');
+                                int PosX = Convert.ToInt32(Posstr[1]);
+                                int PosY = Convert.ToInt32(Posstr[2]);
+                                box.Location = new System.Drawing.Point(PosX, PosY);
+
+                                //サイズを読む
+                                string[] Size = DataList[(i * 8) + 3].Split(':', ',');
+                                int w = Convert.ToInt32(Size[1]);
+                                int h = Convert.ToInt32(Size[2]);
+                                box.Size = new System.Drawing.Size(w, h);
+
+                                //色指定チェックボックスFLAG
+                                string Checked = DataList[(i * 8) + 4];
+                                if (Checked == "BoxCheckedFalse")
+                                {
+                                    box.BoxChecked = false;
+                                }
+                                else if (Checked == "BoxCheckedTrue")
+                                {
+                                    box.BoxChecked = true;
+                                }
+
+                                //色合いの値
+                                string[] col = DataList[(i * 8) + 5].Split(':', ',');
+                                int SR = Convert.ToInt32(col[1]);
+                                int SG = Convert.ToInt32(col[2]);
+                                int SB = Convert.ToInt32(col[3]);
+                                box.Red = SR;
+                                box.Green = SG;
+                                box.Blue = SB;
+
+                                //合格パーセント
+                                string[] SPercent = DataList[(i * 8) + 6].Split(':', ',');
+                                box.MySPercent = Convert.ToInt32(SPercent[1]);
+
+                                //モード
+                                string[] Smode = DataList[(i * 8) + 7].Split(':', ',');
+                                box.MyBoxMode = (MyBox.BoxMode)Convert.ToInt32(Smode[1]);
+
+                                //指定色用色
+                                string[] SCheckBoxCol = DataList[(i * 8) + 8].Split(':', ',');
+                                box.UsedCol = Color.FromArgb(Convert.ToInt32(SCheckBoxCol[1]), Convert.ToInt32(SCheckBoxCol[2])
+                                    , Convert.ToInt32(SCheckBoxCol[3]));
+
+                                //ボックス番号を付け
+                                box.MyNum = i + 1;
+                            }
+
+                            //コンボボックスのインデックスを0にする
+                            BoxNameCombo.SelectedIndex = 0;
+                        }
+                    }
+
+                    
                 }
                 catch (NullReferenceException a)
                 {
@@ -1989,14 +2110,14 @@ namespace camera
                 //背景色戻す
                 this.BackColor = SystemColors.Control;
 
-                MyBoxList[0]._borderColor = Color.LightSeaGreen;
-                MyBoxList[0].Invalidate();
+                MyBoxList[BoxNameCombo.SelectedIndex]._borderColor = Color.LightSeaGreen;
+                MyBoxList[BoxNameCombo.SelectedIndex].Invalidate();
                 //対象ボックスの合格部分緑を塗る用pictureboxを非表示
                 for (int i = 0; i < MyBoxList.Count; i++)
                 {
                     MyBoxList[i].Drawbox.Visible = false;
                     //MyBoxList[i].Drawbox.BackColor = Color.Transparent;
-                    if (i > 0)
+                    if (i != BoxNameCombo.SelectedIndex)
                     {
                         MyBoxList[i]._borderColor = Color.Blue;
                         MyBoxList[i].Invalidate();
@@ -2004,12 +2125,13 @@ namespace camera
 
                 }
 
+                //結果表示をクリア
                 CheckPerList.Items.Clear();
                 GetAnser.Clear();
 
                 //選択対象を前頭1に戻る
-                NowBox = 1;
-                ClickBoxNum.Text = NowBox.ToString();
+                //NowBox = 1;
+                //ClickBoxNum.Text = NowBox.ToString();
 
             }
         }
