@@ -200,7 +200,9 @@ namespace camera
         /// <summary>
         ///結果取得リスト
         /// </summary>
-        List<bool> GetAnser = new List<bool>();
+        private List<bool> GetAnser = new List<bool>();
+
+        private DateTime nowTime = new DateTime();
 
         //変数宣言END
 
@@ -407,7 +409,8 @@ namespace camera
                 }
             }
 
-            
+            nowTime = DateTime.Now;
+            this.Text = "画像検査  " + nowTime.Hour + " 時 " + nowTime.Minute + " 分 " + nowTime.Second + " 秒";
            
         }
 

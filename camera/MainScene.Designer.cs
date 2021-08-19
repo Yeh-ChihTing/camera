@@ -101,6 +101,7 @@ namespace camera
             this.CheckSetting = new System.Windows.Forms.GroupBox();
             this.ClickBoxNum = new System.Windows.Forms.Label();
             this.CrossTimeLabel = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -423,7 +424,7 @@ namespace camera
             this.CheckLoopBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CheckLoopBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.CheckLoopBtn.ForeColor = System.Drawing.Color.Black;
-            this.CheckLoopBtn.Location = new System.Drawing.Point(838, 2);
+            this.CheckLoopBtn.Location = new System.Drawing.Point(840, 12);
             this.CheckLoopBtn.Name = "CheckLoopBtn";
             this.CheckLoopBtn.Size = new System.Drawing.Size(80, 40);
             this.CheckLoopBtn.TabIndex = 285;
@@ -438,7 +439,7 @@ namespace camera
             // MinText
             // 
             this.MinText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.MinText.Location = new System.Drawing.Point(719, 12);
+            this.MinText.Location = new System.Drawing.Point(721, 22);
             this.MinText.MaxLength = 2;
             this.MinText.Name = "MinText";
             this.MinText.Size = new System.Drawing.Size(30, 19);
@@ -449,7 +450,7 @@ namespace camera
             // SecText
             // 
             this.SecText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SecText.Location = new System.Drawing.Point(771, 12);
+            this.SecText.Location = new System.Drawing.Point(773, 22);
             this.SecText.MaxLength = 2;
             this.SecText.Name = "SecText";
             this.SecText.Size = new System.Drawing.Size(32, 19);
@@ -460,7 +461,7 @@ namespace camera
             // HourText
             // 
             this.HourText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.HourText.Location = new System.Drawing.Point(667, 12);
+            this.HourText.Location = new System.Drawing.Point(669, 22);
             this.HourText.MaxLength = 2;
             this.HourText.Name = "HourText";
             this.HourText.Size = new System.Drawing.Size(29, 19);
@@ -472,7 +473,7 @@ namespace camera
             // 
             this.HourLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.HourLabel.AutoSize = true;
-            this.HourLabel.Location = new System.Drawing.Point(697, 12);
+            this.HourLabel.Location = new System.Drawing.Point(699, 22);
             this.HourLabel.Name = "HourLabel";
             this.HourLabel.Size = new System.Drawing.Size(17, 12);
             this.HourLabel.TabIndex = 289;
@@ -482,7 +483,7 @@ namespace camera
             // 
             this.MinLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MinLabel.AutoSize = true;
-            this.MinLabel.Location = new System.Drawing.Point(750, 12);
+            this.MinLabel.Location = new System.Drawing.Point(752, 22);
             this.MinLabel.Name = "MinLabel";
             this.MinLabel.Size = new System.Drawing.Size(17, 12);
             this.MinLabel.TabIndex = 290;
@@ -492,7 +493,7 @@ namespace camera
             // 
             this.SecLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SecLabel.AutoSize = true;
-            this.SecLabel.Location = new System.Drawing.Point(809, 12);
+            this.SecLabel.Location = new System.Drawing.Point(811, 22);
             this.SecLabel.Name = "SecLabel";
             this.SecLabel.Size = new System.Drawing.Size(17, 12);
             this.SecLabel.TabIndex = 291;
@@ -861,11 +862,20 @@ namespace camera
             // CrossTimeLabel
             // 
             this.CrossTimeLabel.AutoSize = true;
-            this.CrossTimeLabel.Location = new System.Drawing.Point(668, 38);
+            this.CrossTimeLabel.Location = new System.Drawing.Point(670, 48);
             this.CrossTimeLabel.Name = "CrossTimeLabel";
             this.CrossTimeLabel.Size = new System.Drawing.Size(65, 12);
             this.CrossTimeLabel.TabIndex = 311;
             this.CrossTimeLabel.Text = "経過時間：0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(668, 7);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 12);
+            this.label8.TabIndex = 312;
+            this.label8.Text = "間隔時間設定";
             // 
             // MainScene
             // 
@@ -873,6 +883,7 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.CrossTimeLabel);
             this.Controls.Add(this.CheckSetting);
             this.Controls.Add(this.AutoGroup);
@@ -987,6 +998,7 @@ namespace camera
         private System.Windows.Forms.TextBox AutoColGreenNums;
         public System.Windows.Forms.Label ClickBoxNum;
         private System.Windows.Forms.Label CrossTimeLabel;
+        private System.Windows.Forms.Label label8;
     }
 }
 
