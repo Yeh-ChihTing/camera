@@ -103,6 +103,8 @@ namespace camera
             this.CrossTimeLabel = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.DataNameText = new System.Windows.Forms.Label();
+            this.DataName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -183,7 +185,7 @@ namespace camera
             // 
             // BlueTrack
             // 
-            this.BlueTrack.Location = new System.Drawing.Point(23, 145);
+            this.BlueTrack.Location = new System.Drawing.Point(23, 130);
             this.BlueTrack.Maximum = 255;
             this.BlueTrack.Name = "BlueTrack";
             this.BlueTrack.Size = new System.Drawing.Size(104, 45);
@@ -195,7 +197,7 @@ namespace camera
             // 
             this.Btracktext.AutoSize = true;
             this.Btracktext.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Btracktext.Location = new System.Drawing.Point(133, 156);
+            this.Btracktext.Location = new System.Drawing.Point(133, 141);
             this.Btracktext.Name = "Btracktext";
             this.Btracktext.Size = new System.Drawing.Size(26, 16);
             this.Btracktext.TabIndex = 260;
@@ -228,7 +230,7 @@ namespace camera
             this.CheckBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CheckBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.CheckBtn.ForeColor = System.Drawing.Color.Black;
-            this.CheckBtn.Location = new System.Drawing.Point(773, 69);
+            this.CheckBtn.Location = new System.Drawing.Point(778, 67);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 40);
             this.CheckBtn.TabIndex = 263;
@@ -380,7 +382,7 @@ namespace camera
             // BlueLabel
             // 
             this.BlueLabel.AutoSize = true;
-            this.BlueLabel.Location = new System.Drawing.Point(5, 156);
+            this.BlueLabel.Location = new System.Drawing.Point(5, 141);
             this.BlueLabel.Name = "BlueLabel";
             this.BlueLabel.Size = new System.Drawing.Size(13, 12);
             this.BlueLabel.TabIndex = 280;
@@ -425,7 +427,7 @@ namespace camera
             this.CheckLoopBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CheckLoopBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.CheckLoopBtn.ForeColor = System.Drawing.Color.Black;
-            this.CheckLoopBtn.Location = new System.Drawing.Point(840, 12);
+            this.CheckLoopBtn.Location = new System.Drawing.Point(862, 12);
             this.CheckLoopBtn.Name = "CheckLoopBtn";
             this.CheckLoopBtn.Size = new System.Drawing.Size(80, 40);
             this.CheckLoopBtn.TabIndex = 285;
@@ -440,7 +442,7 @@ namespace camera
             // MinText
             // 
             this.MinText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.MinText.Location = new System.Drawing.Point(721, 22);
+            this.MinText.Location = new System.Drawing.Point(721, 27);
             this.MinText.MaxLength = 2;
             this.MinText.Name = "MinText";
             this.MinText.Size = new System.Drawing.Size(30, 19);
@@ -451,7 +453,7 @@ namespace camera
             // SecText
             // 
             this.SecText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SecText.Location = new System.Drawing.Point(773, 22);
+            this.SecText.Location = new System.Drawing.Point(773, 27);
             this.SecText.MaxLength = 2;
             this.SecText.Name = "SecText";
             this.SecText.Size = new System.Drawing.Size(32, 19);
@@ -462,7 +464,7 @@ namespace camera
             // HourText
             // 
             this.HourText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.HourText.Location = new System.Drawing.Point(669, 22);
+            this.HourText.Location = new System.Drawing.Point(669, 27);
             this.HourText.MaxLength = 2;
             this.HourText.Name = "HourText";
             this.HourText.Size = new System.Drawing.Size(29, 19);
@@ -474,7 +476,7 @@ namespace camera
             // 
             this.HourLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.HourLabel.AutoSize = true;
-            this.HourLabel.Location = new System.Drawing.Point(699, 22);
+            this.HourLabel.Location = new System.Drawing.Point(699, 27);
             this.HourLabel.Name = "HourLabel";
             this.HourLabel.Size = new System.Drawing.Size(17, 12);
             this.HourLabel.TabIndex = 289;
@@ -484,7 +486,7 @@ namespace camera
             // 
             this.MinLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MinLabel.AutoSize = true;
-            this.MinLabel.Location = new System.Drawing.Point(752, 22);
+            this.MinLabel.Location = new System.Drawing.Point(752, 27);
             this.MinLabel.Name = "MinLabel";
             this.MinLabel.Size = new System.Drawing.Size(17, 12);
             this.MinLabel.TabIndex = 290;
@@ -494,7 +496,7 @@ namespace camera
             // 
             this.SecLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SecLabel.AutoSize = true;
-            this.SecLabel.Location = new System.Drawing.Point(811, 22);
+            this.SecLabel.Location = new System.Drawing.Point(811, 27);
             this.SecLabel.Name = "SecLabel";
             this.SecLabel.Size = new System.Drawing.Size(17, 12);
             this.SecLabel.TabIndex = 291;
@@ -507,9 +509,9 @@ namespace camera
             this.CheckPerList.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.CheckPerList.FormattingEnabled = true;
             this.CheckPerList.ItemHeight = 20;
-            this.CheckPerList.Location = new System.Drawing.Point(666, 115);
+            this.CheckPerList.Location = new System.Drawing.Point(663, 178);
             this.CheckPerList.Name = "CheckPerList";
-            this.CheckPerList.Size = new System.Drawing.Size(252, 124);
+            this.CheckPerList.Size = new System.Drawing.Size(286, 104);
             this.CheckPerList.TabIndex = 292;
             this.CheckPerList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.CheckPerList_DrawItem);
             // 
@@ -517,7 +519,7 @@ namespace camera
             // 
             this.AllPercentShow.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.AllPercentShow.AutoSize = true;
-            this.AllPercentShow.Location = new System.Drawing.Point(667, 97);
+            this.AllPercentShow.Location = new System.Drawing.Point(661, 163);
             this.AllPercentShow.Name = "AllPercentShow";
             this.AllPercentShow.Size = new System.Drawing.Size(100, 12);
             this.AllPercentShow.TabIndex = 293;
@@ -548,7 +550,7 @@ namespace camera
             // BSetText
             // 
             this.BSetText.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.BSetText.Location = new System.Drawing.Point(186, 153);
+            this.BSetText.Location = new System.Drawing.Point(186, 138);
             this.BSetText.MaxLength = 3;
             this.BSetText.Name = "BSetText";
             this.BSetText.Size = new System.Drawing.Size(44, 23);
@@ -568,7 +570,7 @@ namespace camera
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 178);
+            this.label2.Location = new System.Drawing.Point(5, 163);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 12);
             this.label2.TabIndex = 298;
@@ -577,7 +579,7 @@ namespace camera
             // SetSusscePercent
             // 
             this.SetSusscePercent.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.SetSusscePercent.Location = new System.Drawing.Point(5, 196);
+            this.SetSusscePercent.Location = new System.Drawing.Point(7, 181);
             this.SetSusscePercent.MaxLength = 3;
             this.SetSusscePercent.Name = "SetSusscePercent";
             this.SetSusscePercent.Size = new System.Drawing.Size(32, 23);
@@ -589,7 +591,7 @@ namespace camera
             // 
             this.ClearCheckScene.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ClearCheckScene.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ClearCheckScene.Location = new System.Drawing.Point(859, 69);
+            this.ClearCheckScene.Location = new System.Drawing.Point(864, 67);
             this.ClearCheckScene.Name = "ClearCheckScene";
             this.ClearCheckScene.Size = new System.Drawing.Size(80, 40);
             this.ClearCheckScene.TabIndex = 300;
@@ -627,16 +629,16 @@ namespace camera
             this.BoxSetting.Controls.Add(this.BNums);
             this.BoxSetting.Controls.Add(this.RNums);
             this.BoxSetting.Controls.Add(this.GNums);
-            this.BoxSetting.Location = new System.Drawing.Point(664, 250);
+            this.BoxSetting.Location = new System.Drawing.Point(663, 285);
             this.BoxSetting.Name = "BoxSetting";
-            this.BoxSetting.Size = new System.Drawing.Size(277, 227);
+            this.BoxSetting.Size = new System.Drawing.Size(286, 210);
             this.BoxSetting.TabIndex = 301;
             this.BoxSetting.TabStop = false;
             this.BoxSetting.Text = "groupBox1";
             // 
             // ChooseCol
             // 
-            this.ChooseCol.Location = new System.Drawing.Point(186, 196);
+            this.ChooseCol.Location = new System.Drawing.Point(188, 181);
             this.ChooseCol.Name = "ChooseCol";
             this.ChooseCol.Size = new System.Drawing.Size(56, 23);
             this.ChooseCol.TabIndex = 305;
@@ -647,7 +649,7 @@ namespace camera
             // UseCol
             // 
             this.UseCol.BackColor = System.Drawing.Color.Red;
-            this.UseCol.Location = new System.Drawing.Point(248, 198);
+            this.UseCol.Location = new System.Drawing.Point(250, 183);
             this.UseCol.Name = "UseCol";
             this.UseCol.Size = new System.Drawing.Size(21, 18);
             this.UseCol.TabIndex = 304;
@@ -656,7 +658,7 @@ namespace camera
             // UseThisCol
             // 
             this.UseThisCol.AutoSize = true;
-            this.UseThisCol.Location = new System.Drawing.Point(121, 200);
+            this.UseThisCol.Location = new System.Drawing.Point(123, 185);
             this.UseThisCol.Name = "UseThisCol";
             this.UseThisCol.Size = new System.Drawing.Size(60, 16);
             this.UseThisCol.TabIndex = 303;
@@ -744,7 +746,7 @@ namespace camera
             this.AutoGroup.Controls.Add(this.AutoCol);
             this.AutoGroup.Location = new System.Drawing.Point(663, 679);
             this.AutoGroup.Name = "AutoGroup";
-            this.AutoGroup.Size = new System.Drawing.Size(281, 80);
+            this.AutoGroup.Size = new System.Drawing.Size(286, 80);
             this.AutoGroup.TabIndex = 308;
             this.AutoGroup.TabStop = false;
             this.AutoGroup.Text = "自動対象設定用";
@@ -844,7 +846,7 @@ namespace camera
             this.CheckSetting.Controls.Add(this.SettingNameBtn);
             this.CheckSetting.Controls.Add(this.BoxNameCombo);
             this.CheckSetting.Controls.Add(this.BoxNameListlabel);
-            this.CheckSetting.Location = new System.Drawing.Point(663, 492);
+            this.CheckSetting.Location = new System.Drawing.Point(663, 501);
             this.CheckSetting.Name = "CheckSetting";
             this.CheckSetting.Size = new System.Drawing.Size(286, 170);
             this.CheckSetting.TabIndex = 310;
@@ -864,7 +866,7 @@ namespace camera
             // CrossTimeLabel
             // 
             this.CrossTimeLabel.AutoSize = true;
-            this.CrossTimeLabel.Location = new System.Drawing.Point(670, 48);
+            this.CrossTimeLabel.Location = new System.Drawing.Point(670, 53);
             this.CrossTimeLabel.Name = "CrossTimeLabel";
             this.CrossTimeLabel.Size = new System.Drawing.Size(65, 12);
             this.CrossTimeLabel.TabIndex = 311;
@@ -873,7 +875,7 @@ namespace camera
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(668, 7);
+            this.label8.Location = new System.Drawing.Point(668, 12);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 12);
             this.label8.TabIndex = 312;
@@ -888,12 +890,33 @@ namespace camera
             this.label9.TabIndex = 306;
             this.label9.Text = "モード";
             // 
+            // DataNameText
+            // 
+            this.DataNameText.AutoSize = true;
+            this.DataNameText.Location = new System.Drawing.Point(663, 132);
+            this.DataNameText.Name = "DataNameText";
+            this.DataNameText.Size = new System.Drawing.Size(93, 12);
+            this.DataNameText.TabIndex = 307;
+            this.DataNameText.Text = "結果記録データ名";
+            // 
+            // DataName
+            // 
+            this.DataName.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.DataName.Location = new System.Drawing.Point(759, 128);
+            this.DataName.MaxLength = 3;
+            this.DataName.Name = "DataName";
+            this.DataName.Size = new System.Drawing.Size(154, 21);
+            this.DataName.TabIndex = 307;
+            this.DataName.Text = "監視データ";
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.DataName);
+            this.Controls.Add(this.DataNameText);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.CrossTimeLabel);
             this.Controls.Add(this.CheckSetting);
@@ -1011,6 +1034,8 @@ namespace camera
         private System.Windows.Forms.Label CrossTimeLabel;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label DataNameText;
+        private System.Windows.Forms.TextBox DataName;
     }
 }
 

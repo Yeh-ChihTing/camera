@@ -1610,8 +1610,13 @@ namespace camera
             DateTime dt = new DateTime();
             dt = DateTime.Now;
 
+            if (DataName.Text == "")
+            {
+                DataName.Text = "監視データ";
+            }
+
             //データ名
-            string Path = "SaveData/" + dt.Year + "." + dt.Month + "." + dt.Day + "監視データ.csv";
+            string Path = "SaveData/" + dt.Year + "." + dt.Month + "." + dt.Day + DataName.Text + ".csv";
             StreamWriter sw;
 
             //データ存在確認
@@ -2759,7 +2764,5 @@ namespace camera
             }
 
         }
-
-
     }
 }
