@@ -79,6 +79,8 @@ namespace camera
 
             //ネットワークカメラアドレス設定
             //main.CamTypeName = "http://"+UserID.Text+":"+ PassWord.Text+"@"+IpAdress.Text+ "/axis-cgi/mjpg/video.cgi";
+            //ImageViewer?Resolution=640x480&Quality=Standard&Mode=Refresh&Interval=1
+            //cgi-bin/camera?resolution=640*360
             main.CamTypeName = "http://" + UserID.Text + ":" + PassWord.Text + "@" + IpAdress.Text + "/" + CGIConment.Text;
 
             //メインシーン表示

@@ -409,6 +409,7 @@ namespace camera
                 nowTime.Hour + " 時 " +
                 nowTime.Minute + " 分 " +
                 nowTime.Second + " 秒";
+
            
         }
 

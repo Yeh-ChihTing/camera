@@ -148,7 +148,7 @@ namespace camera
             this.CGIConment.Name = "CGIConment";
             this.CGIConment.Size = new System.Drawing.Size(197, 19);
             this.CGIConment.TabIndex = 286;
-            this.CGIConment.Text = "cgi-bin/camera?resolution=640";
+            this.CGIConment.Text = "cgi-bin/camera?resolution=640*360";
             // 
             // OpenScene
             // 
