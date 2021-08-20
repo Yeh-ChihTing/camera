@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 namespace camera
 {
     /// <summary>
@@ -36,6 +35,7 @@ namespace camera
         /// </summary>
         public Image GetCutPicNow = null;
 
+
         /// <summary>
         /// カメラサイズモード
         /// </summary>
@@ -61,7 +61,7 @@ namespace camera
         /// <summary>
         /// カカメラモード宣言
         /// </summary>
-        public CamMode Cmode;
+        public CamMode Cmode { get; set; }
 
         /// <summary>
         /// 今の倍率
@@ -91,7 +91,7 @@ namespace camera
         /// <summary>
         ///今クリックした対象番号
         /// </summary>
-        public int NowBox;
+        public int NowBox { get; set; }
 
         /// <summary>
         ///連続チェックLCOK用FLAG
@@ -113,11 +113,6 @@ namespace camera
         /// 検査用写真用空間
         /// </summary>
         private Image MasterImage = null;
-
-        /// <summary>
-        /// 一つ目の粋の宣言
-        /// </summary>
-        private MyBox box1;
 
         /// <summary>
         ///粋数
@@ -172,12 +167,12 @@ namespace camera
         /// <summary>
         ///検査用色
         /// </summary>
-        private Color CheckCol;
+        private Color CheckCol { get; set; }
 
         /// <summary>
         ///マスタ画像名を記録用
         /// </summary>
-        private string NowName;
+        private string NowName { get; set; }
 
         /// <summary>
         ///起動経過時間
@@ -199,10 +194,10 @@ namespace camera
         /// </summary>
         private List<bool> GetAnser = new List<bool>();
 
-        private DateTime nowTime = new DateTime();
+        //現在時間取得用
+        private DateTime nowTime = DateTime.Now;
 
         //変数宣言END
-
 
         /// <summary>
         ///初期化
@@ -229,7 +224,7 @@ namespace camera
             CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
 
             //最初の対象ボックス生成
-            box1 = new MyBox();
+            MyBox box1 = new MyBox();
 
             //対象ボックス番号設定
             box1.MyNum = 1;
@@ -406,8 +401,14 @@ namespace camera
                 }
             }
 
+            //現在時間の表示
             nowTime = DateTime.Now;
-            this.Text = "画像検査  " + nowTime.Hour + " 時 " + nowTime.Minute + " 分 " + nowTime.Second + " 秒";
+            this.Text = "画像検査  " + "現在時間: " +
+                nowTime.Year + " 年 " +
+                nowTime.Month + " 月 " +
+                nowTime.Hour + " 時 " +
+                nowTime.Minute + " 分 " +
+                nowTime.Second + " 秒";
            
         }
 
@@ -2757,6 +2758,7 @@ namespace camera
             }
 
         }
+
 
     }
 }
