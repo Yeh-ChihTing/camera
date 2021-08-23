@@ -194,7 +194,9 @@ namespace camera
         /// </summary>
         private List<bool> GetAnser = new List<bool>();
 
-        //現在時間取得用
+        /// <summary>
+        ///現在時間取得用
+        /// </summary>
         private DateTime nowTime = DateTime.Now;
 
         //変数宣言END
