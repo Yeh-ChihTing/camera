@@ -49,6 +49,8 @@ namespace camera
                 //使用するカメラ番号
                 main.WebCamNum = WebCamSelect.SelectedIndex;
 
+                main.version.Text = version.Text;
+
                 //メインシーン表示
                 main.Show();
 
@@ -67,6 +69,8 @@ namespace camera
         {
             //新しいメインシーン宣言
             MainScene main = new MainScene();
+
+            main.version.Text = version.Text;
 
             //メインシーンフォーム位置を画面の真中にする
             main.StartPosition = FormStartPosition.CenterScreen;

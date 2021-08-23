@@ -79,6 +79,7 @@ namespace camera
             this.SetSusscePercent = new System.Windows.Forms.TextBox();
             this.ClearCheckScene = new System.Windows.Forms.Button();
             this.BoxSetting = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.ChooseCol = new System.Windows.Forms.Button();
             this.UseCol = new System.Windows.Forms.PictureBox();
             this.UseThisCol = new System.Windows.Forms.CheckBox();
@@ -102,9 +103,9 @@ namespace camera
             this.ClickBoxNum = new System.Windows.Forms.Label();
             this.CrossTimeLabel = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.DataNameText = new System.Windows.Forms.Label();
             this.DataName = new System.Windows.Forms.TextBox();
+            this.version = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -221,7 +222,7 @@ namespace camera
             this.GetPicBtn.Name = "GetPicBtn";
             this.GetPicBtn.Size = new System.Drawing.Size(79, 23);
             this.GetPicBtn.TabIndex = 262;
-            this.GetPicBtn.Text = "画像を選択";
+            this.GetPicBtn.Text = "画像開く";
             this.GetPicBtn.UseVisualStyleBackColor = true;
             this.GetPicBtn.Click += new System.EventHandler(this.GetPic_Click);
             // 
@@ -636,6 +637,15 @@ namespace camera
             this.BoxSetting.TabStop = false;
             this.BoxSetting.Text = "groupBox1";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(98, 15);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(33, 12);
+            this.label9.TabIndex = 306;
+            this.label9.Text = "モード";
+            // 
             // ChooseCol
             // 
             this.ChooseCol.Location = new System.Drawing.Point(188, 181);
@@ -749,7 +759,7 @@ namespace camera
             this.AutoGroup.Size = new System.Drawing.Size(286, 80);
             this.AutoGroup.TabIndex = 308;
             this.AutoGroup.TabStop = false;
-            this.AutoGroup.Text = "自動対象設定用";
+            this.AutoGroup.Text = "自動対象指定用";
             // 
             // label7
             // 
@@ -881,15 +891,6 @@ namespace camera
             this.label8.TabIndex = 312;
             this.label8.Text = "間隔時間設定";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(98, 15);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(33, 12);
-            this.label9.TabIndex = 306;
-            this.label9.Text = "モード";
-            // 
             // DataNameText
             // 
             this.DataNameText.AutoSize = true;
@@ -909,12 +910,22 @@ namespace camera
             this.DataName.TabIndex = 307;
             this.DataName.Text = "監視データ";
             // 
+            // version
+            // 
+            this.version.AutoSize = true;
+            this.version.Location = new System.Drawing.Point(908, 770);
+            this.version.Name = "version";
+            this.version.Size = new System.Drawing.Size(41, 12);
+            this.version.TabIndex = 313;
+            this.version.Text = "label10";
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
             this.Controls.Add(this.DataNameText);
             this.Controls.Add(this.label8);
@@ -1036,6 +1047,7 @@ namespace camera
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label DataNameText;
         private System.Windows.Forms.TextBox DataName;
+        public System.Windows.Forms.Label version;
     }
 }
 
