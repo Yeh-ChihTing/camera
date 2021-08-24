@@ -97,20 +97,6 @@ namespace camera
         private Size OriginSize;
 
         /// <summary>
-        ///　コンソールの位置
-        /// </summary>
-        public enum CursorPos
-        {
-            None,
-            LeftTop,
-            Top,
-            RightTop,
-            LeftBottom,
-            Bottom,
-            RightBottom
-        }
-
-        /// <summary>
         ///　コンソールとボックス相対位置
         /// </summary>
         public enum ResizeDirection
@@ -299,7 +285,6 @@ namespace camera
                 this.Cursor = Cursors.SizeAll;
             }
 
-
             //マウスクリック(左)　サイズ変更
             if (e.Button == MouseButtons.Left)
             {
@@ -405,12 +390,15 @@ namespace camera
                     {
                         this.Cursor = Cursors.SizeAll;
 
+                        //移動
                         if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
                             this.Location.Y >= 0 && this.Location.Y <= PHeight)
                         {
                             Point mp = new Point(e.X - OriginPoint.X + this.Location.X, e.Y - OriginPoint.Y + this.Location.Y);
                             this.Location = mp;
                         }
+
+                        //横方向限界超える処理
                         if (this.Location.X + this.Width > this.Parent.Width)
                         {
                             this.Location = new Point(PWeight - this.Width, this.Location.Y);
@@ -419,6 +407,8 @@ namespace camera
                         {
                             this.Location = new Point(0, this.Location.Y);
                         }
+
+                        //縦方向限界超える処理
                         if (this.Location.Y + this.Height > this.Parent.Height)
                         {
                             this.Location = new Point(this.Location.X, PHeight - this.Height);
