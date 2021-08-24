@@ -2882,6 +2882,8 @@ namespace camera
 
                     //選択FLAG閉める
                     StarChooseCol = false;
+
+                    this.Cursor = Cursors.Default;
                 }
 
                 //自動対象検索用色
@@ -2896,6 +2898,7 @@ namespace camera
 
                     //選択FLAG閉める
                     StarChooseAutoCol = false;
+                    this.Cursor = Cursors.Default;
                 }
             }
             catch
@@ -2940,7 +2943,6 @@ namespace camera
 
             }
         }
-
 
         private void CutPic_MouseEnter(object sender, EventArgs e)
         {
@@ -3029,7 +3031,6 @@ namespace camera
             }
 
         }
-
 
         private bool NeerNumbers(int a,int b,int c,int limint)
         {
