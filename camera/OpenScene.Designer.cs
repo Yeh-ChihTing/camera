@@ -43,6 +43,7 @@ namespace camera
             this.label1 = new System.Windows.Forms.Label();
             this.CGIConment = new System.Windows.Forms.TextBox();
             this.version = new System.Windows.Forms.Label();
+            this.CopyRight = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // StartnetCamera
@@ -154,17 +155,27 @@ namespace camera
             // version
             // 
             this.version.AutoSize = true;
-            this.version.Location = new System.Drawing.Point(284, 188);
+            this.version.Location = new System.Drawing.Point(284, 197);
             this.version.Name = "version";
             this.version.Size = new System.Drawing.Size(27, 12);
             this.version.TabIndex = 288;
             this.version.Text = "1.0.0";
             // 
+            // CopyRight
+            // 
+            this.CopyRight.AutoSize = true;
+            this.CopyRight.Location = new System.Drawing.Point(83, 197);
+            this.CopyRight.Name = "CopyRight";
+            this.CopyRight.Size = new System.Drawing.Size(167, 12);
+            this.CopyRight.TabIndex = 289;
+            this.CopyRight.Text = "© 2021 Makoto-electric Co.LTD";
+            // 
             // OpenScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(323, 209);
+            this.ClientSize = new System.Drawing.Size(323, 218);
+            this.Controls.Add(this.CopyRight);
             this.Controls.Add(this.version);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CGIConment);
@@ -203,5 +214,6 @@ namespace camera
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox CGIConment;
         public System.Windows.Forms.Label version;
+        private System.Windows.Forms.Label CopyRight;
     }
 }
