@@ -328,7 +328,8 @@ namespace camera
                 {
                     //this.Cursor = Cursors.SizeNESW;
                     //右
-                    this.Height = OriginSize.Height + diffY;
+                    this.Width = OriginSize.Width + diffX;
+                    ReSize = true;
                     //上
                     int h = this.Height;
                     this.Height -= diffY;
@@ -345,8 +346,9 @@ namespace camera
                     int w = this.Width;
                     this.Width -= diffX;
                     this.Left += w - this.Width;
+                    ReSize = true;
                     //下
-                    this.Width = OriginSize.Width + diffX;
+                    this.Height = OriginSize.Height + diffY;
                     ReSize = true;
                 }
                 //右下

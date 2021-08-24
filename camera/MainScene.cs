@@ -105,11 +105,6 @@ namespace camera
         private Mat img = new Mat();
 
         /// <summary>
-        /// カメラ画面取得
-        /// </summary>
-        private VideoCapture vc;
-
-        /// <summary>
         /// 検査用写真用空間
         /// </summary>
         private Image MasterImage = null;
@@ -286,10 +281,16 @@ namespace camera
             }
 
             /// <summary>
+            /// カメラ画面取得
+            /// </summary>
+            VideoCapture vc = new VideoCapture();
+
+            /// <summary>
             /// カメラの稼働処理
             /// </summary>
             try
             {
+
                 Task.Run(() =>
                 {
 
@@ -2327,472 +2328,486 @@ namespace camera
                         int G = AutoCol.BackColor.G;
                         int B = AutoCol.BackColor.B;
 
-                        ////ボックス番号
-                        //int boxnum = 0;
-                        //ボックス数
-                        int Boxlimit = Convert.ToInt32(CheckLockNum.Text);
-
-                        //ボックス番号
-                        BoxNum = 1;
-
-                        //横縦計算用int
-                        int w = 0, h = 0;
-
-                        //ボックス判定用四角保存リスト
-                        List<Rectangle> rectList = new List<Rectangle>();
-
-                        //現存ボックスクリア
-                        BoxNameCombo.Items.Clear();
-                        MyBoxList.Clear();
-                        CutPic.Controls.Clear();
-
-                        //対象名リセット
-                        BoxNameList.Clear();
-
-                        //最初の位置探す用色合い基準
-                        int firstLimitR = Convert.ToInt32(AutoColRedNums.Text);
-                        int firstLimitG = Convert.ToInt32(AutoColGreenNums.Text);
-                        int firstLimitB = Convert.ToInt32(AutoColBlueNums.Text);
-
-                        //横幅測量基準色合い
-                        int IroAi = 50;
-
-                        //検索ループ
-                        for (int i = 0; i < CutPic.Width; i++)
+                        if (NeerNumbers(R, G, B, 5))
                         {
-                            for (int j = 0; j < CutPic.Height; j++)
+                            MessageBox.Show("黒、白、灰色は使用できない");
+                        }
+
+                        if (!NeerNumbers(R,G,B,5))
+                        {
+
+                            ////ボックス番号
+                            //int boxnum = 0;
+                            //ボックス数
+                            int Boxlimit = Convert.ToInt32(CheckLockNum.Text);
+
+                            //ボックス番号
+                            BoxNum = 1;
+
+                            //横縦計算用int
+                            int w = 0, h = 0;
+
+                            //ボックス判定用四角保存リスト
+                            List<Rectangle> rectList = new List<Rectangle>();
+
+                            //現存ボックスクリア
+                            BoxNameCombo.Items.Clear();
+                            MyBoxList.Clear();
+                            CutPic.Controls.Clear();
+
+                            //対象名リセット
+                            BoxNameList.Clear();
+
+                            //最初の位置探す用色合い基準
+                            int firstLimitR = Convert.ToInt32(AutoColRedNums.Text);
+                            int firstLimitG = Convert.ToInt32(AutoColGreenNums.Text);
+                            int firstLimitB = Convert.ToInt32(AutoColBlueNums.Text);
+
+                            //横幅測量基準色合い
+                            int IroAi = 50;
+
+
+                            //検索ループ
+                            for (int i = 0; i < CutPic.Width; i++)
                             {
-                                //検索したピクセルのRGB取得
-                                int CR = CheackBT.GetPixel(i, j).R;
-                                int CG = CheackBT.GetPixel(i, j).G;
-                                int CB = CheackBT.GetPixel(i, j).B;
-
-                                //最初の対象ボックス
-                                if (BoxNum == 1)
+                                for (int j = 0; j < CutPic.Height; j++)
                                 {
-                                    //ボックスの左上の点を取得条件
-                                    if (CR >= R - firstLimitR && CR <= R + firstLimitR &&
-                                    CG >= G - firstLimitG && CG <= G + firstLimitG &&
-                                    CB >= B - firstLimitB && CB <= B + firstLimitB)
+                                    //検索したピクセルのRGB取得
+                                    int CR = CheackBT.GetPixel(i, j).R;
+                                    int CG = CheackBT.GetPixel(i, j).G;
+                                    int CB = CheackBT.GetPixel(i, j).B;
+
+                                    //最初の対象ボックス
+                                    if (BoxNum == 1)
                                     {
-                                        //横幅計算
-                                        for (int k = i; k < CutPic.Width; k++)
-                                        {
-                                            //左上の点の右の点の色RGBを取得
-                                            int KR = CheackBT.GetPixel(k, j).R;
-                                            int KG = CheackBT.GetPixel(k, j).G;
-                                            int KB = CheackBT.GetPixel(k, j).B;
-
-                                            //右に行って色合い以内ならば横幅(w)++
-                                            if (KR >= R - IroAi && KR <= R + IroAi &&
-                                                KG >= G - IroAi && KG <= G + IroAi &&
-                                                KB >= B - IroAi && KB <= B + IroAi)
-                                            {
-                                                w++;
-                                            }
-                                            else
-                                            {
-                                                //違いますなら計算終了
-                                                break;
-                                            }
-                                        }
-
-                                        //縦幅計算
-                                        for (int l = j; l < CutPic.Height; l++)
-                                        {
-                                            //左上の点の下の点の色RGBを取得
-                                            int lR = CheackBT.GetPixel(i, l).R;
-                                            int lG = CheackBT.GetPixel(i, l).G;
-                                            int lB = CheackBT.GetPixel(i, l).B;
-                                            //下に行って色合い以内ならば縦幅(h)++
-                                            if (lR >= R - IroAi && lR <= R + IroAi &&
-                                                lG >= G - IroAi && lG <= G + IroAi &&
-                                                lB >= B - IroAi && lB <= B + IroAi)
-                                            {
-                                                h++;
-                                            }
-                                            else
-                                            {
-                                                //違いますなら計算終了
-                                                break;
-                                            }
-                                        }
-
-                                        //欲し長さ
-                                        int r = 0;
-                                        //いい横幅
-                                        bool goodbuildW = true;
-                                        //いい縦幅
-                                        bool goodbuildR = true;
-                                        //正方形とか
-                                        bool notrangle = false;
-
-                                        //横幅縦幅同じ確認
-                                        if (w > h)
-                                        {
-                                            notrangle = true;
-                                        }
-                                        else if (h > w)
-                                        {
-                                            notrangle = true;
-                                        }
-                                        else if (h == w)
-                                        {
-                                            r = h;
-                                            notrangle = false;
-                                        }
-
-                                        //正方形なら
-                                        if (!notrangle)
-                                        {
-                                            //取得点中心としてもう一度計算
-
-
-                                            if (i - (r / 2) > 0)
-                                            {
-                                                for (int k = i - (r / 2); k < i +r; k++)
-                                                {
-                                                    if (i + r < CutPic.Width)
-                                                    {
-                                                        //左上の点の右の点の色RGBを取得
-                                                        int KR = CheackBT.GetPixel(k, j).R;
-                                                        int KG = CheackBT.GetPixel(k, j).G;
-                                                        int KB = CheackBT.GetPixel(k, j).B;
-
-                                                        //右に行って色合い以内ならば横幅(w)++
-                                                        if (KR >= R - IroAi && KR <= R + IroAi &&
-                                                            KG >= G - IroAi && KG <= G + IroAi &&
-                                                            KB >= B - IroAi && KB <= B + IroAi)
-                                                        {
-                                                            goodbuildW = true;
-                                                        }
-                                                        else
-                                                        {
-                                                            goodbuildW = false;
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        goodbuildW = false;
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                goodbuildW = false;
-                                            }
-
-                                            if (j - (r / 2) > 0)
-                                            {
-                                                //縦幅計算
-                                                for (int l = j - (r / 2); l < j + r; l++)
-                                                {
-                                                    if (j + r < CutPic.Height)
-                                                    {
-                                                        //左上の点の下の点の色RGBを取得
-                                                        int lR = CheackBT.GetPixel(i, l).R;
-                                                        int lG = CheackBT.GetPixel(i, l).G;
-                                                        int lB = CheackBT.GetPixel(i, l).B;
-                                                        //下に行って色合い以内ならば縦幅(h)++
-                                                        if (lR >= R - IroAi && lR <= R + IroAi &&
-                                                            lG >= G - IroAi && lG <= G + IroAi &&
-                                                            lB >= B - IroAi && lB <= B + IroAi)
-                                                        {
-                                                            goodbuildR = true;
-                                                        }
-                                                        else
-                                                        {
-                                                            goodbuildR = false;
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        goodbuildR = false;
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                goodbuildR = false;
-                                            }
-                                        }
-
-
-                                        if (goodbuildW && goodbuildR && !notrangle)
-                                        {
-
-                                            ////ボックス番号++
-                                            //BoxNum++;
-                                            //対象ボックス生成
-                                            MyBox box = new MyBox();
-
-                                            //対象ボックス番号設定
-                                            box.MyNum = BoxNum;
-
-                                            //対象ボックスをCutPicの子にする
-                                            CutPic.Controls.Add(box);
-
-                                            //ボックス番号テキスト
-                                            box.MyNumber.Text = BoxNum.ToString();
-
-                                            //ボックスリストに追加
-                                            MyBoxList.Add(box);
-
-                                            //ボックスコンボボックスに追加
-                                            BoxNameCombo.Items.Add(BoxNum.ToString());
-
-                                            ////ボックス名リストに追加
-                                            //BoxNameList.Add(BoxNum.ToString());
-
-                                            //ボックス判定用四角生成
-                                            Rectangle angle = new Rectangle(i, j, w, h);
-
-                                            //判定用四角をリストに追加
-                                            rectList.Add(angle);
-
-                                            //対象ボックスの位置とサイズ設定
-                                            MyBoxList[BoxNum - 1].Location = new System.Drawing.Point(i, j);
-                                            MyBoxList[BoxNum - 1].Width = w;
-                                            MyBoxList[BoxNum - 1].Height = h;
-
-                                            //ボックス計数器++
-                                            BoxNum++;
-                                        }
-
-                                        //横縦計算用intを0にする
-                                        w = 0;
-                                        h = 0;
-                                    }
-
-                                }
-
-                                //二個目以降の対象ボックス
-                                else if (BoxNum <= Boxlimit && BoxNum != 1)
-                                {
-                                    if (CR >= R - firstLimitR && CR <= R + firstLimitR &&
+                                        //ボックスの左上の点を取得条件
+                                        if (CR >= R - firstLimitR && CR <= R + firstLimitR &&
                                         CG >= G - firstLimitG && CG <= G + firstLimitG &&
                                         CB >= B - firstLimitB && CB <= B + firstLimitB)
-                                    {
-
-                                        //横幅計算
-                                        for (int k = i; k < CutPic.Width; k++)
                                         {
-                                            //左上の点の右の点の色RGBを取得
-                                            int KR = CheackBT.GetPixel(k, j).R;
-                                            int KG = CheackBT.GetPixel(k, j).G;
-                                            int KB = CheackBT.GetPixel(k, j).B;
-
-                                            //右に行って色合い以内ならば横幅(w)++
-                                            if (KR >= R - IroAi && KR <= R + IroAi &&
-                                                KG >= G - IroAi && KG <= G + IroAi &&
-                                                KB >= B - IroAi && KB <= B + IroAi)
+                                            //横幅計算
+                                            for (int k = i; k < CutPic.Width; k++)
                                             {
-                                                w++;
-                                            }
-                                            else
-                                            {
-                                                //違いますなら計算終了
-                                                break;
-                                            }
-                                        }
+                                                //左上の点の右の点の色RGBを取得
+                                                int KR = CheackBT.GetPixel(k, j).R;
+                                                int KG = CheackBT.GetPixel(k, j).G;
+                                                int KB = CheackBT.GetPixel(k, j).B;
 
-                                        //縦幅計算
-                                        for (int l = j; l < CutPic.Height; l++)
-                                        {
-                                            //左上の点の下の点の色RGBを取得
-                                            int lR = CheackBT.GetPixel(i, l).R;
-                                            int lG = CheackBT.GetPixel(i, l).G;
-                                            int lB = CheackBT.GetPixel(i, l).B;
-
-                                            //下に行って色合い以内ならば縦幅(h)++
-                                            if (lR >= R - IroAi && lR <= R + IroAi &&
-                                                lG >= G - IroAi && lG <= G + IroAi &&
-                                                lB >= B - IroAi && lB <= B + IroAi)
-                                            {
-                                                h++;
-                                            }
-                                            else
-                                            {
-                                                //違いますなら計算終了
-                                                break;
-                                            }
-                                        }
-                                        //欲し長さ
-                                        int ro = 0;
-                                        //いい横幅
-                                        bool goodbuildW = true;
-                                        //いい縦幅
-                                        bool goodbuildR = true;
-                                        //正方形とか
-                                        bool notrangle = false;
-
-                                        //横幅縦幅同じ確認
-                                        if (w > h)
-                                        {
-                                            ro = w;
-                                            notrangle = true;
-                                        }
-                                        else if (h > w)
-                                        {
-                                            ro = h;
-                                            notrangle = true;
-                                        }
-                                        else if (h == w)
-                                        {
-                                            ro = h;
-                                            notrangle = false;
-                                        }
-
-                                        //正方形なら
-                                        if (!notrangle)
-                                        {
-                                            //取得の点を中心店としても一度計算
-
-                                            if (i - (ro / 2) > 0)
-                                            {
-
-                                                for (int k = i - (ro / 2); k < i + ro; k++)
+                                                //右に行って色合い以内ならば横幅(w)++
+                                                if (KR >= R - IroAi && KR <= R + IroAi &&
+                                                    KG >= G - IroAi && KG <= G + IroAi &&
+                                                    KB >= B - IroAi && KB <= B + IroAi)
                                                 {
-                                                    if (i + ro< CutPic.Width)
-                                                    {
-                                                        //左上の点の右の点の色RGBを取得
-                                                        int KR = CheackBT.GetPixel(k, j).R;
-                                                        int KG = CheackBT.GetPixel(k, j).G;
-                                                        int KB = CheackBT.GetPixel(k, j).B;
+                                                    w++;
+                                                }
+                                                else
+                                                {
+                                                    //違いますなら計算終了
+                                                    break;
+                                                }
+                                            }
 
-                                                        //右に行って色合い以内ならば横幅(w)++
-                                                        if (KR >= R - IroAi && KR <= R + IroAi &&
-                                                            KG >= G - IroAi && KG <= G + IroAi &&
-                                                            KB >= B - IroAi && KB <= B + IroAi)
+                                            //縦幅計算
+                                            for (int l = j; l < CutPic.Height; l++)
+                                            {
+                                                //左上の点の下の点の色RGBを取得
+                                                int lR = CheackBT.GetPixel(i, l).R;
+                                                int lG = CheackBT.GetPixel(i, l).G;
+                                                int lB = CheackBT.GetPixel(i, l).B;
+                                                //下に行って色合い以内ならば縦幅(h)++
+                                                if (lR >= R - IroAi && lR <= R + IroAi &&
+                                                    lG >= G - IroAi && lG <= G + IroAi &&
+                                                    lB >= B - IroAi && lB <= B + IroAi)
+                                                {
+                                                    h++;
+                                                }
+                                                else
+                                                {
+                                                    //違いますなら計算終了
+                                                    break;
+                                                }
+                                            }
+
+                                            //欲し長さ
+                                            int r = 0;
+                                            //いい横幅
+                                            bool goodbuildW = true;
+                                            //いい縦幅
+                                            bool goodbuildR = true;
+                                            //正方形とか
+                                            bool notrangle = false;
+
+                                            //横幅縦幅同じ確認
+                                            if (w > h)
+                                            {
+                                                notrangle = true;
+                                            }
+                                            else if (h > w)
+                                            {
+                                                notrangle = true;
+                                            }
+                                            else if (h == w)
+                                            {
+                                                r = h;
+                                                notrangle = false;
+
+
+                                            }
+
+                                            //正方形なら
+                                            if (!notrangle)
+                                            {
+                                                //取得点中心としてもう一度計算
+
+
+                                                if (i - (r / 2) > 0)
+                                                {
+                                                    for (int k = i - (r / 2); k < i + r; k++)
+                                                    {
+                                                        if (i + r < CutPic.Width)
                                                         {
-                                                            goodbuildW = true;
+                                                            //左上の点の右の点の色RGBを取得
+                                                            int KR = CheackBT.GetPixel(k, j).R;
+                                                            int KG = CheackBT.GetPixel(k, j).G;
+                                                            int KB = CheackBT.GetPixel(k, j).B;
+
+                                                            //右に行って色合い以内ならば横幅(w)++
+                                                            if (KR >= R - IroAi && KR <= R + IroAi &&
+                                                                KG >= G - IroAi && KG <= G + IroAi &&
+                                                                KB >= B - IroAi && KB <= B + IroAi)
+                                                            {
+                                                                goodbuildW = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                goodbuildW = false;
+                                                            }
                                                         }
                                                         else
                                                         {
                                                             goodbuildW = false;
+                                                            break;
                                                         }
                                                     }
-                                                    else
-                                                    {
-                                                        goodbuildW = false;
-                                                        break;
-                                                    }
                                                 }
-                                            }
-                                            else
-                                            {
-                                                goodbuildW = false;
-                                            }
-
-                                            if (j - (ro / 2) > 0)
-                                            {
-                                                //縦幅計算
-                                                for (int l = j - (ro / 2); l < j + ro; l++)
+                                                else
                                                 {
-                                                    if (j + ro < CutPic.Height)
+                                                    goodbuildW = false;
+                                                }
+
+                                                if (j - (r / 2) > 0)
+                                                {
+                                                    //縦幅計算
+                                                    for (int l = j - (r / 2); l < j + r; l++)
                                                     {
-                                                        //左上の点の下の点の色RGBを取得
-                                                        int lR = CheackBT.GetPixel(i, l).R;
-                                                        int lG = CheackBT.GetPixel(i, l).G;
-                                                        int lB = CheackBT.GetPixel(i, l).B;
-                                                        //下に行って色合い以内ならば縦幅(h)++
-                                                        if (lR >= R - IroAi && lR <= R + IroAi &&
-                                                            lG >= G - IroAi && lG <= G + IroAi &&
-                                                            lB >= B - IroAi && lB <= B + IroAi)
+                                                        if (j + r < CutPic.Height)
                                                         {
-                                                            goodbuildR = true;
+                                                            //左上の点の下の点の色RGBを取得
+                                                            int lR = CheackBT.GetPixel(i, l).R;
+                                                            int lG = CheackBT.GetPixel(i, l).G;
+                                                            int lB = CheackBT.GetPixel(i, l).B;
+                                                            //下に行って色合い以内ならば縦幅(h)++
+                                                            if (lR >= R - IroAi && lR <= R + IroAi &&
+                                                                lG >= G - IroAi && lG <= G + IroAi &&
+                                                                lB >= B - IroAi && lB <= B + IroAi)
+                                                            {
+                                                                goodbuildR = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                goodbuildR = false;
+                                                            }
                                                         }
                                                         else
                                                         {
                                                             goodbuildR = false;
+                                                            break;
                                                         }
                                                     }
-                                                    else
-                                                    {
-                                                        goodbuildR = false;
-                                                        break;
-                                                    }
+                                                }
+                                                else
+                                                {
+                                                    goodbuildR = false;
                                                 }
                                             }
+
+
+                                            if (goodbuildW && goodbuildR && !notrangle)
+                                            {
+
+                                                ////ボックス番号++
+                                                //BoxNum++;
+                                                //対象ボックス生成
+                                                MyBox box = new MyBox();
+
+                                                //対象ボックス番号設定
+                                                box.MyNum = BoxNum;
+
+                                                //対象ボックスをCutPicの子にする
+                                                CutPic.Controls.Add(box);
+
+                                                //ボックス番号テキスト
+                                                box.MyNumber.Text = BoxNum.ToString();
+
+                                                //ボックスリストに追加
+                                                MyBoxList.Add(box);
+
+                                                //ボックスコンボボックスに追加
+                                                BoxNameCombo.Items.Add(BoxNum.ToString());
+
+                                                ////ボックス名リストに追加
+                                                //BoxNameList.Add(BoxNum.ToString());
+
+                                                //ボックス判定用四角生成
+                                                Rectangle angle = new Rectangle(i - (w / 2), j - (w / 2), w * 2, h * 2);
+
+                                                //判定用四角をリストに追加
+                                                rectList.Add(angle);
+
+                                                //対象ボックスの位置とサイズ設定
+                                                MyBoxList[BoxNum - 1].Location = new System.Drawing.Point(i, j);
+                                                MyBoxList[BoxNum - 1].Width = w;
+                                                MyBoxList[BoxNum - 1].Height = h;
+
+                                                //ボックス計数器++
+                                                BoxNum++;
+                                            }
+
+                                            //横縦計算用intを0にする
+                                            w = 0;
+                                            h = 0;
                                         }
-                                        if (goodbuildW && goodbuildR && !notrangle)
+
+                                    }
+
+                                    //二個目以降の対象ボックス
+                                    else if (BoxNum <= Boxlimit && BoxNum != 1)
+                                    {
+                                        if (CR >= R - firstLimitR && CR <= R + firstLimitR &&
+                                            CG >= G - firstLimitG && CG <= G + firstLimitG &&
+                                            CB >= B - firstLimitB && CB <= B + firstLimitB)
                                         {
 
-                                            //生成必要判定FLAG
-                                            bool canbuild = true;
-
-                                            //生成済みの対象と判定　同じ場所なら生成必要ない
-                                            for (int r = 0; r < rectList.Count; r++)
+                                            //横幅計算
+                                            for (int k = i; k < CutPic.Width; k++)
                                             {
-                                                if (rectList[r].Contains((i + (i + w)) / 2, (j + (j + h)) / 2) ||
-                                                    rectList[r].Contains(i + 5, j - 5) ||
-                                                    rectList[r].Contains(i + 5, j + 5) ||
-                                                    rectList[r].Contains(i - 5, j - 5) ||
-                                                    rectList[r].Contains(i - 5, j + 5))
+                                                //左上の点の右の点の色RGBを取得
+                                                int KR = CheackBT.GetPixel(k, j).R;
+                                                int KG = CheackBT.GetPixel(k, j).G;
+                                                int KB = CheackBT.GetPixel(k, j).B;
+
+                                                //右に行って色合い以内ならば横幅(w)++
+                                                if (KR >= R - IroAi && KR <= R + IroAi &&
+                                                    KG >= G - IroAi && KG <= G + IroAi &&
+                                                    KB >= B - IroAi && KB <= B + IroAi)
                                                 {
-                                                    w = 0;
-                                                    h = 0;
-                                                    canbuild = false;
+                                                    w++;
                                                 }
+                                                else
+                                                {
+                                                    //違いますなら計算終了
+                                                    break;
+                                                }
+                                            }
+
+                                            //縦幅計算
+                                            for (int l = j; l < CutPic.Height; l++)
+                                            {
+                                                //左上の点の下の点の色RGBを取得
+                                                int lR = CheackBT.GetPixel(i, l).R;
+                                                int lG = CheackBT.GetPixel(i, l).G;
+                                                int lB = CheackBT.GetPixel(i, l).B;
+
+                                                //下に行って色合い以内ならば縦幅(h)++
+                                                if (lR >= R - IroAi && lR <= R + IroAi &&
+                                                    lG >= G - IroAi && lG <= G + IroAi &&
+                                                    lB >= B - IroAi && lB <= B + IroAi)
+                                                {
+                                                    h++;
+                                                }
+                                                else
+                                                {
+                                                    //違いますなら計算終了
+                                                    break;
+                                                }
+                                            }
+                                            //欲し長さ
+                                            int ro = 0;
+                                            //いい横幅
+                                            bool goodbuildW = true;
+                                            //いい縦幅
+                                            bool goodbuildR = true;
+                                            //正方形とか
+                                            bool notrangle = false;
+
+                                            //横幅縦幅同じ確認
+                                            if (w > h)
+                                            {
+                                                ro = w;
+                                                notrangle = true;
+                                            }
+                                            else if (h > w)
+                                            {
+                                                ro = h;
+                                                notrangle = true;
+                                            }
+                                            else if (h == w)
+                                            {
+                                                ro = h;
+                                                notrangle = false;
 
                                             }
 
-                                            //生成必要
-                                            if (canbuild)
+                                            //正方形なら
+                                            if (!notrangle)
                                             {
-                                                //ボックス数量は指定数量を超えるか判定
-                                                if (MyBoxList.Count < Boxlimit)
+                                                //取得の点を中心店としても一度計算
+
+                                                if (i - (ro / 2) > 0)
                                                 {
-                                                    ////ボックス番号++
-                                                    //BoxNum++;
-                                                    //対象ボックス生成
-                                                    MyBox box = new MyBox();
 
-                                                    //対象ボックス番号設定
-                                                    box.MyNum = BoxNum;
-
-                                                    //対象ボックスをCutPicの子にする
-                                                    CutPic.Controls.Add(box);
-
-                                                    //ボックス番号テキスト
-                                                    box.MyNumber.Text = BoxNum.ToString();
-
-                                                    //ボックスリストに追加
-                                                    MyBoxList.Add(box);
-
-                                                    //ボックスコンボボックスに対象ボックス名追加
-                                                    BoxNameCombo.Items.Add(BoxNum.ToString());
-
-                                                    ////ボックス名リストに追加
-                                                    //BoxNameList.Add(BoxNum.ToString());
-                                                    //ボックス判定用四角生成
-                                                    Rectangle angle = new Rectangle(i, j, w, h);
-
-                                                    //判定用四角をリストに追加
-                                                    rectList.Add(angle);
-
-                                                    //対象ボックスの位置とサイズ設定
-                                                    MyBoxList[BoxNum - 1].Location = new System.Drawing.Point(i, j);
-                                                    MyBoxList[BoxNum - 1].Width = w;
-                                                    MyBoxList[BoxNum - 1].Height = h;
-
-                                                    //ボックス計数器++
-                                                    if (BoxNum != Boxlimit)
+                                                    for (int k = i - (ro / 2); k < i + ro; k++)
                                                     {
-                                                        BoxNum++;
+                                                        if (i + ro < CutPic.Width)
+                                                        {
+                                                            //左上の点の右の点の色RGBを取得
+                                                            int KR = CheackBT.GetPixel(k, j).R;
+                                                            int KG = CheackBT.GetPixel(k, j).G;
+                                                            int KB = CheackBT.GetPixel(k, j).B;
+
+                                                            //右に行って色合い以内ならば横幅(w)++
+                                                            if (KR >= R - IroAi && KR <= R + IroAi &&
+                                                                KG >= G - IroAi && KG <= G + IroAi &&
+                                                                KB >= B - IroAi && KB <= B + IroAi)
+                                                            {
+                                                                goodbuildW = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                goodbuildW = false;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            goodbuildW = false;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    goodbuildW = false;
+                                                }
+
+                                                if (j - (ro / 2) > 0)
+                                                {
+                                                    //縦幅計算
+                                                    for (int l = j - (ro / 2); l < j + ro; l++)
+                                                    {
+                                                        if (j + ro < CutPic.Height)
+                                                        {
+                                                            //左上の点の下の点の色RGBを取得
+                                                            int lR = CheackBT.GetPixel(i, l).R;
+                                                            int lG = CheackBT.GetPixel(i, l).G;
+                                                            int lB = CheackBT.GetPixel(i, l).B;
+                                                            //下に行って色合い以内ならば縦幅(h)++
+                                                            if (lR >= R - IroAi && lR <= R + IroAi &&
+                                                                lG >= G - IroAi && lG <= G + IroAi &&
+                                                                lB >= B - IroAi && lB <= B + IroAi)
+                                                            {
+                                                                goodbuildR = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                goodbuildR = false;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            goodbuildR = false;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            if (goodbuildW && goodbuildR && !notrangle)
+                                            {
+
+                                                //生成必要判定FLAG
+                                                bool canbuild = true;
+
+                                                //生成済みの対象と判定　同じ場所なら生成必要ない
+                                                for (int r = 0; r < rectList.Count; r++)
+                                                {
+                                                    if (rectList[r].Contains((i + (i + w)) / 2, (j + (j + h)) / 2) ||
+                                                        rectList[r].Contains(i + 5, j - 5) ||
+                                                        rectList[r].Contains(i + 5, j + 5) ||
+                                                        rectList[r].Contains(i - 5, j - 5) ||
+                                                        rectList[r].Contains(i - 5, j + 5))
+                                                    {
+                                                        w = 0;
+                                                        h = 0;
+                                                        canbuild = false;
                                                     }
 
                                                 }
-                                                //横縦計算用intを0にする
-                                                w = 0;
-                                                h = 0;
-                                            }
-                                        }
 
-                                        w = 0;
-                                        h = 0;
+                                                //生成必要
+                                                if (canbuild)
+                                                {
+                                                    //ボックス数量は指定数量を超えるか判定
+                                                    if (MyBoxList.Count < Boxlimit)
+                                                    {
+                                                        ////ボックス番号++
+                                                        //BoxNum++;
+                                                        //対象ボックス生成
+                                                        MyBox box = new MyBox();
+
+                                                        //対象ボックス番号設定
+                                                        box.MyNum = BoxNum;
+
+                                                        //対象ボックスをCutPicの子にする
+                                                        CutPic.Controls.Add(box);
+
+                                                        //ボックス番号テキスト
+                                                        box.MyNumber.Text = BoxNum.ToString();
+
+                                                        //ボックスリストに追加
+                                                        MyBoxList.Add(box);
+
+                                                        //ボックスコンボボックスに対象ボックス名追加
+                                                        BoxNameCombo.Items.Add(BoxNum.ToString());
+
+                                                        ////ボックス名リストに追加
+                                                        //BoxNameList.Add(BoxNum.ToString());
+                                                        //ボックス判定用四角生成
+                                                        Rectangle angle = new Rectangle(i - (w / 2), j - (w / 2), w * 2, h * 2);
+
+                                                        //判定用四角をリストに追加
+                                                        rectList.Add(angle);
+
+                                                        //対象ボックスの位置とサイズ設定
+                                                        MyBoxList[BoxNum - 1].Location = new System.Drawing.Point(i, j);
+                                                        MyBoxList[BoxNum - 1].Width = w;
+                                                        MyBoxList[BoxNum - 1].Height = h;
+
+                                                        //ボックス計数器++
+                                                        if (BoxNum != Boxlimit)
+                                                        {
+                                                            BoxNum++;
+                                                        }
+
+                                                    }
+                                                    //横縦計算用intを0にする
+                                                    w = 0;
+                                                    h = 0;
+                                                }
+                                            }
+
+                                            w = 0;
+                                            h = 0;
+
+                                        }
 
                                     }
 
@@ -2800,12 +2815,13 @@ namespace camera
 
                             }
 
-                        }
+                            if (BoxNameCombo.Items.Count > 0)
+                            {
+                                //ボックスコンボボックスのインデックス0にします
+                                BoxNameCombo.SelectedIndex = 0;
+                            }
 
-                        if (BoxNameCombo.Items.Count > 0)
-                        {
-                            //ボックスコンボボックスのインデックス0にします
-                            BoxNameCombo.SelectedIndex = 0;
+                            
                         }
 
                         OneTimeAuto = true;
@@ -2815,6 +2831,7 @@ namespace camera
                         MessageBox.Show("まずは画像選択とか画像保存してください。");
                     }
                 }
+
 
             }
             catch
@@ -2977,6 +2994,23 @@ namespace camera
 
         }
 
+
+        private bool NeerNumbers(int a,int b,int c,int limint)
+        {
+            if (a + limint > b && a + limint > c &&
+                b + limint > a && b + limint > c &&
+                c + limint > a && c + limint > b &&
+                a - limint < b && a - limint < c &&
+                b - limint < a && b - limint < c &&
+                c - limint < a && c - limint < b)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
 
