@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace camera
 {
@@ -132,7 +133,7 @@ namespace camera
         /// <summary>
         ///音声プレイヤー
         /// </summary>
-        private System.Media.SoundPlayer Player = null;
+        private SoundPlayer Player = null;
 
         /// <summary>
         ///合格音
@@ -789,7 +790,7 @@ namespace camera
                     if (LoopBtnFlag)
                     {
                         //合格音
-                        Player = new System.Media.SoundPlayer(SussesSound);
+                        Player = new SoundPlayer(SussesSound);
                         Player.Play();
                     }
 
@@ -800,7 +801,7 @@ namespace camera
                 else
                 {
                     //不合格音
-                    Player = new System.Media.SoundPlayer(FailSound);
+                    Player = new SoundPlayer(FailSound);
                     Player.Play();
 
                     //背景赤に変換
