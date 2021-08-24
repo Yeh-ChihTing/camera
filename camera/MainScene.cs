@@ -2335,7 +2335,7 @@ namespace camera
 
                         if (!NeerNumbers(R,G,B,5))
                         {
-
+                            this.Cursor = Cursors.WaitCursor;
                             ////ボックス番号
                             //int boxnum = 0;
                             //ボックス数
@@ -2824,6 +2824,7 @@ namespace camera
                             
                         }
 
+                        this.Cursor = Cursors.Default;
                         OneTimeAuto = true;
                     }
                     else
@@ -2845,9 +2846,12 @@ namespace camera
         /// 自動対象目標設定色選択ボタン
         /// </summary>
         private void AutoColSelectBtn_Click(object sender, EventArgs e)
-        {  //CutPicイメージ存在確認
+        {
+           
+            //CutPicイメージ存在確認
             if (CutPic.Image != null)
             {
+               
                 //自動対象検索用色選択FLAGをTRUEにする
                 StarChooseAutoCol = true;
             }
@@ -2936,6 +2940,37 @@ namespace camera
             }
         }
 
+
+        private void CutPic_MouseEnter(object sender, EventArgs e)
+        {
+            //指定色ボックス検査色
+            if (StarChooseCol)
+            {
+                this.Cursor = Cursors.Hand;
+
+            }
+            //自動対象検索用色
+            if (StarChooseAutoCol)
+            {
+                this.Cursor = Cursors.Hand;
+            }
+        }
+
+        private void CutPic_MouseLeave(object sender, EventArgs e)
+        {
+            //指定色ボックス検査色
+            if (StarChooseCol)
+            {
+                this.Cursor = Cursors.Default;
+
+            }
+            //自動対象検索用色
+            if (StarChooseAutoCol)
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
         /// <summary>
         /// 対象ボックスを一つに戻すボタン
         /// </summary>
@@ -3011,6 +3046,7 @@ namespace camera
                 return false;
             }
         }
+
     }
 }
 

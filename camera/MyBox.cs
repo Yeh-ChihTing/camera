@@ -296,7 +296,7 @@ namespace camera
             //最初のカーソル戻す
             else
             {
-                this.Cursor = defaultCursor;
+                this.Cursor = Cursors.SizeAll;
             }
 
 
@@ -403,6 +403,8 @@ namespace camera
                     //サイズ変更していないなら移動許可します
                     if (!ReSize)
                     {
+                        this.Cursor = Cursors.SizeAll;
+
                         if (this.Location.X + this.Width <= PWeight && this.Location.X >= 0 &&
                             this.Location.Y >= 0 && this.Location.Y <= PHeight)
                         {

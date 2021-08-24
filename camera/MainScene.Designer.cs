@@ -213,6 +213,8 @@ namespace camera
             this.CutPic.TabIndex = 261;
             this.CutPic.TabStop = false;
             this.CutPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CutPic_MouseDown);
+            this.CutPic.MouseEnter += new System.EventHandler(this.CutPic_MouseEnter);
+            this.CutPic.MouseLeave += new System.EventHandler(this.CutPic_MouseLeave);
             this.CutPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CutPic_MouseMove);
             // 
             // GetPicBtn
