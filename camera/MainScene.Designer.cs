@@ -106,7 +106,6 @@ namespace camera
             this.DataNameText = new System.Windows.Forms.Label();
             this.DataName = new System.Windows.Forms.TextBox();
             this.version = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -765,7 +764,7 @@ namespace camera
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(205, 23);
+            this.label7.Location = new System.Drawing.Point(169, 23);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(13, 12);
             this.label7.TabIndex = 315;
@@ -774,7 +773,7 @@ namespace camera
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(129, 23);
+            this.label6.Location = new System.Drawing.Point(111, 23);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(13, 12);
             this.label6.TabIndex = 314;
@@ -791,7 +790,7 @@ namespace camera
             // 
             // AutoColBlueNums
             // 
-            this.AutoColBlueNums.Location = new System.Drawing.Point(224, 20);
+            this.AutoColBlueNums.Location = new System.Drawing.Point(188, 20);
             this.AutoColBlueNums.Name = "AutoColBlueNums";
             this.AutoColBlueNums.Size = new System.Drawing.Size(31, 19);
             this.AutoColBlueNums.TabIndex = 312;
@@ -799,7 +798,7 @@ namespace camera
             // 
             // AutoColGreenNums
             // 
-            this.AutoColGreenNums.Location = new System.Drawing.Point(148, 20);
+            this.AutoColGreenNums.Location = new System.Drawing.Point(130, 20);
             this.AutoColGreenNums.Name = "AutoColGreenNums";
             this.AutoColGreenNums.Size = new System.Drawing.Size(31, 19);
             this.AutoColGreenNums.TabIndex = 311;
@@ -920,23 +919,12 @@ namespace camera
             this.version.TabIndex = 313;
             this.version.Text = "label10";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(649, 758);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 314;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
             this.Controls.Add(this.DataNameText);
@@ -1060,7 +1048,6 @@ namespace camera
         private System.Windows.Forms.Label DataNameText;
         private System.Windows.Forms.TextBox DataName;
         public System.Windows.Forms.Label version;
-        private System.Windows.Forms.Button button1;
     }
 }
 
