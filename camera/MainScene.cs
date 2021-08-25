@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Media;
+
 
 namespace camera
 {
@@ -334,9 +335,20 @@ namespace camera
                             //取得した画像をMATに変換
                             img = vc.RetrieveMat();
 
+
+                            //ガンマ補正
+                            //byte[] lut = new byte[256];
+                            //double gamamDB = Gamma.Value / 10.0;
+                            //for (int i = 0; i < lut.Length; i++)
+                            //{
+                            //    lut[i] = (byte)(Math.Pow(i / 255.0, 1.0 / gamamDB) * 255.0);
+                            //}
+                            //Cv2.LUT(img, lut, img);
+
+
                             //変換したMatをbitmapに変換そしてカメライメージとして表示
                             CameraPic.Image = img.ToBitmap();
-                            // }
+
                         }
                     }
 
@@ -2334,7 +2346,7 @@ namespace camera
                             MessageBox.Show("黒、白、灰色は使用できない");
                         }
 
-                        if (!NeerNumbers(R,G,B,5))
+                        if (!NeerNumbers(R, G, B, 5))
                         {
                             this.Cursor = Cursors.WaitCursor;
                             ////ボックス番号
@@ -2822,7 +2834,7 @@ namespace camera
                                 BoxNameCombo.SelectedIndex = 0;
                             }
 
-                            
+
                         }
 
                         this.Cursor = Cursors.Default;
@@ -2848,11 +2860,11 @@ namespace camera
         /// </summary>
         private void AutoColSelectBtn_Click(object sender, EventArgs e)
         {
-           
+
             //CutPicイメージ存在確認
             if (CutPic.Image != null)
             {
-               
+
                 //自動対象検索用色選択FLAGをTRUEにする
                 StarChooseAutoCol = true;
             }
@@ -3032,7 +3044,7 @@ namespace camera
 
         }
 
-        private bool NeerNumbers(int a,int b,int c,int limint)
+        private bool NeerNumbers(int a, int b, int c, int limint)
         {
             if (a + limint > b && a + limint > c &&
                 b + limint > a && b + limint > c &&

@@ -106,6 +106,7 @@ namespace camera
             this.DataNameText = new System.Windows.Forms.Label();
             this.DataName = new System.Windows.Forms.TextBox();
             this.version = new System.Windows.Forms.Label();
+            this.Gamma = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -117,6 +118,7 @@ namespace camera
             ((System.ComponentModel.ISupportInitialize)(this.AutoCol)).BeginInit();
             this.AutoGroup.SuspendLayout();
             this.CheckSetting.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Gamma)).BeginInit();
             this.SuspendLayout();
             // 
             // CameraPic
@@ -921,12 +923,24 @@ namespace camera
             this.version.TabIndex = 313;
             this.version.Text = "label10";
             // 
+            // Gamma
+            // 
+            this.Gamma.Location = new System.Drawing.Point(665, 67);
+            this.Gamma.Maximum = 20;
+            this.Gamma.Minimum = 1;
+            this.Gamma.Name = "Gamma";
+            this.Gamma.Size = new System.Drawing.Size(104, 45);
+            this.Gamma.TabIndex = 314;
+            this.Gamma.Value = 10;
+            this.Gamma.Visible = false;
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.Gamma);
             this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
             this.Controls.Add(this.DataNameText);
@@ -968,6 +982,7 @@ namespace camera
             this.AutoGroup.PerformLayout();
             this.CheckSetting.ResumeLayout(false);
             this.CheckSetting.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Gamma)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1050,6 +1065,7 @@ namespace camera
         private System.Windows.Forms.Label DataNameText;
         private System.Windows.Forms.TextBox DataName;
         public System.Windows.Forms.Label version;
+        private System.Windows.Forms.TrackBar Gamma;
     }
 }
 
