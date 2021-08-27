@@ -109,6 +109,7 @@ namespace camera
             this.Gamma = new System.Windows.Forms.TrackBar();
             this.GammaPanel = new System.Windows.Forms.Panel();
             this.GammaLabel = new System.Windows.Forms.Label();
+            this.NowGamma = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -929,20 +930,21 @@ namespace camera
             // Gamma
             // 
             this.Gamma.Location = new System.Drawing.Point(0, 27);
-            this.Gamma.Maximum = 50;
+            this.Gamma.Maximum = 30;
             this.Gamma.Minimum = 1;
             this.Gamma.Name = "Gamma";
             this.Gamma.Size = new System.Drawing.Size(104, 45);
             this.Gamma.TabIndex = 314;
             this.Gamma.Value = 10;
+            this.Gamma.Scroll += new System.EventHandler(this.Gamma_Scroll);
             // 
             // GammaPanel
             // 
             this.GammaPanel.Controls.Add(this.GammaLabel);
             this.GammaPanel.Controls.Add(this.Gamma);
-            this.GammaPanel.Location = new System.Drawing.Point(664, 86);
+            this.GammaPanel.Location = new System.Drawing.Point(665, 100);
             this.GammaPanel.Name = "GammaPanel";
-            this.GammaPanel.Size = new System.Drawing.Size(102, 58);
+            this.GammaPanel.Size = new System.Drawing.Size(129, 58);
             this.GammaPanel.TabIndex = 315;
             // 
             // GammaLabel
@@ -954,13 +956,22 @@ namespace camera
             this.GammaLabel.TabIndex = 315;
             this.GammaLabel.Text = "ガンマ補正";
             // 
+            // NowGamma
+            // 
+            this.NowGamma.AutoSize = true;
+            this.NowGamma.Location = new System.Drawing.Point(772, 136);
+            this.NowGamma.Name = "NowGamma";
+            this.NowGamma.Size = new System.Drawing.Size(11, 12);
+            this.NowGamma.TabIndex = 316;
+            this.NowGamma.Text = "1";
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
-            this.Controls.Add(this.GammaPanel);
+            this.Controls.Add(this.NowGamma);
             this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
             this.Controls.Add(this.DataNameText);
@@ -982,6 +993,7 @@ namespace camera
             this.Controls.Add(this.CameraPic);
             this.Controls.Add(this.CheckSetting);
             this.Controls.Add(this.BoxSetting);
+            this.Controls.Add(this.GammaPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainScene";
@@ -1090,6 +1102,7 @@ namespace camera
         private System.Windows.Forms.TrackBar Gamma;
         private System.Windows.Forms.Panel GammaPanel;
         private System.Windows.Forms.Label GammaLabel;
+        private System.Windows.Forms.Label NowGamma;
     }
 }
 

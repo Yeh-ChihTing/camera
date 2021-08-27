@@ -196,6 +196,8 @@ namespace camera
         /// </summary>
         private DateTime nowTime = DateTime.Now;
 
+        private double GetGamma = 1.0;
+
         //変数宣言END
 
         /// <summary>
@@ -335,17 +337,24 @@ namespace camera
                             //取得した画像をMATに変換
                             img = vc.RetrieveMat();
 
+                            
 
-                            //ガンマ補正
-                            if (GammaPanel.Visible)
+                            try
                             {
-                                byte[] lut = new byte[256];
-                                double gamamDB = Gamma.Value / 10.0;
-                                for (int i = 0; i < lut.Length; i++)
+                                //ガンマ補正
+                                if (GammaPanel.Visible)
                                 {
-                                    lut[i] = (byte)(Math.Pow(i / 255.0, 1.0 / gamamDB) * 255.0);
+                                    byte[] lut = new byte[256];
+                                    for (int i = 0; i < lut.Length; i++)
+                                    {
+                                        lut[i] = (byte)(Math.Pow(i / 255.0, 1.0 / GetGamma) * 255.0);
+                                    }
+                                    Cv2.LUT(img, lut, img);
                                 }
-                                Cv2.LUT(img, lut, img);
+                            }
+                            catch (Exception ex)
+                            {
+                                //MessageBox.Show(ex.ToString());
                             }
 
 
@@ -3062,6 +3071,12 @@ namespace camera
             {
                 return false;
             }
+        }
+
+        private void Gamma_Scroll(object sender, EventArgs e)
+        {
+            GetGamma = (double)Gamma.Value/10;
+            NowGamma.Text = GetGamma.ToString();
         }
     }
 }
