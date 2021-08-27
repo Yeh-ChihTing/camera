@@ -196,8 +196,14 @@ namespace camera
         /// </summary>
         private DateTime nowTime = DateTime.Now;
 
+        /// <summary>
+        ///ガンマ設定値を取得
+        /// </summary>
         private double GetGamma = 1.0;
 
+        /// <summary>
+        ///マウス指したところ色取得用
+        /// </summary>
         private Bitmap GetColor;
 
         //変数宣言END
@@ -341,8 +347,6 @@ namespace camera
                             //取得した画像をMATに変換
                             img = vc.RetrieveMat();
 
-                            
-
                             try
                             {
                                 //ガンマ補正
@@ -358,9 +362,8 @@ namespace camera
                             }
                             catch (Exception ex)
                             {
-                                //MessageBox.Show(ex.ToString());
+                                MessageBox.Show(ex.ToString());
                             }
-
 
                             //変換したMatをbitmapに変換そしてカメライメージとして表示
                             CameraPic.Image = img.ToBitmap();
@@ -1108,7 +1111,7 @@ namespace camera
                     string Batname = getname[0] + ".bat";
                     if (File.Exists(Batname))
                     {
-                        DialogResult DeleteBat = MessageBox.Show("同じ名の対象状態データあります、削除しますか", "", MessageBoxButtons.YesNo);
+                        DialogResult DeleteBat = MessageBox.Show("同じ名の対象状態データあります、状態データを削除しますか", "", MessageBoxButtons.YesNo);
                         if (DeleteBat == DialogResult.Yes)
                         {
                             File.Delete(Batname);
@@ -2958,11 +2961,13 @@ namespace camera
                 //指定色ボックス検査色
                 if (StarChooseCol)
                 {
+                    this.Cursor = Cursors.Hand;
                     UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
                 }
                 //自動対象検索用色
                 if (StarChooseAutoCol)
-                {            
+                {
+                    this.Cursor = Cursors.Hand;
                     AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
                 }
 
@@ -2971,21 +2976,10 @@ namespace camera
             }
         }
 
-        private void CutPic_MouseEnter(object sender, EventArgs e)
-        {
-            //指定色ボックス検査色
-            if (StarChooseCol)
-            {
-                this.Cursor = Cursors.Hand;
 
-            }
-            //自動対象検索用色
-            if (StarChooseAutoCol)
-            {
-                this.Cursor = Cursors.Hand;
-            }
-        }
-
+        /// <summary>
+        /// マウスがCutPicから離れる時の処理
+        /// </summary>
         private void CutPic_MouseLeave(object sender, EventArgs e)
         {
             //指定色ボックス検査色
@@ -3000,6 +2994,7 @@ namespace camera
                 this.Cursor = Cursors.Default;
             }
 
+            //マウス指したRGB値を表示オフ　
             MouseRGB.Text = null;
         }
 
@@ -3061,6 +3056,9 @@ namespace camera
 
         }
 
+        /// <summary>
+        /// 三つの数値が近いの検査関数
+        /// </summary>
         private bool NeerNumbers(int a, int b, int c, int limint)
         {
             if (a + limint > b && a + limint > c &&
@@ -3078,12 +3076,19 @@ namespace camera
             }
         }
 
+
+        /// <summary>
+        ///　ガンマ数値変更
+        /// </summary>
         private void Gamma_Scroll(object sender, EventArgs e)
         {
             GetGamma = (double)Gamma.Value/10;
             NowGamma.Text = GetGamma.ToString();
         }
 
+        /// <summary>
+        /// マウス指した色RGB値取得
+        /// </summary>
         private void CameraPic_MouseMove(object sender, MouseEventArgs e)
         {
             if (CameraPic.Image != null)
@@ -3097,6 +3102,10 @@ namespace camera
             }
         }
 
+
+        /// <summary>
+        /// マウスがCameraPicから離す時に指すRGB値の表示を閉める
+        /// </summary>
         private void CameraPic_MouseLeave(object sender, EventArgs e)
         {
             MouseRGB.Text = null;

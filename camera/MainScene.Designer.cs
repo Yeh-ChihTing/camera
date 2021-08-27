@@ -111,7 +111,7 @@ namespace camera
             this.GammaLabel = new System.Windows.Forms.Label();
             this.NowGamma = new System.Windows.Forms.Label();
             this.MouseRGB = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.MouseRGBPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -125,7 +125,7 @@ namespace camera
             this.CheckSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Gamma)).BeginInit();
             this.GammaPanel.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.MouseRGBPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // CameraPic
@@ -224,7 +224,6 @@ namespace camera
             this.CutPic.TabIndex = 261;
             this.CutPic.TabStop = false;
             this.CutPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CutPic_MouseDown);
-            this.CutPic.MouseEnter += new System.EventHandler(this.CutPic_MouseEnter);
             this.CutPic.MouseLeave += new System.EventHandler(this.CutPic_MouseLeave);
             this.CutPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CutPic_MouseMove);
             // 
@@ -981,13 +980,13 @@ namespace camera
             this.MouseRGB.Size = new System.Drawing.Size(0, 10);
             this.MouseRGB.TabIndex = 262;
             // 
-            // panel2
+            // MouseRGBPanel
             // 
-            this.panel2.Controls.Add(this.MouseRGB);
-            this.panel2.Location = new System.Drawing.Point(572, 769);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(80, 18);
-            this.panel2.TabIndex = 317;
+            this.MouseRGBPanel.Controls.Add(this.MouseRGB);
+            this.MouseRGBPanel.Location = new System.Drawing.Point(572, 769);
+            this.MouseRGBPanel.Name = "MouseRGBPanel";
+            this.MouseRGBPanel.Size = new System.Drawing.Size(80, 18);
+            this.MouseRGBPanel.TabIndex = 317;
             // 
             // MainScene
             // 
@@ -995,7 +994,7 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.MouseRGBPanel);
             this.Controls.Add(this.NowGamma);
             this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
@@ -1042,8 +1041,8 @@ namespace camera
             ((System.ComponentModel.ISupportInitialize)(this.Gamma)).EndInit();
             this.GammaPanel.ResumeLayout(false);
             this.GammaPanel.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.MouseRGBPanel.ResumeLayout(false);
+            this.MouseRGBPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1131,7 +1130,7 @@ namespace camera
         private System.Windows.Forms.Label GammaLabel;
         private System.Windows.Forms.Label NowGamma;
         private System.Windows.Forms.Label MouseRGB;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel MouseRGBPanel;
     }
 }
 
