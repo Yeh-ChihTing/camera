@@ -110,6 +110,8 @@ namespace camera
             this.GammaPanel = new System.Windows.Forms.Panel();
             this.GammaLabel = new System.Windows.Forms.Label();
             this.NowGamma = new System.Windows.Forms.Label();
+            this.MouseRGB = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -123,6 +125,7 @@ namespace camera
             this.CheckSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Gamma)).BeginInit();
             this.GammaPanel.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // CameraPic
@@ -136,6 +139,8 @@ namespace camera
             this.CameraPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CameraPic.TabIndex = 0;
             this.CameraPic.TabStop = false;
+            this.CameraPic.MouseLeave += new System.EventHandler(this.CameraPic_MouseLeave);
+            this.CameraPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CameraPic_MouseMove);
             // 
             // PColor
             // 
@@ -802,7 +807,7 @@ namespace camera
             this.AutoColBlueNums.Name = "AutoColBlueNums";
             this.AutoColBlueNums.Size = new System.Drawing.Size(31, 19);
             this.AutoColBlueNums.TabIndex = 312;
-            this.AutoColBlueNums.Text = "5";
+            this.AutoColBlueNums.Text = "10";
             // 
             // AutoColGreenNums
             // 
@@ -810,7 +815,7 @@ namespace camera
             this.AutoColGreenNums.Name = "AutoColGreenNums";
             this.AutoColGreenNums.Size = new System.Drawing.Size(31, 19);
             this.AutoColGreenNums.TabIndex = 311;
-            this.AutoColGreenNums.Text = "5";
+            this.AutoColGreenNums.Text = "10";
             // 
             // label4
             // 
@@ -827,7 +832,7 @@ namespace camera
             this.AutoColRedNums.Name = "AutoColRedNums";
             this.AutoColRedNums.Size = new System.Drawing.Size(31, 19);
             this.AutoColRedNums.TabIndex = 309;
-            this.AutoColRedNums.Text = "5";
+            this.AutoColRedNums.Text = "10";
             this.AutoColRedNums.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyInputNum);
             // 
             // label3
@@ -965,12 +970,32 @@ namespace camera
             this.NowGamma.TabIndex = 316;
             this.NowGamma.Text = "1";
             // 
+            // MouseRGB
+            // 
+            this.MouseRGB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.MouseRGB.AutoSize = true;
+            this.MouseRGB.Font = new System.Drawing.Font("MS UI Gothic", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.MouseRGB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.MouseRGB.Location = new System.Drawing.Point(3, 2);
+            this.MouseRGB.Name = "MouseRGB";
+            this.MouseRGB.Size = new System.Drawing.Size(0, 10);
+            this.MouseRGB.TabIndex = 262;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.MouseRGB);
+            this.panel2.Location = new System.Drawing.Point(572, 769);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(80, 18);
+            this.panel2.TabIndex = 317;
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.NowGamma);
             this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
@@ -1017,6 +1042,8 @@ namespace camera
             ((System.ComponentModel.ISupportInitialize)(this.Gamma)).EndInit();
             this.GammaPanel.ResumeLayout(false);
             this.GammaPanel.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1103,6 +1130,8 @@ namespace camera
         private System.Windows.Forms.Panel GammaPanel;
         private System.Windows.Forms.Label GammaLabel;
         private System.Windows.Forms.Label NowGamma;
+        private System.Windows.Forms.Label MouseRGB;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 

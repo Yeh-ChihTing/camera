@@ -198,6 +198,8 @@ namespace camera
 
         private double GetGamma = 1.0;
 
+        private Bitmap GetColor;
+
         //変数宣言END
 
         /// <summary>
@@ -263,6 +265,8 @@ namespace camera
 
             //モードを初期化
             CheckMode.SelectedIndex = 0;
+
+            //CutPic.Controls.Add(MouseRGB);
 
             /// <summary>
             /// 初期化END
@@ -1033,7 +1037,7 @@ namespace camera
 
             //現在のマスタイメージの記録
             GetCutPicNow = CutPic.Image;
-
+            GetColor = new Bitmap(CutPic.Image);
         }
 
         /// <summary>
@@ -1067,7 +1071,7 @@ namespace camera
                     CutPic.Image = bmp;
                     MasterImage = CutPic.Image;
                     GetCutPicNow = CutPic.Image;
-
+                    GetColor = new Bitmap(CutPic.Image);
 
                     //1以外の対象ボックスをクリアそして初期化
                     if (MyBoxList.Count > 1)
@@ -1319,6 +1323,8 @@ namespace camera
                               GraphicsUnit.Pixel);
                     }
 
+                    GetColor = new Bitmap(CutPic.Image);
+
                     //各対象をサイズ変更後の位置とサイズ計算
                     for (int i = 0; i < MyBoxList.Count; i++)
                     {
@@ -1391,6 +1397,8 @@ namespace camera
                               GraphicsUnit.Pixel);
                     }
 
+                    GetColor = new Bitmap(CutPic.Image);
+
                     //各対象をサイズ変更後の位置とサイズ計算
                     for (int i = 0; i < MyBoxList.Count; i++)
                     {
@@ -1458,6 +1466,8 @@ namespace camera
                               new RectangleF(0, 0, bmp.Width, bmp.Height),
                               GraphicsUnit.Pixel);
                     }
+
+                    GetColor = new Bitmap(CutPic.Image);
 
                     //各対象をサイズ変更後の位置とサイズ計算
                     for (int i = 0; i < MyBoxList.Count; i++)
@@ -2935,36 +2945,29 @@ namespace camera
         /// マウスでマスタ画像から参照したい色をみる
         /// </summary>
         private void CutPic_MouseMove(object sender, MouseEventArgs e)
-        {
-            //指定色ボックス検査色
-            if (StarChooseCol)
+        { //CutPicイメージ存在確認
+            if (CutPic.Image != null)
             {
-                //CutPicイメージ存在確認
-                if (CutPic.Image != null)
-                {
-                    //マスターが画像bitmap取得
-                    Bitmap bmp = new Bitmap(CutPic.Image);
 
-                    //マウス指す場所色を取得そして表示
-                    Color color = bmp.GetPixel(e.X, e.Y);
+                ////マスターが画像bitmap取得
+                //GetColor = new Bitmap(CutPic.Image);
+
+                //マウス指す場所色を取得そして表示
+                Color color = GetColor.GetPixel(e.X, e.Y);
+
+                //指定色ボックス検査色
+                if (StarChooseCol)
+                {
                     UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
                 }
-
-            }
-            //自動対象検索用色
-            if (StarChooseAutoCol)
-            {
-                //CutPicイメージ存在確認
-                if (CutPic.Image != null)
-                {
-                    //マスターが画像bitmap取得
-                    Bitmap bmp = new Bitmap(CutPic.Image);
-
-                    //マウス指す場所色を取得そして表示
-                    Color color = bmp.GetPixel(e.X, e.Y);
+                //自動対象検索用色
+                if (StarChooseAutoCol)
+                {            
                     AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
                 }
 
+                MouseRGB.Text = "R:" + color.R + " G:" + color.G + " B:" + color.B;
+                MouseRGB.ForeColor = color;
             }
         }
 
@@ -2996,6 +2999,8 @@ namespace camera
             {
                 this.Cursor = Cursors.Default;
             }
+
+            MouseRGB.Text = null;
         }
 
         /// <summary>
@@ -3077,6 +3082,24 @@ namespace camera
         {
             GetGamma = (double)Gamma.Value/10;
             NowGamma.Text = GetGamma.ToString();
+        }
+
+        private void CameraPic_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (CameraPic.Image != null)
+            {
+                //マウス指す場所色を取得そして表示
+                Color color = ((Bitmap)CameraPic.Image).GetPixel(e.X, e.Y);
+
+
+                MouseRGB.Text = "R:" + color.R + " G:" + color.G + " B:" + color.B;
+                MouseRGB.ForeColor = color;
+            }
+        }
+
+        private void CameraPic_MouseLeave(object sender, EventArgs e)
+        {
+            MouseRGB.Text = null;
         }
     }
 }
