@@ -337,13 +337,16 @@ namespace camera
 
 
                             //ガンマ補正
-                            //byte[] lut = new byte[256];
-                            //double gamamDB = Gamma.Value / 10.0;
-                            //for (int i = 0; i < lut.Length; i++)
-                            //{
-                            //    lut[i] = (byte)(Math.Pow(i / 255.0, 1.0 / gamamDB) * 255.0);
-                            //}
-                            //Cv2.LUT(img, lut, img);
+                            if (GammaPanel.Visible)
+                            {
+                                byte[] lut = new byte[256];
+                                double gamamDB = Gamma.Value / 10.0;
+                                for (int i = 0; i < lut.Length; i++)
+                                {
+                                    lut[i] = (byte)(Math.Pow(i / 255.0, 1.0 / gamamDB) * 255.0);
+                                }
+                                Cv2.LUT(img, lut, img);
+                            }
 
 
                             //変換したMatをbitmapに変換そしてカメライメージとして表示
@@ -3060,7 +3063,6 @@ namespace camera
                 return false;
             }
         }
-
     }
 }
 

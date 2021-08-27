@@ -107,6 +107,8 @@ namespace camera
             this.DataName = new System.Windows.Forms.TextBox();
             this.version = new System.Windows.Forms.Label();
             this.Gamma = new System.Windows.Forms.TrackBar();
+            this.GammaPanel = new System.Windows.Forms.Panel();
+            this.GammaLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -119,6 +121,7 @@ namespace camera
             this.AutoGroup.SuspendLayout();
             this.CheckSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Gamma)).BeginInit();
+            this.GammaPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // CameraPic
@@ -126,7 +129,7 @@ namespace camera
             this.CameraPic.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CameraPic.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.CameraPic.InitialImage = null;
-            this.CameraPic.Location = new System.Drawing.Point(12, 12);
+            this.CameraPic.Location = new System.Drawing.Point(12, 24);
             this.CameraPic.Name = "CameraPic";
             this.CameraPic.Size = new System.Drawing.Size(640, 360);
             this.CameraPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -235,7 +238,7 @@ namespace camera
             this.CheckBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CheckBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.CheckBtn.ForeColor = System.Drawing.Color.Black;
-            this.CheckBtn.Location = new System.Drawing.Point(778, 67);
+            this.CheckBtn.Location = new System.Drawing.Point(776, 74);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 40);
             this.CheckBtn.TabIndex = 263;
@@ -351,7 +354,7 @@ namespace camera
             this.panel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.CutPic);
-            this.panel1.Location = new System.Drawing.Point(12, 399);
+            this.panel1.Location = new System.Drawing.Point(12, 403);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(640, 360);
             this.panel1.TabIndex = 276;
@@ -432,7 +435,7 @@ namespace camera
             this.CheckLoopBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CheckLoopBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.CheckLoopBtn.ForeColor = System.Drawing.Color.Black;
-            this.CheckLoopBtn.Location = new System.Drawing.Point(862, 12);
+            this.CheckLoopBtn.Location = new System.Drawing.Point(862, 24);
             this.CheckLoopBtn.Name = "CheckLoopBtn";
             this.CheckLoopBtn.Size = new System.Drawing.Size(80, 40);
             this.CheckLoopBtn.TabIndex = 285;
@@ -447,7 +450,7 @@ namespace camera
             // MinText
             // 
             this.MinText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.MinText.Location = new System.Drawing.Point(721, 27);
+            this.MinText.Location = new System.Drawing.Point(723, 32);
             this.MinText.MaxLength = 2;
             this.MinText.Name = "MinText";
             this.MinText.Size = new System.Drawing.Size(30, 19);
@@ -458,7 +461,7 @@ namespace camera
             // SecText
             // 
             this.SecText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SecText.Location = new System.Drawing.Point(773, 27);
+            this.SecText.Location = new System.Drawing.Point(775, 32);
             this.SecText.MaxLength = 2;
             this.SecText.Name = "SecText";
             this.SecText.Size = new System.Drawing.Size(32, 19);
@@ -469,7 +472,7 @@ namespace camera
             // HourText
             // 
             this.HourText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.HourText.Location = new System.Drawing.Point(669, 27);
+            this.HourText.Location = new System.Drawing.Point(671, 32);
             this.HourText.MaxLength = 2;
             this.HourText.Name = "HourText";
             this.HourText.Size = new System.Drawing.Size(29, 19);
@@ -481,7 +484,7 @@ namespace camera
             // 
             this.HourLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.HourLabel.AutoSize = true;
-            this.HourLabel.Location = new System.Drawing.Point(699, 27);
+            this.HourLabel.Location = new System.Drawing.Point(701, 32);
             this.HourLabel.Name = "HourLabel";
             this.HourLabel.Size = new System.Drawing.Size(17, 12);
             this.HourLabel.TabIndex = 289;
@@ -491,7 +494,7 @@ namespace camera
             // 
             this.MinLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MinLabel.AutoSize = true;
-            this.MinLabel.Location = new System.Drawing.Point(752, 27);
+            this.MinLabel.Location = new System.Drawing.Point(754, 32);
             this.MinLabel.Name = "MinLabel";
             this.MinLabel.Size = new System.Drawing.Size(17, 12);
             this.MinLabel.TabIndex = 290;
@@ -501,7 +504,7 @@ namespace camera
             // 
             this.SecLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SecLabel.AutoSize = true;
-            this.SecLabel.Location = new System.Drawing.Point(811, 27);
+            this.SecLabel.Location = new System.Drawing.Point(813, 32);
             this.SecLabel.Name = "SecLabel";
             this.SecLabel.Size = new System.Drawing.Size(17, 12);
             this.SecLabel.TabIndex = 291;
@@ -514,7 +517,7 @@ namespace camera
             this.CheckPerList.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.CheckPerList.FormattingEnabled = true;
             this.CheckPerList.ItemHeight = 20;
-            this.CheckPerList.Location = new System.Drawing.Point(663, 178);
+            this.CheckPerList.Location = new System.Drawing.Point(665, 203);
             this.CheckPerList.Name = "CheckPerList";
             this.CheckPerList.Size = new System.Drawing.Size(286, 104);
             this.CheckPerList.TabIndex = 292;
@@ -524,7 +527,7 @@ namespace camera
             // 
             this.AllPercentShow.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.AllPercentShow.AutoSize = true;
-            this.AllPercentShow.Location = new System.Drawing.Point(661, 163);
+            this.AllPercentShow.Location = new System.Drawing.Point(666, 188);
             this.AllPercentShow.Name = "AllPercentShow";
             this.AllPercentShow.Size = new System.Drawing.Size(100, 12);
             this.AllPercentShow.TabIndex = 293;
@@ -596,7 +599,7 @@ namespace camera
             // 
             this.ClearCheckScene.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ClearCheckScene.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ClearCheckScene.Location = new System.Drawing.Point(864, 67);
+            this.ClearCheckScene.Location = new System.Drawing.Point(862, 74);
             this.ClearCheckScene.Name = "ClearCheckScene";
             this.ClearCheckScene.Size = new System.Drawing.Size(80, 40);
             this.ClearCheckScene.TabIndex = 300;
@@ -634,7 +637,7 @@ namespace camera
             this.BoxSetting.Controls.Add(this.BNums);
             this.BoxSetting.Controls.Add(this.RNums);
             this.BoxSetting.Controls.Add(this.GNums);
-            this.BoxSetting.Location = new System.Drawing.Point(663, 285);
+            this.BoxSetting.Location = new System.Drawing.Point(663, 316);
             this.BoxSetting.Name = "BoxSetting";
             this.BoxSetting.Size = new System.Drawing.Size(286, 210);
             this.BoxSetting.TabIndex = 301;
@@ -758,7 +761,7 @@ namespace camera
             this.AutoGroup.Controls.Add(this.AutoLock);
             this.AutoGroup.Controls.Add(this.CheckLockNum);
             this.AutoGroup.Controls.Add(this.AutoCol);
-            this.AutoGroup.Location = new System.Drawing.Point(663, 679);
+            this.AutoGroup.Location = new System.Drawing.Point(663, 687);
             this.AutoGroup.Name = "AutoGroup";
             this.AutoGroup.Size = new System.Drawing.Size(286, 80);
             this.AutoGroup.TabIndex = 308;
@@ -860,7 +863,7 @@ namespace camera
             this.CheckSetting.Controls.Add(this.SettingNameBtn);
             this.CheckSetting.Controls.Add(this.BoxNameCombo);
             this.CheckSetting.Controls.Add(this.BoxNameListlabel);
-            this.CheckSetting.Location = new System.Drawing.Point(663, 501);
+            this.CheckSetting.Location = new System.Drawing.Point(663, 521);
             this.CheckSetting.Name = "CheckSetting";
             this.CheckSetting.Size = new System.Drawing.Size(286, 170);
             this.CheckSetting.TabIndex = 310;
@@ -889,7 +892,7 @@ namespace camera
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(668, 12);
+            this.label8.Location = new System.Drawing.Point(738, 9);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 12);
             this.label8.TabIndex = 312;
@@ -898,7 +901,7 @@ namespace camera
             // DataNameText
             // 
             this.DataNameText.AutoSize = true;
-            this.DataNameText.Location = new System.Drawing.Point(663, 132);
+            this.DataNameText.Location = new System.Drawing.Point(666, 168);
             this.DataNameText.Name = "DataNameText";
             this.DataNameText.Size = new System.Drawing.Size(93, 12);
             this.DataNameText.TabIndex = 307;
@@ -907,7 +910,7 @@ namespace camera
             // DataName
             // 
             this.DataName.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.DataName.Location = new System.Drawing.Point(759, 128);
+            this.DataName.Location = new System.Drawing.Point(762, 164);
             this.DataName.MaxLength = 3;
             this.DataName.Name = "DataName";
             this.DataName.Size = new System.Drawing.Size(154, 21);
@@ -925,14 +928,31 @@ namespace camera
             // 
             // Gamma
             // 
-            this.Gamma.Location = new System.Drawing.Point(665, 67);
-            this.Gamma.Maximum = 20;
+            this.Gamma.Location = new System.Drawing.Point(0, 27);
+            this.Gamma.Maximum = 50;
             this.Gamma.Minimum = 1;
             this.Gamma.Name = "Gamma";
             this.Gamma.Size = new System.Drawing.Size(104, 45);
             this.Gamma.TabIndex = 314;
             this.Gamma.Value = 10;
-            this.Gamma.Visible = false;
+            // 
+            // GammaPanel
+            // 
+            this.GammaPanel.Controls.Add(this.GammaLabel);
+            this.GammaPanel.Controls.Add(this.Gamma);
+            this.GammaPanel.Location = new System.Drawing.Point(664, 86);
+            this.GammaPanel.Name = "GammaPanel";
+            this.GammaPanel.Size = new System.Drawing.Size(102, 58);
+            this.GammaPanel.TabIndex = 315;
+            // 
+            // GammaLabel
+            // 
+            this.GammaLabel.AutoSize = true;
+            this.GammaLabel.Location = new System.Drawing.Point(6, 12);
+            this.GammaLabel.Name = "GammaLabel";
+            this.GammaLabel.Size = new System.Drawing.Size(57, 12);
+            this.GammaLabel.TabIndex = 315;
+            this.GammaLabel.Text = "ガンマ補正";
             // 
             // MainScene
             // 
@@ -940,15 +960,13 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
-            this.Controls.Add(this.Gamma);
+            this.Controls.Add(this.GammaPanel);
             this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
             this.Controls.Add(this.DataNameText);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.CrossTimeLabel);
-            this.Controls.Add(this.CheckSetting);
             this.Controls.Add(this.AutoGroup);
-            this.Controls.Add(this.BoxSetting);
             this.Controls.Add(this.ClearCheckScene);
             this.Controls.Add(this.AllPercentShow);
             this.Controls.Add(this.CheckPerList);
@@ -962,6 +980,8 @@ namespace camera
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.CheckBtn);
             this.Controls.Add(this.CameraPic);
+            this.Controls.Add(this.CheckSetting);
+            this.Controls.Add(this.BoxSetting);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainScene";
@@ -983,6 +1003,8 @@ namespace camera
             this.CheckSetting.ResumeLayout(false);
             this.CheckSetting.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Gamma)).EndInit();
+            this.GammaPanel.ResumeLayout(false);
+            this.GammaPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1066,6 +1088,8 @@ namespace camera
         private System.Windows.Forms.TextBox DataName;
         public System.Windows.Forms.Label version;
         private System.Windows.Forms.TrackBar Gamma;
+        private System.Windows.Forms.Panel GammaPanel;
+        private System.Windows.Forms.Label GammaLabel;
     }
 }
 
