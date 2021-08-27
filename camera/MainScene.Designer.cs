@@ -112,6 +112,7 @@ namespace camera
             this.NowGamma = new System.Windows.Forms.Label();
             this.MouseRGB = new System.Windows.Forms.Label();
             this.MouseRGBPanel = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -940,6 +941,7 @@ namespace camera
             this.Gamma.Size = new System.Drawing.Size(104, 45);
             this.Gamma.TabIndex = 314;
             this.Gamma.Value = 10;
+            this.Gamma.Visible = false;
             this.Gamma.Scroll += new System.EventHandler(this.Gamma_Scroll);
             // 
             // GammaPanel
@@ -988,12 +990,22 @@ namespace camera
             this.MouseRGBPanel.Size = new System.Drawing.Size(80, 18);
             this.MouseRGBPanel.TabIndex = 317;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(497, 8);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 12);
+            this.label10.TabIndex = 318;
+            this.label10.Text = "label10";
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.MouseRGBPanel);
             this.Controls.Add(this.NowGamma);
             this.Controls.Add(this.version);
@@ -1131,6 +1143,7 @@ namespace camera
         private System.Windows.Forms.Label NowGamma;
         private System.Windows.Forms.Label MouseRGB;
         private System.Windows.Forms.Panel MouseRGBPanel;
+        private System.Windows.Forms.Label label10;
     }
 }
 

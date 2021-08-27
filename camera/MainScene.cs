@@ -9,6 +9,7 @@ using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 
 
 namespace camera
@@ -105,6 +106,7 @@ namespace camera
         /// カメラ画面処理用
         /// </summary>
         private Mat img = new Mat();
+        private Mat img2 = new Mat();
 
         /// <summary>
         /// 検査用写真用空間
@@ -206,6 +208,12 @@ namespace camera
         /// </summary>
         private Bitmap GetColor;
 
+
+        private List<int> NowR = new List<int>();
+        private List<int> NowG = new List<int>();
+        private List<int> NowB = new List<int>();
+
+        private bool StarGamamCheck = false;
         //変数宣言END
 
         /// <summary>
@@ -272,8 +280,6 @@ namespace camera
             //モードを初期化
             CheckMode.SelectedIndex = 0;
 
-            //CutPic.Controls.Add(MouseRGB);
-
             /// <summary>
             /// 初期化END
             /// </summary>
@@ -298,6 +304,8 @@ namespace camera
             /// カメラ画面取得
             /// </summary>
             VideoCapture vc = new VideoCapture();
+
+           
 
             /// <summary>
             /// カメラの稼働処理
@@ -339,6 +347,9 @@ namespace camera
                             MessageBox.Show("このカメラは使用できない");
                         }
                     }
+
+                   
+
                     if (vc.ConvertRgb)
                     {
                         //カメラ画像表示ループ
@@ -346,6 +357,9 @@ namespace camera
                         {
                             //取得した画像をMATに変換
                             img = vc.RetrieveMat();
+                            img2 = vc.RetrieveMat();
+
+                            
 
                             try
                             {
@@ -367,11 +381,14 @@ namespace camera
 
                             //変換したMatをbitmapに変換そしてカメライメージとして表示
                             CameraPic.Image = img.ToBitmap();
-
+                            if (!StarGamamCheck)
+                            {
+                                StarGamamCheck = true;
+                            }
                         }
                     }
 
-                });
+                });        
 
             }
             catch
@@ -445,6 +462,34 @@ namespace camera
                 nowTime.Minute + " 分 " +
                 nowTime.Second + " 秒";
 
+            //自動ガンマ調整
+            if (StarGamamCheck)
+            {
+                Bitmap bmp = new Bitmap(img2.ToBitmap());
+
+                for (int i = 0; i < CameraPic.Width; i++)
+                {
+                    for (int j = 0; j < CameraPic.Height; j++)
+                    {
+
+                        NowR.Add(bmp.GetPixel(i, j).R);
+                        NowG.Add(bmp.GetPixel(i, j).G);
+                        NowB.Add(bmp.GetPixel(i, j).B);
+                                                       
+                    }                                  
+                }                                      
+                                                       
+                int AvgR = (int)NowR.Average();        
+                int AvgG = (int)NowG.Average();        
+                int AvgB = (int)NowB.Average();        
+                double Avg = (((double)AvgR + (double)AvgG + (double)AvgB) / 3.0) / 100.0;
+                double GetAvg = Math.Round(Avg, 2, MidpointRounding.AwayFromZero);
+
+                GetGamma = (GetAvg + 1.15) / 2;
+
+                label10.Text = GetAvg.ToString();
+                NowGamma.Text = GetGamma.ToString();
+            }
 
         }
 
@@ -3082,8 +3127,8 @@ namespace camera
         /// </summary>
         private void Gamma_Scroll(object sender, EventArgs e)
         {
-            GetGamma = (double)Gamma.Value/10;
-            NowGamma.Text = GetGamma.ToString();
+            //GetGamma = (double)Gamma.Value/10;
+            //NowGamma.Text = GetGamma.ToString();
         }
 
         /// <summary>
