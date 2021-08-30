@@ -139,12 +139,12 @@ namespace camera
         private SoundPlayer Player = null;
 
         /// <summary>
-        ///合格音
+        ///正常音
         /// </summary>
         private string SussesSound = @"Sound\Answer.wav";
 
         /// <summary>
-        ///不合格音
+        ///異常音
         /// </summary>
         private string FailSound = @"Sound\Wrong.wav";
 
@@ -273,7 +273,7 @@ namespace camera
             GSetText.Text = GreenTrack.Value.ToString();
             BSetText.Text = BlueTrack.Value.ToString();
 
-            //合格パーセントの数値を初期化
+            //正常パーセントの数値を初期化
             int BoxPercent = MyBoxList[BoxNameCombo.SelectedIndex].MySPercent;
             SetSusscePercent.Text = BoxPercent.ToString();
 
@@ -656,7 +656,7 @@ namespace camera
 
                 }
 
-                //不合格あるFALG
+                //異常あるFALG
                 bool haveFail = false;
 
                 //結果結果表示をクリア
@@ -730,21 +730,21 @@ namespace camera
                                 CB = CheckCol.B;
                             }
 
-                            //カメラ画像のピクセル色はマスタ画像のピクセル色が指定色と範囲内ならば合格
+                            //カメラ画像のピクセル色はマスタ画像のピクセル色が指定色と範囲内ならば正常
                             if ((CR <= OR + MyBoxList[k].Red && CR >= OR - MyBoxList[k].Red) &&
                                 (CG <= OG + MyBoxList[k].Green && CG >= OG - MyBoxList[k].Green) &&
                                 (CB <= OB + MyBoxList[k].Blue && CB >= OB - MyBoxList[k].Blue))
                             {
 
                                 //OkOrFail[k] = true;
-                                //合格部分のピクセルを緑にする
+                                //正常部分のピクセルを緑にする
                                 bmp.SetPixel(i - X, j - Y, Color.Blue);
-                                //合格に青に変更
+                                //正常に青に変更
                                 MyBoxList[k].ChangeColor(Color.Blue);
                                 //正しい数++
                                 RightNum++;
                             }
-                            //不合格
+                            //異常
                             else
                             {
                                 //haveFail = true;
@@ -759,26 +759,26 @@ namespace camera
                     //drawboxに緑ではない部分背景画像にする
                     MyBoxList[k].Drawbox.Image = bmp;
 
-                    //合格した部分のパーセント計算
+                    //正常した部分のパーセント計算
                     percentOfSusses = ((double)RightNum / ((double)MyBoxList[k].Width * (double)MyBoxList[k].Height)) * 100.0;
 
                     //計算した結果をINTに転換
                     int Getpercent = (int)percentOfSusses;
 
-                    //対象ボックスの合格基準を取得
+                    //対象ボックスの正常基準を取得
                     int BoxPercent = MyBoxList[k].MySPercent;
 
                     // GetPercent.Text = Getpercent.ToString();
-                    //合格パーセント以下の時不合格
+                    //正常パーセント以下の時異常
                     if (percentOfSusses < BoxPercent)
                     {
-                        //不合格の対象ボックスの色を赤にする
+                        //異常の対象ボックスの色を赤にする
                         MyBoxList[k].ChangeColor(Color.Red);
 
-                        //一つの対象が不合格があります
+                        //一つの対象が異常があります
                         haveFail = true;
 
-                        //数列中に不合格を記録
+                        //数列中に異常を記録
                         OkOrFail[k] = false;
                     }
 
@@ -832,13 +832,13 @@ namespace camera
 
                 }
 
-                //合格　
+                //正常　
                 if (!haveFail)
                 {
                     //ループモードではない判定
                     if (LoopBtnFlag)
                     {
-                        //合格音
+                        //正常音
                         Player = new SoundPlayer(SussesSound);
                         Player.Play();
                     }
@@ -846,10 +846,10 @@ namespace camera
                     //背景緑に変換
                     this.BackColor = Color.Blue;
                 }
-                //不合格
+                //異常
                 else
                 {
-                    //不合格音
+                    //異常音
                     Player = new SoundPlayer(FailSound);
                     Player.Play();
 
@@ -987,7 +987,7 @@ namespace camera
                             box.Green = SG;
                             box.Blue = SB;
 
-                            //合格パーセント
+                            //正常パーセント
                             string[] SPercent = DataList[(i * 8) + 6].Split(':', ',');
                             box.MySPercent = Convert.ToInt32(SPercent[1]);
 
@@ -1212,7 +1212,7 @@ namespace camera
                                 box.Green = SG;
                                 box.Blue = SB;
 
-                                //合格パーセント
+                                //正常パーセント
                                 string[] SPercent = DataList[(i * 8) + 6].Split(':', ',');
                                 box.MySPercent = Convert.ToInt32(SPercent[1]);
 
@@ -1692,7 +1692,7 @@ namespace camera
                     //対象名リストは０なら
                     if (BoxNameList.Count == 0)
                     {
-                        //合格
+                        //正常
                         if (ok[i])
                         {
                             //サーモテープモード
@@ -1711,7 +1711,7 @@ namespace camera
                                 sw.WriteLine((i + 1).ToString() + "," + "消灯");
                             }
                         }
-                        //不合格
+                        //異常
                         else
                         {
                             //サーモテープモード
@@ -1734,7 +1734,7 @@ namespace camera
                     //対象名あるなら
                     else
                     {
-                        //合格
+                        //正常
                         if (ok[i])
                         {
                             //サーモテープモード
@@ -1754,7 +1754,7 @@ namespace camera
                             }
 
                         }
-                        //不合格
+                        //異常
                         else
                         {
                             //サーモテープモード
@@ -1792,7 +1792,7 @@ namespace camera
                     //対象名リストは０なら
                     if (BoxNameList.Count == 0)
                     {
-                        //合格
+                        //正常
                         if (ok[i])
                         {
                             //サーモテープモード
@@ -1811,7 +1811,7 @@ namespace camera
                                 sw.WriteLine((i + 1).ToString() + "," + "消灯");
                             }
                         }
-                        //不合格
+                        //異常
                         else
                         {
                             //サーモテープモード
@@ -1834,7 +1834,7 @@ namespace camera
                     //対象名あるなら
                     else
                     {
-                        //合格
+                        //正常
                         if (ok[i])
                         {
                             //サーモテープモード
@@ -1854,7 +1854,7 @@ namespace camera
                             }
 
                         }
-                        //不合格
+                        //異常
                         else
                         {
                             //サーモテープモード
@@ -1955,7 +1955,7 @@ namespace camera
             GSetText.Text = GreenTrack.Value.ToString();
             BSetText.Text = BlueTrack.Value.ToString();
 
-            //選択した対象ボックスの合格パーセント
+            //選択した対象ボックスの正常パーセント
             //取得
             int BoxPercent = MyBoxList[BoxNameCombo.SelectedIndex].MySPercent;
             //設定
@@ -2178,7 +2178,7 @@ namespace camera
 
                 MyBoxList[BoxNameCombo.SelectedIndex]._borderColor = Color.LightSeaGreen;
                 MyBoxList[BoxNameCombo.SelectedIndex].Invalidate();
-                //対象ボックスの合格部分緑を塗る用pictureboxを非表示
+                //対象ボックスの正常部分緑を塗る用pictureboxを非表示
                 for (int i = 0; i < MyBoxList.Count; i++)
                 {
                     MyBoxList[i].Drawbox.Visible = false;
@@ -2273,7 +2273,7 @@ namespace camera
                             //対象ボックスRGB書く
                             sw.WriteLine("RGB:" + _赤.ToString() + "," + _緑.ToString() + "," + _青.ToString());
 
-                            //合格パーセント
+                            //正常パーセント
                             //パーセント取得
                             int _パーセント = MyBoxList[i].MySPercent;
                             //パーセント書く
@@ -3037,20 +3037,25 @@ namespace camera
             //    }
 
             //}
+
+            //すべてのボックス削除
             MyBoxList.Clear();
             CutPic.Controls.Clear();
             BoxNameCombo.Items.Clear();
             BoxNameList.Clear();
-            BoxNum = 1;
 
+            //もう一つ新しいボックス生成
+            BoxNum = 1;
             MyBox box = new MyBox();
             CutPic.Controls.Add(box);
             BoxNameCombo.Items.Add("1");
+            box.MyNum = 1;
             MyBoxList.Add(box);
             if(BoxNameCombo.Items.Count > 0)
             {
                 BoxNameCombo.SelectedIndex = 0;
             }
+
         }
 
         /// <summary>
@@ -3073,12 +3078,12 @@ namespace camera
 
             if (GetAnser.Count >= 1)
             {
-                //合格
+                //正常
                 if (GetAnser[e.Index])
                 {
                     e.Graphics.DrawString(CheckPerList.Items[e.Index].ToString(), e.Font, Blackbrush, e.Bounds, StringFormat.GenericDefault);
                 }
-                //不合格
+                //異常
                 else
                 {
                     e.Graphics.DrawString(CheckPerList.Items[e.Index].ToString(), e.Font, Redbrush, e.Bounds, StringFormat.GenericDefault);
@@ -3142,6 +3147,9 @@ namespace camera
             MouseRGB.Text = null;
         }
 
+        /// <summary>
+        /// 自動ガンマ計算
+        /// </summary>
         private void GamamTimer_Tick(object sender, EventArgs e)
         {
             //自動ガンマ調整

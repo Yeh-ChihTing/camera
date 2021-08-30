@@ -30,7 +30,7 @@ namespace camera
         /// </summary>
         public int Blue = 30;
         /// <summary>
-        ///　Boxの合格パーセント参照値
+        ///　Boxの正常パーセント参照値
         /// </summary>
         public int MySPercent = 80;
 

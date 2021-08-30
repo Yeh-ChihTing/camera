@@ -589,7 +589,7 @@ namespace camera
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 12);
             this.label2.TabIndex = 298;
-            this.label2.Text = "合格パーセント設定";
+            this.label2.Text = "正常パーセント設定";
             // 
             // SetSusscePercent
             // 

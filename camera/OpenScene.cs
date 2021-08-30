@@ -140,6 +140,7 @@ namespace camera
             //return cameras.ToArray();
         }
 
+        //ネットワークカメラステータス保存用関数
         private void SaveIPCamStatus()
         {
             string path = "CamStatus.bat";
@@ -155,6 +156,8 @@ namespace camera
 
         }
 
+
+        //ネットワークカメラステータス読み込み用関数
         private void LoadIpCamStatus()
         {
             string path = "CamStatus.bat";
