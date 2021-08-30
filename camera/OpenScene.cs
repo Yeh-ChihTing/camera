@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-
+using System.IO;
 
 namespace camera
 {
@@ -87,6 +87,9 @@ namespace camera
             //cgi-bin/camera?resolution=640*360
             main.CamTypeName = "http://" + UserID.Text + ":" + PassWord.Text + "@" + IpAdress.Text + "/" + CGIConment.Text;
 
+            //今回使用したネットワークカメラのステータスを保存
+            SaveIPCamStatus();
+
             //メインシーン表示
             main.Show();
 
@@ -118,6 +121,9 @@ namespace camera
                 WebCamSelect.DropDownStyle = ComboBoxStyle.DropDownList;
             }
 
+            //前回使ったネットワークカメラのステータスを読み込む
+            LoadIpCamStatus();
+
         }
 
         //使用できるWEBカメラリストを取得
@@ -132,6 +138,41 @@ namespace camera
                 CameraNames.Add(friendlyName);
             }
             //return cameras.ToArray();
+        }
+
+        private void SaveIPCamStatus()
+        {
+            string path = "CamStatus.bat";
+
+
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.WriteLine(IpAdress.Text);
+                sw.WriteLine(UserID.Text);
+                sw.WriteLine(PassWord.Text);
+                sw.WriteLine(CGIConment.Text);
+            }
+
+        }
+
+        private void LoadIpCamStatus()
+        {
+            string path = "CamStatus.bat";
+
+            using(StreamReader sr=new StreamReader(path))
+            {
+                string[] Getline = new string[4];
+                for(int i = 0; i < 4; i++)
+                {
+                    Getline[i] = sr.ReadLine();
+                }
+
+                IpAdress.Text = Getline[0];
+                UserID.Text = Getline[1];
+                PassWord.Text=Getline[2];
+                CGIConment.Text = Getline[3];
+                
+            }
         }
 
     }
