@@ -159,19 +159,22 @@ namespace camera
         {
             string path = "CamStatus.bat";
 
-            using(StreamReader sr=new StreamReader(path))
+            if (File.Exists(path))
             {
-                string[] Getline = new string[4];
-                for(int i = 0; i < 4; i++)
+                using (StreamReader sr = new StreamReader(path))
                 {
-                    Getline[i] = sr.ReadLine();
-                }
+                    string[] Getline = new string[4];
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Getline[i] = sr.ReadLine();
+                    }
 
-                IpAdress.Text = Getline[0];
-                UserID.Text = Getline[1];
-                PassWord.Text=Getline[2];
-                CGIConment.Text = Getline[3];
-                
+                    IpAdress.Text = Getline[0];
+                    UserID.Text = Getline[1];
+                    PassWord.Text = Getline[2];
+                    CGIConment.Text = Getline[3];
+
+                }
             }
         }
 

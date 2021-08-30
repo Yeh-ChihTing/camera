@@ -359,7 +359,7 @@ namespace camera
                             img = vc.RetrieveMat();
                             img2 = vc.RetrieveMat();
 
-                            
+
 
                             try
                             {
@@ -462,34 +462,7 @@ namespace camera
                 nowTime.Minute + " 分 " +
                 nowTime.Second + " 秒";
 
-            //自動ガンマ調整
-            if (StarGamamCheck)
-            {
-                Bitmap bmp = new Bitmap(img2.ToBitmap());
-
-                for (int i = 0; i < CameraPic.Width; i++)
-                {
-                    for (int j = 0; j < CameraPic.Height; j++)
-                    {
-
-                        NowR.Add(bmp.GetPixel(i, j).R);
-                        NowG.Add(bmp.GetPixel(i, j).G);
-                        NowB.Add(bmp.GetPixel(i, j).B);
-                                                       
-                    }                                  
-                }                                      
-                                                       
-                int AvgR = (int)NowR.Average();        
-                int AvgG = (int)NowG.Average();        
-                int AvgB = (int)NowB.Average();        
-                double Avg = (((double)AvgR + (double)AvgG + (double)AvgB) / 3.0) / 100.0;
-                double GetAvg = Math.Round(Avg, 2, MidpointRounding.AwayFromZero);
-
-                GetGamma = (GetAvg + 1.15) / 2;
-
-                label10.Text = GetAvg.ToString();
-                NowGamma.Text = GetGamma.ToString();
-            }
+       
 
         }
 
@@ -765,7 +738,7 @@ namespace camera
 
                                 //OkOrFail[k] = true;
                                 //合格部分のピクセルを緑にする
-                                bmp.SetPixel(i - X, j - Y, Color.Green);
+                                bmp.SetPixel(i - X, j - Y, Color.Blue);
                                 //合格に青に変更
                                 MyBoxList[k].ChangeColor(Color.Blue);
                                 //正しい数++
@@ -871,7 +844,7 @@ namespace camera
                     }
 
                     //背景緑に変換
-                    this.BackColor = Color.Green;
+                    this.BackColor = Color.Blue;
                 }
                 //不合格
                 else
@@ -3052,19 +3025,32 @@ namespace camera
             int MyboxNums = MyBoxList.Count;
 
             //最後の一つから消す
-            for (int i = (MyboxNums - 1); i > 0; i--)
-            {
-                MyBoxList.RemoveAt(i);
-                CutPic.Controls.RemoveAt(i);
-                BoxNameCombo.Items.RemoveAt(i);
+            //for (int i = (MyboxNums - 1); i > 0; i--)
+            //{
+            //    MyBoxList.RemoveAt(i);
+            //    CutPic.Controls.RemoveAt(i);
+            //    BoxNameCombo.Items.RemoveAt(i);
 
-                if (BoxNameList.Count > 1)
-                {
-                    BoxNameList.RemoveAt(i);
-                }
+            //    if (BoxNameList.Count > 1)
+            //    {
+            //        BoxNameList.RemoveAt(i);
+            //    }
 
-            }
+            //}
+            MyBoxList.Clear();
+            CutPic.Controls.Clear();
+            BoxNameCombo.Items.Clear();
+            BoxNameList.Clear();
             BoxNum = 1;
+
+            MyBox box = new MyBox();
+            CutPic.Controls.Add(box);
+            BoxNameCombo.Items.Add("1");
+            MyBoxList.Add(box);
+            if(BoxNameCombo.Items.Count > 0)
+            {
+                BoxNameCombo.SelectedIndex = 0;
+            }
         }
 
         /// <summary>
@@ -3083,7 +3069,7 @@ namespace camera
             //赤ブラシ
             var Redbrush = new SolidBrush(Color.Red);
             //黒ブラシ
-            var Blackbrush = new SolidBrush(Color.Black);
+            var Blackbrush = new SolidBrush(Color.Blue);
 
             if (GetAnser.Count >= 1)
             {
@@ -3154,6 +3140,38 @@ namespace camera
         private void CameraPic_MouseLeave(object sender, EventArgs e)
         {
             MouseRGB.Text = null;
+        }
+
+        private void GamamTimer_Tick(object sender, EventArgs e)
+        {
+            //自動ガンマ調整
+            if (StarGamamCheck)
+            {
+                Bitmap bmp = new Bitmap(img2.ToBitmap());
+
+                for (int i = 0; i < CameraPic.Width; i++)
+                {
+                    for (int j = 0; j < CameraPic.Height; j++)
+                    {
+
+                        NowR.Add(bmp.GetPixel(i, j).R);
+                        NowG.Add(bmp.GetPixel(i, j).G);
+                        NowB.Add(bmp.GetPixel(i, j).B);
+
+                    }
+                }
+
+                int AvgR = (int)NowR.Average();
+                int AvgG = (int)NowG.Average();
+                int AvgB = (int)NowB.Average();
+                double Avg = (((double)AvgR + (double)AvgG + (double)AvgB) / 3.0) / 100.0;
+                double GetAvg = Math.Round(Avg, 2, MidpointRounding.AwayFromZero);
+
+                GetGamma = (GetAvg + 1.15) / 2;
+
+                label10.Text = GetAvg.ToString();
+                NowGamma.Text = GetGamma.ToString();
+            }
         }
     }
 }

@@ -113,6 +113,7 @@ namespace camera
             this.MouseRGB = new System.Windows.Forms.Label();
             this.MouseRGBPanel = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
+            this.GamamTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -695,8 +696,8 @@ namespace camera
             this.CheckMode.FormattingEnabled = true;
             this.CheckMode.Items.AddRange(new object[] {
             "サーモテープ",
-            "ランプ点灯モード",
-            "ランプ消灯モード"});
+            "ランプ点灯",
+            "ランプ消灯"});
             this.CheckMode.Location = new System.Drawing.Point(137, 12);
             this.CheckMode.Name = "CheckMode";
             this.CheckMode.Size = new System.Drawing.Size(134, 20);
@@ -999,6 +1000,12 @@ namespace camera
             this.label10.TabIndex = 318;
             this.label10.Text = "label10";
             // 
+            // GamamTimer
+            // 
+            this.GamamTimer.Enabled = true;
+            this.GamamTimer.Interval = 10000;
+            this.GamamTimer.Tick += new System.EventHandler(this.GamamTimer_Tick);
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1144,6 +1151,7 @@ namespace camera
         private System.Windows.Forms.Label MouseRGB;
         private System.Windows.Forms.Panel MouseRGBPanel;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Timer GamamTimer;
     }
 }
 
