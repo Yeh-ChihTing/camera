@@ -209,12 +209,15 @@ namespace camera
         private Bitmap GetColor;
 
         /// <summary>
-        ///現在ライブ画像の全RGB値を
+        ///現在ライブ画像の全RGB値を取得用リスト
         /// </summary>
         private List<int> NowR = new List<int>();
         private List<int> NowG = new List<int>();
         private List<int> NowB = new List<int>();
 
+        /// <summary>
+        ///自動ガンマ調整起動FLAG
+        /// </summary>
         private bool StarGamamCheck = false;
         //変数宣言END
 
