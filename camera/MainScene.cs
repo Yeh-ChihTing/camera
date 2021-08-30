@@ -208,7 +208,9 @@ namespace camera
         /// </summary>
         private Bitmap GetColor;
 
-
+        /// <summary>
+        ///現在ライブ画像の全RGB値を
+        /// </summary>
         private List<int> NowR = new List<int>();
         private List<int> NowG = new List<int>();
         private List<int> NowB = new List<int>();

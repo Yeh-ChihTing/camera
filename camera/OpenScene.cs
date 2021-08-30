@@ -143,9 +143,9 @@ namespace camera
         //ネットワークカメラステータス保存用関数
         private void SaveIPCamStatus()
         {
+            //保存パース
             string path = "CamStatus.bat";
-
-
+            
             using (StreamWriter sw = new StreamWriter(path))
             {
                 sw.WriteLine(IpAdress.Text);
@@ -160,6 +160,7 @@ namespace camera
         //ネットワークカメラステータス読み込み用関数
         private void LoadIpCamStatus()
         {
+            //パース
             string path = "CamStatus.bat";
 
             if (File.Exists(path))
