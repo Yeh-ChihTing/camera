@@ -1066,11 +1066,13 @@ namespace camera
                     //ChangePic.Image = MasterImage;
                 }
 
+                //現在のマスタイメージの記録
+                GetCutPicNow = CutPic.Image;
+                GetColor = new Bitmap(CutPic.Image);
+
             }
 
-            //現在のマスタイメージの記録
-            GetCutPicNow = CutPic.Image;
-            GetColor = new Bitmap(CutPic.Image);
+          
         }
 
         /// <summary>
@@ -3088,7 +3090,7 @@ namespace camera
         {
             //赤ブラシ
             var Redbrush = new SolidBrush(Color.Red);
-            //黒ブラシ
+            //青ブラシ
             var Blackbrush = new SolidBrush(Color.Blue);
 
             if (GetAnser.Count >= 1)

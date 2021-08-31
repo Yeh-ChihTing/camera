@@ -111,7 +111,6 @@ namespace camera
             this.NowGamma = new System.Windows.Forms.Label();
             this.MouseRGB = new System.Windows.Forms.Label();
             this.MouseRGBPanel = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
             this.GamamTimer = new System.Windows.Forms.Timer(this.components);
             this.OpenSaveFolder = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
@@ -980,15 +979,6 @@ namespace camera
             this.MouseRGBPanel.Size = new System.Drawing.Size(80, 18);
             this.MouseRGBPanel.TabIndex = 317;
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(497, 8);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 12);
-            this.label10.TabIndex = 318;
-            this.label10.Text = "label10";
-            // 
             // GamamTimer
             // 
             this.GamamTimer.Enabled = true;
@@ -1011,7 +1001,6 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
-            this.Controls.Add(this.label10);
             this.Controls.Add(this.MouseRGBPanel);
             this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
@@ -1146,7 +1135,6 @@ namespace camera
         private System.Windows.Forms.Label NowGamma;
         private System.Windows.Forms.Label MouseRGB;
         private System.Windows.Forms.Panel MouseRGBPanel;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Timer GamamTimer;
         private System.Windows.Forms.Button OpenSaveFolder;
     }
