@@ -219,6 +219,7 @@ namespace camera
         ///自動ガンマ調整起動FLAG
         /// </summary>
         private bool StarGamamCheck = false;
+
         //変数宣言END
 
         /// <summary>
@@ -2023,7 +2024,6 @@ namespace camera
             MyBoxList[BoxNameCombo.SelectedIndex].Blue = BlueTrack.Value;
         }
 
-
         /// <summary>
         ///色合いの値R（赤）入力したイベント
         /// </summary>
@@ -2128,7 +2128,6 @@ namespace camera
         /// <summary>
         ///RGB値の変更END
         /// </summary>
-
 
         /// <summary>
         ///入力を数字に限定する関数
@@ -3011,7 +3010,6 @@ namespace camera
             }
         }
 
-
         /// <summary>
         /// マウスがCutPicから離れる時の処理
         /// </summary>
@@ -3144,7 +3142,6 @@ namespace camera
                 MouseRGB.ForeColor = color;
             }
         }
-
 
         /// <summary>
         /// マウスがCameraPicから離す時に指すRGB値の表示を閉める
