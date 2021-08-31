@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
-
+using System.Diagnostics;
 
 namespace camera
 {
@@ -364,19 +364,21 @@ namespace camera
                             img = vc.RetrieveMat();
                             img2 = vc.RetrieveMat();
 
-
-
+                            //ガンマ補正計算
                             try
                             {
-                                //ガンマ補正
                                 if (GammaPanel.Visible)
                                 {
-                                    byte[] lut = new byte[256];
-                                    for (int i = 0; i < lut.Length; i++)
+                                    //ガンマ補正
+                                    if (GammaPanel.Visible)
                                     {
-                                        lut[i] = (byte)(Math.Pow(i / 255.0, 1.0 / GetGamma) * 255.0);
+                                        byte[] lut = new byte[256];
+                                        for (int i = 0; i < lut.Length; i++)
+                                        {
+                                            lut[i] = (byte)(Math.Pow(i / 255.0, 1.0 / GetGamma) * 255.0);
+                                        }
+                                        Cv2.LUT(img, lut, img);
                                     }
-                                    Cv2.LUT(img, lut, img);
                                 }
                             }
                             catch (Exception ex)
@@ -386,9 +388,14 @@ namespace camera
 
                             //変換したMatをbitmapに変換そしてカメライメージとして表示
                             CameraPic.Image = img.ToBitmap();
-                            if (!StarGamamCheck)
+
+                            //ガンマ補正開始フラグ
+                            if (GammaPanel.Visible)
                             {
-                                StarGamamCheck = true;
+                                if (!StarGamamCheck)
+                                {
+                                    StarGamamCheck = true;
+                                }
                             }
                         }
                     }
@@ -658,7 +665,6 @@ namespace camera
                 for (int i = 0; i < OkOrFail.Length; i++)
                 {
                     OkOrFail[i] = true;
-
                 }
 
                 //異常あるFALG
@@ -715,7 +721,6 @@ namespace camera
                         for (int j = Y; j < SizeY; j++)
                         {
                             //カメラ画像のピクセル色を取得
-
                             OR = Origin.GetPixel(i, j).R;
                             OG = Origin.GetPixel(i, j).G;
                             OB = Origin.GetPixel(i, j).B;
@@ -863,11 +868,13 @@ namespace camera
                     //Ans.Text = "FAIL";
                 }
 
+                //GetAnser初期化
                 if (GetAnser.Count > 1)
                 {
                     GetAnser.Clear();
                 }
 
+                //結果表示データ取得
                 for (int i = 0; i < OkOrFail.Length; i++)
                 {
                     GetAnser.Add(OkOrFail[i]);
@@ -1349,6 +1356,7 @@ namespace camera
                               GraphicsUnit.Pixel);
                     }
 
+                    //現サイズのビットマップ取得
                     GetColor = new Bitmap(CutPic.Image);
 
                     //各対象をサイズ変更後の位置とサイズ計算
@@ -1423,6 +1431,7 @@ namespace camera
                               GraphicsUnit.Pixel);
                     }
 
+                    //現サイズのビットマップ取得
                     GetColor = new Bitmap(CutPic.Image);
 
                     //各対象をサイズ変更後の位置とサイズ計算
@@ -1493,6 +1502,7 @@ namespace camera
                               GraphicsUnit.Pixel);
                     }
 
+                    //現サイズのビットマップ取得
                     GetColor = new Bitmap(CutPic.Image);
 
                     //各対象をサイズ変更後の位置とサイズ計算
@@ -3117,16 +3127,6 @@ namespace camera
             }
         }
 
-
-        /// <summary>
-        ///　ガンマ数値変更
-        /// </summary>
-        private void Gamma_Scroll(object sender, EventArgs e)
-        {
-            //GetGamma = (double)Gamma.Value/10;
-            //NowGamma.Text = GetGamma.ToString();
-        }
-
         /// <summary>
         /// マウス指した色RGB値取得
         /// </summary>
@@ -3182,9 +3182,17 @@ namespace camera
 
                 GetGamma = (GetAvg + 1.15) / 2;
 
-                label10.Text = GetAvg.ToString();
+                //label10.Text = GetAvg.ToString();
                 NowGamma.Text = GetGamma.ToString();
             }
+        }
+
+        /// <summary>
+        /// セーフデータフォルダ開くボタン
+        /// </summary>
+        private void OpenSaveFolder_Click(object sender, EventArgs e)
+        {
+            Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\SaveData");
         }
     }
 }

@@ -113,6 +113,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="License.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="License.Designer.cs">
+      <DependentUpon>License.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainScene.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +145,9 @@
     <Compile Include="SettingBoxName.Designer.cs">
       <DependentUpon>SettingBoxName.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="License.resx">
+      <DependentUpon>License.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainScene.resx">
       <DependentUpon>MainScene.cs</DependentUpon>
       <SubType>Designer</SubType>

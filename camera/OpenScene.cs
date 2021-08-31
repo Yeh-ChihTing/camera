@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 
+
 namespace camera
 {
     /// <summary>
@@ -14,6 +15,17 @@ namespace camera
     {
         //カメラ名リスト
         List<string> CameraNames = new List<string>();
+
+        //コンピューターユーザー名
+        string ComUser;
+
+        //ライセンス保存パース
+        public string Lipath;
+        public string Foldpath;
+
+        //
+        public string LiID = "Makoto";
+        public string LiPass = "system";
 
         public OpenScene()
         {
@@ -32,8 +44,8 @@ namespace camera
         //Webカメラを起動
         private void StartWebCamera_Click(object sender, EventArgs e)
         {
-            if (CameraNames.Count > 0)
-            {
+            //if (CameraNames.Count > 0)
+            //{
                 //新しいメインシーン宣言
                 MainScene main = new MainScene();
 
@@ -57,11 +69,11 @@ namespace camera
                 //this.Close();
                 //このフォームを隠し
                 this.Visible = false;
-            }
-            else
-            {
-                MessageBox.Show("使用できるカメラは0です");
-            }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("使用できるカメラは0です");
+            //}
         }
 
         //ネットワークカメラを起動
@@ -100,6 +112,12 @@ namespace camera
         //Load
         private void OpenScene_Load(object sender, EventArgs e)
         {
+
+            ComUser = System.Environment.UserName;
+
+            Lipath = @"C:\Users\" + ComUser + @"\Documents\MKT\LICENSE.bat";
+            Foldpath= @"C:\Users\" + ComUser + @"\Documents\MKT";
+
             //使用できるWEBカメラ表示
             for (int i = 0; i < CameraNames.Count; i++)
             {
@@ -124,6 +142,55 @@ namespace camera
             //前回使ったネットワークカメラのステータスを読み込む
             LoadIpCamStatus();
 
+
+            //ライセンスファイル存在確認
+            if (File.Exists(Lipath))
+            {
+                //IDとPass取得用
+                string ID;
+                string Pass;
+
+                //データを読み込む
+                using (StreamReader sr=new StreamReader(Lipath))
+                {
+                    ID = sr.ReadLine();
+                    Pass = sr.ReadLine();                 
+                }
+
+                //ライセンス確認
+                if (ID != LiID || Pass != LiPass)
+                {
+
+                    MessageBox.Show("ライセンス問題あり");
+
+                    License Li = new License();
+                    Li.Owner = this;
+
+                    Li.ShowDialog();
+
+                    if (!Li.Finish)
+                    {
+                        this.Close();
+                    }
+
+                }
+ 
+            }
+            else
+            {
+               //ライセンス入力画面起動
+                License Li = new License();
+                Li.Owner = this;
+           
+                Li.ShowDialog();
+
+                if (!Li.Finish)
+                {
+                    this.Close();
+                }
+
+            }
+
         }
 
         //使用できるWEBカメラリストを取得
@@ -146,6 +213,7 @@ namespace camera
             //保存パース
             string path = "CamStatus.bat";
             
+            //データ保存
             using (StreamWriter sw = new StreamWriter(path))
             {
                 sw.WriteLine(IpAdress.Text);
@@ -163,16 +231,22 @@ namespace camera
             //パース
             string path = "CamStatus.bat";
 
+            //データ存在確認
             if (File.Exists(path))
             {
+                //データ読み込む
                 using (StreamReader sr = new StreamReader(path))
                 {
+                    //文字列取得用
                     string[] Getline = new string[4];
+
+                    //文字列を取得
                     for (int i = 0; i < 4; i++)
                     {
                         Getline[i] = sr.ReadLine();
                     }
 
+                    //取得したデータの切り替え
                     IpAdress.Text = Getline[0];
                     UserID.Text = Getline[1];
                     PassWord.Text = Getline[2];

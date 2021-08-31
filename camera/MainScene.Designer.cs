@@ -106,7 +106,6 @@ namespace camera
             this.DataNameText = new System.Windows.Forms.Label();
             this.DataName = new System.Windows.Forms.TextBox();
             this.version = new System.Windows.Forms.Label();
-            this.Gamma = new System.Windows.Forms.TrackBar();
             this.GammaPanel = new System.Windows.Forms.Panel();
             this.GammaLabel = new System.Windows.Forms.Label();
             this.NowGamma = new System.Windows.Forms.Label();
@@ -114,6 +113,7 @@ namespace camera
             this.MouseRGBPanel = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.GamamTimer = new System.Windows.Forms.Timer(this.components);
+            this.OpenSaveFolder = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -125,7 +125,6 @@ namespace camera
             ((System.ComponentModel.ISupportInitialize)(this.AutoCol)).BeginInit();
             this.AutoGroup.SuspendLayout();
             this.CheckSetting.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Gamma)).BeginInit();
             this.GammaPanel.SuspendLayout();
             this.MouseRGBPanel.SuspendLayout();
             this.SuspendLayout();
@@ -933,31 +932,21 @@ namespace camera
             this.version.TabIndex = 313;
             this.version.Text = "label10";
             // 
-            // Gamma
-            // 
-            this.Gamma.Location = new System.Drawing.Point(0, 27);
-            this.Gamma.Maximum = 30;
-            this.Gamma.Minimum = 1;
-            this.Gamma.Name = "Gamma";
-            this.Gamma.Size = new System.Drawing.Size(104, 45);
-            this.Gamma.TabIndex = 314;
-            this.Gamma.Value = 10;
-            this.Gamma.Visible = false;
-            this.Gamma.Scroll += new System.EventHandler(this.Gamma_Scroll);
-            // 
             // GammaPanel
             // 
+            this.GammaPanel.Controls.Add(this.OpenSaveFolder);
             this.GammaPanel.Controls.Add(this.GammaLabel);
-            this.GammaPanel.Controls.Add(this.Gamma);
-            this.GammaPanel.Location = new System.Drawing.Point(665, 100);
+            this.GammaPanel.Controls.Add(this.NowGamma);
+            this.GammaPanel.Location = new System.Drawing.Point(665, 107);
             this.GammaPanel.Name = "GammaPanel";
-            this.GammaPanel.Size = new System.Drawing.Size(129, 58);
+            this.GammaPanel.Size = new System.Drawing.Size(120, 58);
             this.GammaPanel.TabIndex = 315;
+            this.GammaPanel.Visible = false;
             // 
             // GammaLabel
             // 
             this.GammaLabel.AutoSize = true;
-            this.GammaLabel.Location = new System.Drawing.Point(6, 12);
+            this.GammaLabel.Location = new System.Drawing.Point(4, 36);
             this.GammaLabel.Name = "GammaLabel";
             this.GammaLabel.Size = new System.Drawing.Size(57, 12);
             this.GammaLabel.TabIndex = 315;
@@ -966,7 +955,7 @@ namespace camera
             // NowGamma
             // 
             this.NowGamma.AutoSize = true;
-            this.NowGamma.Location = new System.Drawing.Point(772, 136);
+            this.NowGamma.Location = new System.Drawing.Point(101, 36);
             this.NowGamma.Name = "NowGamma";
             this.NowGamma.Size = new System.Drawing.Size(11, 12);
             this.NowGamma.TabIndex = 316;
@@ -1006,6 +995,16 @@ namespace camera
             this.GamamTimer.Interval = 10000;
             this.GamamTimer.Tick += new System.EventHandler(this.GamamTimer_Tick);
             // 
+            // OpenSaveFolder
+            // 
+            this.OpenSaveFolder.Location = new System.Drawing.Point(10, 3);
+            this.OpenSaveFolder.Name = "OpenSaveFolder";
+            this.OpenSaveFolder.Size = new System.Drawing.Size(80, 23);
+            this.OpenSaveFolder.TabIndex = 319;
+            this.OpenSaveFolder.Text = "フォルダ開く";
+            this.OpenSaveFolder.UseVisualStyleBackColor = true;
+            this.OpenSaveFolder.Click += new System.EventHandler(this.OpenSaveFolder_Click);
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1014,7 +1013,6 @@ namespace camera
             this.ClientSize = new System.Drawing.Size(956, 791);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.MouseRGBPanel);
-            this.Controls.Add(this.NowGamma);
             this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
             this.Controls.Add(this.DataNameText);
@@ -1057,7 +1055,6 @@ namespace camera
             this.AutoGroup.PerformLayout();
             this.CheckSetting.ResumeLayout(false);
             this.CheckSetting.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Gamma)).EndInit();
             this.GammaPanel.ResumeLayout(false);
             this.GammaPanel.PerformLayout();
             this.MouseRGBPanel.ResumeLayout(false);
@@ -1144,7 +1141,6 @@ namespace camera
         private System.Windows.Forms.Label DataNameText;
         private System.Windows.Forms.TextBox DataName;
         public System.Windows.Forms.Label version;
-        private System.Windows.Forms.TrackBar Gamma;
         private System.Windows.Forms.Panel GammaPanel;
         private System.Windows.Forms.Label GammaLabel;
         private System.Windows.Forms.Label NowGamma;
@@ -1152,6 +1148,7 @@ namespace camera
         private System.Windows.Forms.Panel MouseRGBPanel;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Timer GamamTimer;
+        private System.Windows.Forms.Button OpenSaveFolder;
     }
 }
 
