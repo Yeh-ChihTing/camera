@@ -44,8 +44,8 @@ namespace camera
         //Webカメラを起動
         private void StartWebCamera_Click(object sender, EventArgs e)
         {
-            //if (CameraNames.Count > 0)
-            //{
+            if (CameraNames.Count > 0)
+            {
                 //新しいメインシーン宣言
                 MainScene main = new MainScene();
 
@@ -69,11 +69,11 @@ namespace camera
                 //this.Close();
                 //このフォームを隠し
                 this.Visible = false;
-            //}
-            //else
-            //{
-            //    MessageBox.Show("使用できるカメラは0です");
-            //}
+            }
+            else
+            {
+                MessageBox.Show("使用できるカメラは0です");
+            }
         }
 
         //ネットワークカメラを起動
