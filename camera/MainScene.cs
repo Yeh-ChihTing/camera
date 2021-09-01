@@ -106,7 +106,6 @@ namespace camera
         /// カメラ画面処理用
         /// </summary>
         private Mat img = new Mat();
-        private Mat img2 = new Mat();
 
         /// <summary>
         /// 検査用写真用空間
@@ -363,7 +362,7 @@ namespace camera
                         {
                             //取得した画像をMATに変換
                             img = vc.RetrieveMat();
-                            img2 = vc.RetrieveMat();
+                  
 
                             //ガンマ補正計算
                             try
@@ -899,6 +898,11 @@ namespace camera
             //OpenFileDialog宣言
             OpenFileDialog ofd = new OpenFileDialog();
 
+            //EXE位置取得
+            string path = System.Windows.Forms.Application.StartupPath;
+            //ダイアログ開始位置設定
+            ofd.InitialDirectory = path + @"\Pic";
+
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 using (FileStream fileStream = File.OpenRead(ofd.FileName))
@@ -1083,6 +1087,12 @@ namespace camera
         {
             //セーフデータ宣言
             SaveFileDialog sfd = new SaveFileDialog();
+
+            //EXE位置取得
+            string path = System.Windows.Forms.Application.StartupPath;
+            //ダイアログ開始位置設定
+            sfd.InitialDirectory = path + @"\Pic";
+
 
             //データ名(また自分で変更)
             sfd.FileName = "newMaster";
@@ -2653,7 +2663,7 @@ namespace camera
                                     }
 
                                     //二個目以降の対象ボックス
-                                    else if (BoxNum <= Boxlimit && BoxNum != 1)
+                                    else if (/*BoxNum <= Boxlimit &&*/ BoxNum != 1)
                                     {
                                         if (CR >= R - firstLimitR && CR <= R + firstLimitR &&
                                             CG >= G - firstLimitG && CG <= G + firstLimitG &&
@@ -2828,8 +2838,8 @@ namespace camera
                                                 if (canbuild)
                                                 {
                                                     //ボックス数量は指定数量を超えるか判定
-                                                    if (MyBoxList.Count < Boxlimit)
-                                                    {
+                                                    //if (MyBoxList.Count < Boxlimit)
+                                                    //{
                                                         ////ボックス番号++
                                                         //BoxNum++;
                                                         //対象ボックス生成
@@ -2864,12 +2874,12 @@ namespace camera
                                                         MyBoxList[BoxNum - 1].Height = h;
 
                                                         //ボックス計数器++
-                                                        if (BoxNum != Boxlimit)
+                                                        if (BoxNum != 1)
                                                         {
                                                             BoxNum++;
                                                         }
 
-                                                    }
+                                                    //}
                                                     //横縦計算用intを0にする
                                                     w = 0;
                                                     h = 0;
@@ -2892,6 +2902,8 @@ namespace camera
                                 //ボックスコンボボックスのインデックス0にします
                                 BoxNameCombo.SelectedIndex = 0;
                             }
+
+                            CheckLockNum.Text = (BoxNum-1).ToString();
 
 
                         }
@@ -3159,7 +3171,7 @@ namespace camera
             //自動ガンマ調整
             if (StarGamamCheck)
             {
-                Bitmap bmp = new Bitmap(img2.ToBitmap());
+                Bitmap bmp = new Bitmap(img.ToBitmap());
 
                 for (int i = 0; i < CameraPic.Width; i++)
                 {

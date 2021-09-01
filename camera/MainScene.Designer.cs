@@ -107,12 +107,12 @@ namespace camera
             this.DataName = new System.Windows.Forms.TextBox();
             this.version = new System.Windows.Forms.Label();
             this.GammaPanel = new System.Windows.Forms.Panel();
+            this.OpenSaveFolder = new System.Windows.Forms.Button();
             this.GammaLabel = new System.Windows.Forms.Label();
             this.NowGamma = new System.Windows.Forms.Label();
             this.MouseRGB = new System.Windows.Forms.Label();
             this.MouseRGBPanel = new System.Windows.Forms.Panel();
             this.GamamTimer = new System.Windows.Forms.Timer(this.components);
-            this.OpenSaveFolder = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -727,6 +727,7 @@ namespace camera
             // 
             this.CheckLockNum.Location = new System.Drawing.Point(47, 45);
             this.CheckLockNum.Name = "CheckLockNum";
+            this.CheckLockNum.ReadOnly = true;
             this.CheckLockNum.Size = new System.Drawing.Size(31, 19);
             this.CheckLockNum.TabIndex = 304;
             this.CheckLockNum.Text = "1";
@@ -942,6 +943,16 @@ namespace camera
             this.GammaPanel.TabIndex = 315;
             this.GammaPanel.Visible = false;
             // 
+            // OpenSaveFolder
+            // 
+            this.OpenSaveFolder.Location = new System.Drawing.Point(10, 3);
+            this.OpenSaveFolder.Name = "OpenSaveFolder";
+            this.OpenSaveFolder.Size = new System.Drawing.Size(80, 23);
+            this.OpenSaveFolder.TabIndex = 319;
+            this.OpenSaveFolder.Text = "フォルダ開く";
+            this.OpenSaveFolder.UseVisualStyleBackColor = true;
+            this.OpenSaveFolder.Click += new System.EventHandler(this.OpenSaveFolder_Click);
+            // 
             // GammaLabel
             // 
             this.GammaLabel.AutoSize = true;
@@ -954,7 +965,7 @@ namespace camera
             // NowGamma
             // 
             this.NowGamma.AutoSize = true;
-            this.NowGamma.Location = new System.Drawing.Point(101, 36);
+            this.NowGamma.Location = new System.Drawing.Point(73, 36);
             this.NowGamma.Name = "NowGamma";
             this.NowGamma.Size = new System.Drawing.Size(11, 12);
             this.NowGamma.TabIndex = 316;
@@ -984,16 +995,6 @@ namespace camera
             this.GamamTimer.Enabled = true;
             this.GamamTimer.Interval = 10000;
             this.GamamTimer.Tick += new System.EventHandler(this.GamamTimer_Tick);
-            // 
-            // OpenSaveFolder
-            // 
-            this.OpenSaveFolder.Location = new System.Drawing.Point(10, 3);
-            this.OpenSaveFolder.Name = "OpenSaveFolder";
-            this.OpenSaveFolder.Size = new System.Drawing.Size(80, 23);
-            this.OpenSaveFolder.TabIndex = 319;
-            this.OpenSaveFolder.Text = "フォルダ開く";
-            this.OpenSaveFolder.UseVisualStyleBackColor = true;
-            this.OpenSaveFolder.Click += new System.EventHandler(this.OpenSaveFolder_Click);
             // 
             // MainScene
             // 
