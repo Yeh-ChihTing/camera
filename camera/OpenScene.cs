@@ -144,52 +144,52 @@ namespace camera
 
 
             //ライセンスファイル存在確認
-            if (File.Exists(Lipath))
-            {
-                //IDとPass取得用
-                string ID;
-                string Pass;
+            //if (File.Exists(Lipath))
+            //{
+            //    //IDとPass取得用
+            //    string ID;
+            //    string Pass;
 
-                //データを読み込む
-                using (StreamReader sr=new StreamReader(Lipath))
-                {
-                    ID = sr.ReadLine();
-                    Pass = sr.ReadLine();                 
-                }
+            //    //データを読み込む
+            //    using (StreamReader sr=new StreamReader(Lipath))
+            //    {
+            //        ID = sr.ReadLine();
+            //        Pass = sr.ReadLine();                 
+            //    }
 
-                //ライセンス確認
-                if (ID != LiID || Pass != LiPass)
-                {
+            //    //ライセンス確認
+            //    if (ID != LiID || Pass != LiPass)
+            //    {
 
-                    MessageBox.Show("ライセンス問題あり");
+            //        MessageBox.Show("ライセンス問題あり");
 
-                    License Li = new License();
-                    Li.Owner = this;
+            //        License Li = new License();
+            //        Li.Owner = this;
 
-                    Li.ShowDialog();
+            //        Li.ShowDialog();
 
-                    if (!Li.Finish)
-                    {
-                        this.Close();
-                    }
+            //        if (!Li.Finish)
+            //        {
+            //            this.Close();
+            //        }
 
-                }
+            //    }
  
-            }
-            else
-            {
-               //ライセンス入力画面起動
-                License Li = new License();
-                Li.Owner = this;
+            //}
+            //else
+            //{
+            //   //ライセンス入力画面起動
+            //    License Li = new License();
+            //    Li.Owner = this;
            
-                Li.ShowDialog();
+            //    Li.ShowDialog();
 
-                if (!Li.Finish)
-                {
-                    this.Close();
-                }
+            //    if (!Li.Finish)
+            //    {
+            //        this.Close();
+            //    }
 
-            }
+            //}
 
         }
 
