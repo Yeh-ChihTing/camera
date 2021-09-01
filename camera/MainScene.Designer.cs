@@ -977,7 +977,7 @@ namespace camera
             this.MouseRGB.AutoSize = true;
             this.MouseRGB.Font = new System.Drawing.Font("MS UI Gothic", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.MouseRGB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.MouseRGB.Location = new System.Drawing.Point(3, 2);
+            this.MouseRGB.Location = new System.Drawing.Point(14, 2);
             this.MouseRGB.Name = "MouseRGB";
             this.MouseRGB.Size = new System.Drawing.Size(0, 10);
             this.MouseRGB.TabIndex = 262;
@@ -985,9 +985,9 @@ namespace camera
             // MouseRGBPanel
             // 
             this.MouseRGBPanel.Controls.Add(this.MouseRGB);
-            this.MouseRGBPanel.Location = new System.Drawing.Point(572, 769);
+            this.MouseRGBPanel.Location = new System.Drawing.Point(561, 769);
             this.MouseRGBPanel.Name = "MouseRGBPanel";
-            this.MouseRGBPanel.Size = new System.Drawing.Size(80, 18);
+            this.MouseRGBPanel.Size = new System.Drawing.Size(91, 18);
             this.MouseRGBPanel.TabIndex = 317;
             // 
             // GamamTimer

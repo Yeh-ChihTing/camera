@@ -2905,7 +2905,6 @@ namespace camera
 
                             CheckLockNum.Text = (BoxNum-1).ToString();
 
-
                         }
 
                         this.Cursor = Cursors.Default;
@@ -2916,7 +2915,6 @@ namespace camera
                         MessageBox.Show("まずは画像選択とか画像保存してください。");
                     }
                 }
-
 
             }
             catch
@@ -3171,23 +3169,27 @@ namespace camera
             //自動ガンマ調整
             if (StarGamamCheck)
             {
+                //カメラ画像
                 Bitmap bmp = new Bitmap(img.ToBitmap());
 
                 for (int i = 0; i < CameraPic.Width; i++)
                 {
+                    //ピクセル単位でRGB値を取得
                     for (int j = 0; j < CameraPic.Height; j++)
                     {
-
                         NowR.Add(bmp.GetPixel(i, j).R);
                         NowG.Add(bmp.GetPixel(i, j).G);
                         NowB.Add(bmp.GetPixel(i, j).B);
-
                     }
                 }
 
+
+                //全画素平均RGB値を取得
                 int AvgR = (int)NowR.Average();
                 int AvgG = (int)NowG.Average();
                 int AvgB = (int)NowB.Average();
+
+                //RGB値の平均
                 double Avg = (((double)AvgR + (double)AvgG + (double)AvgB) / 3.0) / 100.0;
                 double GetAvg = Math.Round(Avg, 2, MidpointRounding.AwayFromZero);
 
@@ -3203,6 +3205,7 @@ namespace camera
         /// </summary>
         private void OpenSaveFolder_Click(object sender, EventArgs e)
         {
+            //フォルダ開く
             Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\SaveData");
         }
     }
