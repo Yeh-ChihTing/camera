@@ -8,7 +8,7 @@
     <ProjectGuid>{18E0D67B-217A-46B7-839D-C49B73274163}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>camera</RootNamespace>
-    <AssemblyName>MKT画像処理</AssemblyName>
+    <AssemblyName>サーモセンチネル</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

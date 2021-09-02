@@ -1711,6 +1711,12 @@ namespace camera
             {
                 sw = new StreamWriter(Path, false, Encoding.GetEncoding("utf-8"));
 
+                sw.WriteLine("日時/対象名" +
+                    "," +
+                    "判定状態" +
+                    "," +
+                    "判定結果");
+
                 //今の時間を書く
                 sw.WriteLine(DateTime.Now);
 
@@ -1745,17 +1751,17 @@ namespace camera
                             //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "温度高" + "," + "問題あり");
+                                sw.WriteLine((i + 1).ToString() + "," + "温度高" + "," + "異常判定");
                             }
                             //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "消灯" + "," + "問題あり");
+                                sw.WriteLine((i + 1).ToString() + "," + "消灯" + "," + "異常判定");
                             }
                             //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "点灯" + "," + "問題あり");
+                                sw.WriteLine((i + 1).ToString() + "," + "点灯" + "," + "異常判定");
                             }
                         }
                     }
@@ -1788,17 +1794,17 @@ namespace camera
                             //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "温度高" + "," + "問題あり");
+                                sw.WriteLine(BoxNameList[i] + "," + "温度高" + "," + "異常判定");
                             }
                             //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "消灯" + "," + "問題あり");
+                                sw.WriteLine(BoxNameList[i] + "," + "消灯" + "," + "異常判定");
                             }
                             //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "点灯" + "," + "問題あり");
+                                sw.WriteLine(BoxNameList[i] + "," + "点灯" + "," + "異常判定");
                             }
                         }
                     }
@@ -1845,17 +1851,17 @@ namespace camera
                             //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "温度高" + "," + "問題あり");
+                                sw.WriteLine((i + 1).ToString() + "," + "温度高" + "," + "異常判定");
                             }
                             //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "消灯" + "," + "問題あり");
+                                sw.WriteLine((i + 1).ToString() + "," + "消灯" + "," + "異常判定");
                             }
                             //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine((i + 1).ToString() + "," + "点灯" + "," + "問題あり");
+                                sw.WriteLine((i + 1).ToString() + "," + "点灯" + "," + "異常判定");
                             }
                         }
                     }
@@ -1888,17 +1894,17 @@ namespace camera
                             //サーモテープモード
                             if (MyBoxList[i].MyBoxMode == 0)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "温度高" + "," + "問題あり");
+                                sw.WriteLine(BoxNameList[i] + "," + "温度高" + "," + "異常判定");
                             }
                             //点灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOn)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "消灯" + "," + "問題あり");
+                                sw.WriteLine(BoxNameList[i] + "," + "消灯" + "," + "異常判定");
                             }
                             //消灯モード
                             else if (MyBoxList[i].MyBoxMode == MyBox.BoxMode.LampOff)
                             {
-                                sw.WriteLine(BoxNameList[i] + "," + "点灯" + "," + "問題あり");
+                                sw.WriteLine(BoxNameList[i] + "," + "点灯" + "," + "異常判定");
                             }
                         }
                     }

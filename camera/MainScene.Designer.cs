@@ -1028,7 +1028,7 @@ namespace camera
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainScene";
-            this.Text = "画像検査";
+            this.Text = "サーモセンチネル";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainScene_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).EndInit();
