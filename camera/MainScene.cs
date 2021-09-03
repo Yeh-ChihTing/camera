@@ -925,6 +925,9 @@ namespace camera
                     //対象状態データ名
                     string dataSpace = name[0] + ".bat";
 
+                    //結果データリストをクリア
+                    GetAnser.Clear();
+
                     //対象状態データ存在の時
                     if (File.Exists(dataSpace))
                     {
@@ -1147,6 +1150,9 @@ namespace camera
 
                     //保存したデータ名を記録
                     SaveDataname = sfd.FileName;
+
+                    //結果データリストをクリア
+                    GetAnser.Clear();
 
                     //上書きの時に対象状態ファイルを消す
 
