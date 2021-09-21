@@ -1044,7 +1044,11 @@ namespace camera
                             //1以外の対象ボックスをクリアそして初期化
                             if (MyBoxList.Count > 1)
                             {
-                                for (int i = 1; i < MyBoxList.Count; i++)
+                                //MyBox数量取得
+                                int BoxNum = MyBoxList.Count;
+
+                                //1以外のボックスを削除
+                                for (int i = 1; i < BoxNum; i++)
                                 {
                                     MyBoxList.RemoveAt(i);
 
@@ -1125,10 +1129,13 @@ namespace camera
                     //1以外の対象ボックスをクリアそして初期化
                     if (MyBoxList.Count > 1)
                     {
-                        for (int i = (MyBoxList.Count-1); i >0; i--)
+                        //MyBox数量取得
+                        int BoxNum = MyBoxList.Count;
+
+                        //1以外のボックスを削除
+                        for (int i = 1; i < BoxNum; i++)
                         {
                             MyBoxList.RemoveAt(i);
-
                         }
                         //ボックス数1に戻す
                         BoxNum = 1;
@@ -1687,10 +1694,11 @@ namespace camera
 
                 }
 
-                //コンボボックスのインデックスを0にする
-                BoxNameCombo.SelectedIndex = 0;
+               
             }
             //BoxList.Clear();
+            //コンボボックスのインデックスを0にする
+            BoxNameCombo.SelectedIndex = 0;
 
         }
 
