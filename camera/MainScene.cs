@@ -19,7 +19,8 @@ namespace camera
     /// </summary>
     public partial class MainScene : Form
     {
-        //変数宣言
+        ///変数宣言
+
 
         //public変数
 
@@ -100,7 +101,10 @@ namespace camera
         ///連続チェックLCOK用FLAG
         /// </summary>
         public bool LoopCheckLock = false;
+        
+        
         //private変数
+
 
         /// <summary>
         /// カメラ画面処理用
