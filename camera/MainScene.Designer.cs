@@ -139,6 +139,7 @@ namespace camera
             this.CameraPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CameraPic.TabIndex = 0;
             this.CameraPic.TabStop = false;
+            this.CameraPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CameraPic_MouseDown);
             this.CameraPic.MouseLeave += new System.EventHandler(this.CameraPic_MouseLeave);
             this.CameraPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CameraPic_MouseMove);
             // 

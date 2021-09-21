@@ -1125,7 +1125,7 @@ namespace camera
                     //1以外の対象ボックスをクリアそして初期化
                     if (MyBoxList.Count > 1)
                     {
-                        for (int i = 1; i < MyBoxList.Count; i++)
+                        for (int i = (MyBoxList.Count-1); i >0; i--)
                         {
                             MyBoxList.RemoveAt(i);
 
@@ -3159,6 +3159,19 @@ namespace camera
                 //マウス指す場所色を取得そして表示
                 Color color = ((Bitmap)CameraPic.Image).GetPixel(e.X, e.Y);
 
+                //指定色ボックス検査色
+                if (StarChooseCol)
+                {
+                    this.Cursor = Cursors.Hand;
+                    UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
+                }
+                //自動対象検索用色
+                if (StarChooseAutoCol)
+                {
+                    this.Cursor = Cursors.Hand;
+                    AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
+                }
+
 
                 MouseRGB.Text = "R:" + color.R + " G:" + color.G + " B:" + color.B;
                 MouseRGB.ForeColor = color;
@@ -3219,6 +3232,41 @@ namespace camera
         {
             //フォルダ開く
             Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\SaveData");
+        }
+
+        private void CameraPic_MouseDown(object sender, MouseEventArgs e)
+        {
+            //指定色ボックス検査色
+            if (StarChooseCol)
+            {
+                //マスターが画像bitmap取得
+                Bitmap bmp = new Bitmap(CutPic.Image);
+
+                //マウス指す場所色を取得そして設定
+                Color color = bmp.GetPixel(e.X, e.Y);
+                UseCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
+                MyBoxList[BoxNameCombo.SelectedIndex].UsedCol = CheckCol = color;
+
+                //選択FLAG閉める
+                StarChooseCol = false;
+
+                this.Cursor = Cursors.Default;
+            }
+
+            //自動対象検索用色
+            if (StarChooseAutoCol)
+            {
+                //マスターが画像bitmap取得
+                Bitmap bmp = new Bitmap(CutPic.Image);
+
+                //マウス指す場所色を取得そして設定
+                Color color = bmp.GetPixel(e.X, e.Y);
+                AutoCol.BackColor = Color.FromArgb(color.R, color.G, color.B);
+
+                //選択FLAG閉める
+                StarChooseAutoCol = false;
+                this.Cursor = Cursors.Default;
+            }
         }
     }
 }
