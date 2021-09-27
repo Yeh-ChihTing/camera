@@ -187,7 +187,7 @@ namespace camera
         private bool OneTimeCheck = true;
 
         /// <summary>
-        ///自動対象検索実行中FLAG
+        ///自動対象検索実行中FLAG(一回しか実行するのため用)
         /// </summary>
         private bool OneTimeAuto = true;
 
@@ -2439,7 +2439,7 @@ namespace camera
                             MessageBox.Show("黒、白、灰色は使用できない");
                         }
 
-                        if (!NeerNumbers(R, G, B, 5))
+                        else/* (!NeerNumbers(R, G, B, 5))*/
                         {
                             this.Cursor = Cursors.WaitCursor;
                             ////ボックス番号
@@ -2932,6 +2932,7 @@ namespace camera
                         }
 
                         this.Cursor = Cursors.Default;
+
                         OneTimeAuto = true;
                     }
                     else
