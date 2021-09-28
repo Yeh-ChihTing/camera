@@ -117,12 +117,12 @@ namespace camera
         private Image MasterImage = null;
 
         /// <summary>
-        ///粋数
+        ///ボックス数
         /// </summary>
         private int BoxNum = 1;
 
         /// <summary>
-        ///粋リスト
+        ///ボックスリスト
         /// </summary>
         private List<MyBox> MyBoxList = new List<MyBox>();
 
@@ -2447,7 +2447,7 @@ namespace camera
                             //ボックス数
                             int Boxlimit = Convert.ToInt32(CheckLockNum.Text);
 
-                            //ボックス番号
+                            //ボックス数
                             BoxNum = 1;
 
                             //横縦計算用int
