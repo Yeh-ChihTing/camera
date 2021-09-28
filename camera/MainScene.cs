@@ -225,6 +225,8 @@ namespace camera
 
         //変数宣言END
 
+        //システム
+
         /// <summary>
         ///初期化
         /// </summary>
@@ -236,8 +238,6 @@ namespace camera
             this.MaximizeBox = !this.MaximizeBox;
 
         }
-
-
 
         /// <summary>
         ///ロード
@@ -416,6 +416,25 @@ namespace camera
 
         }
 
+        /// <summary>
+        /// フォーム閉める時
+        /// </summary>
+        private void MainScene_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //閉める時に対象ボックス情報保存確認
+            DialogResult result = MessageBox.Show("対象情報を保存しますか？ ", "", MessageBoxButtons.YesNo);
+
+            //保存したいなら
+            if (result == DialogResult.Yes)
+            {
+                //対象ボックス情報保存関数
+                SaveBoxSetting();
+            }
+
+            //親フォーム表示
+            this.Owner.Visible = true;
+
+        }
 
         //タイマー
 
@@ -2599,7 +2618,118 @@ namespace camera
             }
         }
 
+        /// <summary>
+        ///入力を数字に限定する関数
+        /// </summary>
+        private void OnlyInputNum(object sender, KeyPressEventArgs e)
+        {
+            //数字の時
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+               (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
 
+            //数字以外の時
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// ボックス情報保存関数
+        /// </summary>
+        private void SaveBoxSetting()
+        {
+            //CutPicは画像存在確認
+            if (CutPic.Image != null)
+            {
+                //現画像データ名取得
+                string[] name = SaveDataname.Split('.');
+                //保存データ名
+                string Path = name[0] + ".bat";
+
+                //保存データ名NULL確認
+                if (SaveDataname != "")
+                {
+                    using (StreamWriter sw = new StreamWriter(Path, false, Encoding.GetEncoding("utf-8")))
+                    {
+                        //対象ボックス数量書く
+                        sw.WriteLine(BoxNum.ToString());
+                        for (int i = 0; i < BoxNum; i++)
+                        {
+                            //対象ボックス名書く
+                            sw.WriteLine("name:" + BoxNameCombo.Items[i].ToString());
+
+                            //対象ボックス位置書く
+                            sw.WriteLine("pos:" + MyBoxList[i].Location.X + "," + MyBoxList[i].Location.Y);
+
+                            //対象ボックスサイズ書く
+                            sw.WriteLine("size:" + MyBoxList[i].Width + "," + MyBoxList[i].Height);
+
+                            //対象ボックス指定色使用チェック状態書く
+                            sw.WriteLine("BoxChecked" + MyBoxList[i].BoxChecked);
+
+                            //対象ボックスRGB
+                            //RGB取得
+                            int _赤 = MyBoxList[i].Red;
+                            int _緑 = MyBoxList[i].Green;
+                            int _青 = MyBoxList[i].Blue;
+                            //対象ボックスRGB書く
+                            sw.WriteLine("RGB:" + _赤.ToString() + "," + _緑.ToString() + "," + _青.ToString());
+
+                            //正常パーセント
+                            //パーセント取得
+                            int _パーセント = MyBoxList[i].MySPercent;
+                            //パーセント書く
+                            sw.WriteLine("%:" + _パーセント.ToString());
+
+                            //対象ボックスモード書く
+                            sw.WriteLine("Mode:" + ((int)MyBoxList[i].MyBoxMode).ToString());
+
+                            //対象ボックス指定色
+                            //指定色取得
+                            Color Col = MyBoxList[i].UsedCol;
+                            //指定色書く
+                            sw.WriteLine("CheckCol:" + Col.R + "," + Col.G + "," + Col.B);
+
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("画像選択してください");
+            }
+        }
+
+        /// <summary>
+        /// 三つの数値が近いの検査関数
+        /// </summary>
+        private bool NeerNumbers(int a, int b, int c, int limint)
+        {
+            if (a + limint > b && a + limint > c &&
+                b + limint > a && b + limint > c &&
+                c + limint > a && c + limint > b &&
+                a - limint < b && a - limint < c &&
+                b - limint < a && b - limint < c &&
+                c - limint < a && c - limint < b)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        //値変更反応関数
 
         /// <summary>
         ///マスター画像サイズ変更処理
@@ -2889,101 +3019,7 @@ namespace camera
                 CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
             }
         }
-
-        /// <summary>
-        ///入力を数字に限定する関数
-        /// </summary>
-        private void OnlyInputNum(object sender, KeyPressEventArgs e)
-        {
-            //数字の時
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-               (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            //数字以外の時
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// ボックス情報保存関数
-        /// </summary>
-        private void SaveBoxSetting()
-        {
-            //CutPicは画像存在確認
-            if (CutPic.Image != null)
-            {
-                //現画像データ名取得
-                string[] name = SaveDataname.Split('.');
-                //保存データ名
-                string Path = name[0] + ".bat";
-
-                //保存データ名NULL確認
-                if (SaveDataname != "")
-                {
-                    using (StreamWriter sw = new StreamWriter(Path, false, Encoding.GetEncoding("utf-8")))
-                    {
-                        //対象ボックス数量書く
-                        sw.WriteLine(BoxNum.ToString());
-                        for (int i = 0; i < BoxNum; i++)
-                        {
-                            //対象ボックス名書く
-                            sw.WriteLine("name:" + BoxNameCombo.Items[i].ToString());
-
-                            //対象ボックス位置書く
-                            sw.WriteLine("pos:" + MyBoxList[i].Location.X + "," + MyBoxList[i].Location.Y);
-
-                            //対象ボックスサイズ書く
-                            sw.WriteLine("size:" + MyBoxList[i].Width + "," + MyBoxList[i].Height);
-
-                            //対象ボックス指定色使用チェック状態書く
-                            sw.WriteLine("BoxChecked" + MyBoxList[i].BoxChecked);
-
-                            //対象ボックスRGB
-                            //RGB取得
-                            int _赤 = MyBoxList[i].Red;
-                            int _緑 = MyBoxList[i].Green;
-                            int _青 = MyBoxList[i].Blue;
-                            //対象ボックスRGB書く
-                            sw.WriteLine("RGB:" + _赤.ToString() + "," + _緑.ToString() + "," + _青.ToString());
-
-                            //正常パーセント
-                            //パーセント取得
-                            int _パーセント = MyBoxList[i].MySPercent;
-                            //パーセント書く
-                            sw.WriteLine("%:" + _パーセント.ToString());
-
-                            //対象ボックスモード書く
-                            sw.WriteLine("Mode:" + ((int)MyBoxList[i].MyBoxMode).ToString());
-
-                            //対象ボックス指定色
-                            //指定色取得
-                            Color Col = MyBoxList[i].UsedCol;
-                            //指定色書く
-                            sw.WriteLine("CheckCol:" + Col.R + "," + Col.G + "," + Col.B);
-
-                        }
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                MessageBox.Show("画像選択してください");
-            }
-        }
-
-
-
-
-
+   
         /// <summary>
         ///対象選択したイベント
         /// </summary>
@@ -3166,8 +3202,6 @@ namespace camera
         ///RGB値の変更END
         /// </summary>
 
-
-
         /// <summary>
         ///成功パーセント設定入力したイベント
         /// </summary>
@@ -3202,8 +3236,6 @@ namespace camera
             }
         }
 
-
-
         /// <summary>
         /// モードの切り替え
         /// </summary>
@@ -3212,29 +3244,6 @@ namespace camera
             //モード変更
             MyBoxList[BoxNameCombo.SelectedIndex].MyBoxMode = (MyBox.BoxMode)CheckMode.SelectedIndex;
         }
-
-        /// <summary>
-        /// フォーム閉める時
-        /// </summary>
-        private void MainScene_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //閉める時に対象ボックス情報保存確認
-            DialogResult result = MessageBox.Show("対象情報を保存しますか？ ", "", MessageBoxButtons.YesNo);
-
-            //保存したいなら
-            if (result == DialogResult.Yes)
-            {
-                //対象ボックス情報保存関数
-                SaveBoxSetting();
-            }
-
-            //親フォーム表示
-            this.Owner.Visible = true;
-
-        }
-
-  
-
 
         /// <summary>
         /// 指定色参照使用するかのチェックボックス
@@ -3252,12 +3261,6 @@ namespace camera
                 MyBoxList[BoxNameCombo.SelectedIndex].BoxChecked = false;
             }
         }
-
-
-
-   
-
- 
 
         /// <summary>
         /// 選択した対象ボックスに切り替え
@@ -3292,31 +3295,6 @@ namespace camera
             }
 
         }
-
-        /// <summary>
-        /// 三つの数値が近いの検査関数
-        /// </summary>
-        private bool NeerNumbers(int a, int b, int c, int limint)
-        {
-            if (a + limint > b && a + limint > c &&
-                b + limint > a && b + limint > c &&
-                c + limint > a && c + limint > b &&
-                a - limint < b && a - limint < c &&
-                b - limint < a && b - limint < c &&
-                c - limint < a && c - limint < b)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
-
-
-
 
     }
 }
