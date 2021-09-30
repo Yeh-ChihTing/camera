@@ -225,7 +225,6 @@ namespace camera
 
         //変数宣言END
 
-
         //システム
 
         /// <summary>
@@ -437,7 +436,6 @@ namespace camera
 
         }
 
-
         //タイマー
 
         /// <summary>
@@ -555,7 +553,6 @@ namespace camera
             //検査関数
             Check();
         }
-
 
         //ボタン
 
@@ -2127,7 +2124,6 @@ namespace camera
             //マウス指したRGB値を表示オフ　
             MouseRGB.Text = null;
         }
-
 
         //自作関数
 
