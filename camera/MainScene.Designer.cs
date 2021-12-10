@@ -113,6 +113,9 @@ namespace camera
             this.MouseRGB = new System.Windows.Forms.Label();
             this.MouseRGBPanel = new System.Windows.Forms.Panel();
             this.GamamTimer = new System.Windows.Forms.Timer(this.components);
+            this.ErrowStopBtn = new System.Windows.Forms.Button();
+            this.Error = new System.Windows.Forms.Timer(this.components);
+            this.ErrorSoundCKB = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -938,7 +941,7 @@ namespace camera
             this.GammaPanel.Controls.Add(this.OpenSaveFolder);
             this.GammaPanel.Controls.Add(this.GammaLabel);
             this.GammaPanel.Controls.Add(this.NowGamma);
-            this.GammaPanel.Location = new System.Drawing.Point(665, 107);
+            this.GammaPanel.Location = new System.Drawing.Point(636, 122);
             this.GammaPanel.Name = "GammaPanel";
             this.GammaPanel.Size = new System.Drawing.Size(120, 58);
             this.GammaPanel.TabIndex = 315;
@@ -997,12 +1000,40 @@ namespace camera
             this.GamamTimer.Interval = 10000;
             this.GamamTimer.Tick += new System.EventHandler(this.GamamTimer_Tick);
             // 
+            // ErrowStopBtn
+            // 
+            this.ErrowStopBtn.BackColor = System.Drawing.Color.Red;
+            this.ErrowStopBtn.Location = new System.Drawing.Point(669, 74);
+            this.ErrowStopBtn.Name = "ErrowStopBtn";
+            this.ErrowStopBtn.Size = new System.Drawing.Size(87, 40);
+            this.ErrowStopBtn.TabIndex = 318;
+            this.ErrowStopBtn.Text = "警報止める";
+            this.ErrowStopBtn.UseVisualStyleBackColor = false;
+            this.ErrowStopBtn.Click += new System.EventHandler(this.ErrowStopBtn_Click);
+            // 
+            // Error
+            // 
+            this.Error.Enabled = true;
+            this.Error.Tick += new System.EventHandler(this.Error_Tick);
+            // 
+            // ErrorSoundCKB
+            // 
+            this.ErrorSoundCKB.AutoSize = true;
+            this.ErrorSoundCKB.Location = new System.Drawing.Point(829, 142);
+            this.ErrorSoundCKB.Name = "ErrorSoundCKB";
+            this.ErrorSoundCKB.Size = new System.Drawing.Size(113, 16);
+            this.ErrorSoundCKB.TabIndex = 320;
+            this.ErrorSoundCKB.Text = "異常警報音ループ";
+            this.ErrorSoundCKB.UseVisualStyleBackColor = true;
+            // 
             // MainScene
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.ErrorSoundCKB);
+            this.Controls.Add(this.ErrowStopBtn);
             this.Controls.Add(this.MouseRGBPanel);
             this.Controls.Add(this.version);
             this.Controls.Add(this.DataName);
@@ -1139,6 +1170,9 @@ namespace camera
         private System.Windows.Forms.Panel MouseRGBPanel;
         private System.Windows.Forms.Timer GamamTimer;
         private System.Windows.Forms.Button OpenSaveFolder;
+        private System.Windows.Forms.Button ErrowStopBtn;
+        private System.Windows.Forms.Timer Error;
+        private System.Windows.Forms.CheckBox ErrorSoundCKB;
     }
 }
 

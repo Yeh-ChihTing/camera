@@ -101,8 +101,20 @@ namespace camera
         ///連続チェックLCOK用FLAG
         /// </summary>
         public bool LoopCheckLock = false;
-        
-        
+
+        /// <summary>
+        ///エーラ信号
+        /// </summary>
+        public bool ErrorNow = false;
+
+        public bool ErrorNowColor = true;
+
+        public Color ErrorRed = Color.Red;
+        public Color Errorwhite = Color.White;
+
+        public float ErrorLoop = 0.0f;
+
+
         //private変数
 
 
@@ -502,8 +514,24 @@ namespace camera
                 nowTime.Minute + " 分 " +
                 nowTime.Second + " 秒";
 
-       
+            if (ErrorNow)
+            {
 
+                if (ErrorSoundCKB.Checked == true)
+                {
+                    Player = new SoundPlayer(FailSound);
+                    Player.PlayLooping();
+                }
+
+            }
+            else
+            {
+
+                if (ErrorSoundCKB.Checked == true)
+                {
+                    Player.Stop();
+                }
+            }
         }
 
         /// <summary>
@@ -2346,12 +2374,16 @@ namespace camera
                 //異常
                 else
                 {
-                    //異常音
-                    Player = new SoundPlayer(FailSound);
-                    Player.Play();
+                    if (!ErrorSoundCKB.Checked)
+                    {
+                        //異常音
+                        Player = new SoundPlayer(FailSound);
+                        Player.Play();
+                    }
 
                     //背景赤に変換
                     this.BackColor = Color.Red;
+                    ErrorNow = true;
                     //Ans.Text = "FAIL";
                 }
 
@@ -3295,6 +3327,98 @@ namespace camera
             }
 
         }
+
+        private void Error_Tick(object sender, EventArgs e)
+        {
+            if (ErrorNow)
+            {
+                ErrorLoop++;
+
+                if (ErrorLoop >= 1.0f)
+                {
+
+                    if (ErrorNowColor)
+                    {
+                        this.BackColor = ErrorRed;
+                        ErrorLoop = 0.0f;
+                        ErrorNowColor = !ErrorNowColor;
+                    }
+                    else
+                    {
+                        this.BackColor = Errorwhite;
+                        ErrorLoop = 0.0f;
+                        ErrorNowColor = !ErrorNowColor;
+                    }
+
+
+                }
+
+
+
+            }
+
+        }
+
+        private void ErrowStopBtn_Click(object sender, EventArgs e)
+        {
+            if (ErrorNow)
+            {
+                ErrorNow = false;
+                this.BackColor = ErrorRed;
+            }
+        }
+
+
+
+        private void SendMail(string FromAdd,string Pass,string SendAdd,string Title,string  Msg)
+        {
+            var host = "smtp.gmail.com";
+            var port = 587;
+
+            //using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+            //{
+            //    //(1)STARTTLSで接続する
+            //    smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
+            //    //(2)GMailメールのアカウントを指定して認証する
+            //    smtp.Authenticate("yo.zitei0120@gmail.com", "t19940120");
+
+            //    var mail = new MimeKit.MimeMessage();
+            //    var builder = new MimeKit.BodyBuilder();
+
+            //    mail.From.Add(new MimeKit.MailboxAddress("", "yo.zitei0120@gmail.com"));
+            //    mail.To.Add(new MimeKit.MailboxAddress("", "tony199401@gmail.com"));
+            //    mail.Subject = "霜発生しています";
+            //    builder.TextBody = "除去してください！。\n\n以上";
+            //    mail.Body = builder.ToMessageBody();
+
+            //    smtp.Send(mail);
+            //    smtp.Disconnect(true);
+            //}
+
+            using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+            {
+                //(1)STARTTLSで接続する
+                smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
+                //(2)GMailメールのアカウントを指定して認証する
+                smtp.Authenticate(FromAdd, Pass);
+
+                var mail = new MimeKit.MimeMessage();
+                var builder = new MimeKit.BodyBuilder();
+
+                mail.From.Add(new MimeKit.MailboxAddress("", FromAdd));
+                mail.To.Add(new MimeKit.MailboxAddress("", SendAdd));
+                mail.Subject = Title;
+                builder.TextBody = Msg;
+                mail.Body = builder.ToMessageBody();
+
+                smtp.Send(mail);
+                smtp.Disconnect(true);
+            }
+
+
+
+        }
+
 
     }
 }
