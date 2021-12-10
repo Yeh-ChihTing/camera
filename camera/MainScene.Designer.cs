@@ -116,6 +116,8 @@ namespace camera
             this.ErrowStopBtn = new System.Windows.Forms.Button();
             this.Error = new System.Windows.Forms.Timer(this.components);
             this.ErrorSoundCKB = new System.Windows.Forms.CheckBox();
+            this.UseMailCheckBox = new System.Windows.Forms.CheckBox();
+            this.MailSet = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -941,7 +943,7 @@ namespace camera
             this.GammaPanel.Controls.Add(this.OpenSaveFolder);
             this.GammaPanel.Controls.Add(this.GammaLabel);
             this.GammaPanel.Controls.Add(this.NowGamma);
-            this.GammaPanel.Location = new System.Drawing.Point(636, 122);
+            this.GammaPanel.Location = new System.Drawing.Point(658, 107);
             this.GammaPanel.Name = "GammaPanel";
             this.GammaPanel.Size = new System.Drawing.Size(120, 58);
             this.GammaPanel.TabIndex = 315;
@@ -1019,12 +1021,31 @@ namespace camera
             // ErrorSoundCKB
             // 
             this.ErrorSoundCKB.AutoSize = true;
-            this.ErrorSoundCKB.Location = new System.Drawing.Point(829, 142);
+            this.ErrorSoundCKB.Location = new System.Drawing.Point(834, 125);
             this.ErrorSoundCKB.Name = "ErrorSoundCKB";
             this.ErrorSoundCKB.Size = new System.Drawing.Size(113, 16);
             this.ErrorSoundCKB.TabIndex = 320;
             this.ErrorSoundCKB.Text = "異常警報音ループ";
             this.ErrorSoundCKB.UseVisualStyleBackColor = true;
+            // 
+            // UseMailCheckBox
+            // 
+            this.UseMailCheckBox.AutoSize = true;
+            this.UseMailCheckBox.Location = new System.Drawing.Point(669, 770);
+            this.UseMailCheckBox.Name = "UseMailCheckBox";
+            this.UseMailCheckBox.Size = new System.Drawing.Size(86, 16);
+            this.UseMailCheckBox.TabIndex = 321;
+            this.UseMailCheckBox.Text = "メールで通知";
+            this.UseMailCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // MailSet
+            // 
+            this.MailSet.Location = new System.Drawing.Point(758, 760);
+            this.MailSet.Name = "MailSet";
+            this.MailSet.Size = new System.Drawing.Size(75, 25);
+            this.MailSet.TabIndex = 322;
+            this.MailSet.Text = "メール設定";
+            this.MailSet.UseVisualStyleBackColor = true;
             // 
             // MainScene
             // 
@@ -1032,6 +1053,8 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.MailSet);
+            this.Controls.Add(this.UseMailCheckBox);
             this.Controls.Add(this.ErrorSoundCKB);
             this.Controls.Add(this.ErrowStopBtn);
             this.Controls.Add(this.MouseRGBPanel);
@@ -1173,6 +1196,8 @@ namespace camera
         private System.Windows.Forms.Button ErrowStopBtn;
         private System.Windows.Forms.Timer Error;
         private System.Windows.Forms.CheckBox ErrorSoundCKB;
+        private System.Windows.Forms.CheckBox UseMailCheckBox;
+        private System.Windows.Forms.Button MailSet;
     }
 }
 

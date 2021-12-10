@@ -114,6 +114,14 @@ namespace camera
 
         public float ErrorLoop = 0.0f;
 
+        ///<summary>
+        ///メール
+        /// </summary>>
+        public string FromAdd;
+        public string Pass;
+        public string SendAdd;
+        public string Title;
+        public string Msg;
 
         //private変数
 
@@ -2381,6 +2389,12 @@ namespace camera
                         Player.Play();
                     }
 
+                    if (UseMailCheckBox.Checked)
+                    {
+                        SendMail(FromAdd, Pass, SendAdd, Title, Msg);
+
+                    }
+
                     //背景赤に変換
                     this.BackColor = Color.Red;
                     ErrorNow = true;
@@ -3372,60 +3386,64 @@ namespace camera
 
         private void SendMail(string FromAdd,string Pass,string SendAdd,string Title,string  Msg)
         {
-            var host = "smtp.gmail.com";
-            var port = 587;
-
-            //using (var smtp = new MailKit.Net.Smtp.SmtpClient())
-            //{
-            //    //(1)STARTTLSで接続する
-            //    smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
-            //    //(2)GMailメールのアカウントを指定して認証する
-            //    smtp.Authenticate("yo.zitei0120@gmail.com", "t19940120");
-
-            //    var mail = new MimeKit.MimeMessage();
-            //    var builder = new MimeKit.BodyBuilder();
-
-            //    mail.From.Add(new MimeKit.MailboxAddress("", "yo.zitei0120@gmail.com"));
-            //    mail.To.Add(new MimeKit.MailboxAddress("", "tony199401@gmail.com"));
-            //    mail.Subject = "霜発生しています";
-            //    builder.TextBody = "除去してください！。\n\n以上";
-            //    mail.Body = builder.ToMessageBody();
-
-            //    smtp.Send(mail);
-            //    smtp.Disconnect(true);
-            //}
-            try
+            if (FromAdd != null || Pass != null || SendAdd != null || Title != null || Msg != null)
             {
 
-                using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                var host = "smtp.gmail.com";
+                var port = 587;
+
+                //using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                //{
+                //    //(1)STARTTLSで接続する
+                //    smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
+                //    //(2)GMailメールのアカウントを指定して認証する
+                //    smtp.Authenticate("yo.zitei0120@gmail.com", "t19940120");
+
+                //    var mail = new MimeKit.MimeMessage();
+                //    var builder = new MimeKit.BodyBuilder();
+
+                //    mail.From.Add(new MimeKit.MailboxAddress("", "yo.zitei0120@gmail.com"));
+                //    mail.To.Add(new MimeKit.MailboxAddress("", "tony199401@gmail.com"));
+                //    mail.Subject = "霜発生しています";
+                //    builder.TextBody = "除去してください！。\n\n以上";
+                //    mail.Body = builder.ToMessageBody();
+
+                //    smtp.Send(mail);
+                //    smtp.Disconnect(true);
+                //}
+                try
                 {
-                    //(1)STARTTLSで接続する
-                    smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
-                    //(2)GMailメールのアカウントを指定して認証する
-                    smtp.Authenticate(FromAdd, Pass);
 
-                    var mail = new MimeKit.MimeMessage();
-                    var builder = new MimeKit.BodyBuilder();
+                    using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                    {
+                        //(1)STARTTLSで接続する
+                        smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
+                        //(2)GMailメールのアカウントを指定して認証する
+                        smtp.Authenticate(FromAdd, Pass);
 
-                    mail.From.Add(new MimeKit.MailboxAddress("", FromAdd));
-                    mail.To.Add(new MimeKit.MailboxAddress("", SendAdd));
-                    mail.Subject = Title;
-                    builder.TextBody = Msg;
-                    mail.Body = builder.ToMessageBody();
+                        var mail = new MimeKit.MimeMessage();
+                        var builder = new MimeKit.BodyBuilder();
 
-                    smtp.Send(mail);
-                    smtp.Disconnect(true);
+                        mail.From.Add(new MimeKit.MailboxAddress("", FromAdd));
+                        mail.To.Add(new MimeKit.MailboxAddress("", SendAdd));
+                        mail.Subject = Title;
+                        builder.TextBody = Msg;
+                        mail.Body = builder.ToMessageBody();
+
+                        smtp.Send(mail);
+                        smtp.Disconnect(true);
+                    }
                 }
-            }
-            catch
-            {
-                if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                catch
                 {
-                    MessageBox.Show("ネットワーク接続していないです");
-                }
-                else
-                {
-                    MessageBox.Show("もう一度メール設定確認してください。");
+                    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                    {
+                        MessageBox.Show("ネットワーク接続していないです");
+                    }
+                    else
+                    {
+                        MessageBox.Show("もう一度メール設定確認してください。");
+                    }
                 }
             }
 
