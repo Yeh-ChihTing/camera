@@ -3394,28 +3394,40 @@ namespace camera
             //    smtp.Send(mail);
             //    smtp.Disconnect(true);
             //}
-
-            using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+            try
             {
-                //(1)STARTTLSで接続する
-                smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
-                //(2)GMailメールのアカウントを指定して認証する
-                smtp.Authenticate(FromAdd, Pass);
 
-                var mail = new MimeKit.MimeMessage();
-                var builder = new MimeKit.BodyBuilder();
+                using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    //(1)STARTTLSで接続する
+                    smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
+                    //(2)GMailメールのアカウントを指定して認証する
+                    smtp.Authenticate(FromAdd, Pass);
 
-                mail.From.Add(new MimeKit.MailboxAddress("", FromAdd));
-                mail.To.Add(new MimeKit.MailboxAddress("", SendAdd));
-                mail.Subject = Title;
-                builder.TextBody = Msg;
-                mail.Body = builder.ToMessageBody();
+                    var mail = new MimeKit.MimeMessage();
+                    var builder = new MimeKit.BodyBuilder();
 
-                smtp.Send(mail);
-                smtp.Disconnect(true);
+                    mail.From.Add(new MimeKit.MailboxAddress("", FromAdd));
+                    mail.To.Add(new MimeKit.MailboxAddress("", SendAdd));
+                    mail.Subject = Title;
+                    builder.TextBody = Msg;
+                    mail.Body = builder.ToMessageBody();
+
+                    smtp.Send(mail);
+                    smtp.Disconnect(true);
+                }
             }
-
-
+            catch
+            {
+                if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                {
+                    MessageBox.Show("ネットワーク接続していないです");
+                }
+                else
+                {
+                    MessageBox.Show("もう一度メール設定確認してください。");
+                }
+            }
 
         }
 
