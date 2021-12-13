@@ -122,6 +122,7 @@ namespace camera
         public string SendAdd;
         public string Title;
         public string Msg;
+        public string PicPath;
 
         //private変数
 
@@ -2391,7 +2392,7 @@ namespace camera
 
                     if (UseMailCheckBox.Checked)
                     {
-                        SendMail(FromAdd, Pass, SendAdd, Title, Msg);
+                        SendMail(FromAdd, Pass, SendAdd, Title, Msg,PicPath);
 
                     }
 
@@ -3384,9 +3385,9 @@ namespace camera
 
 
 
-        private void SendMail(string FromAdd,string Pass,string SendAdd,string Title,string  Msg)
+        private void SendMail(string FromAdd,string Pass,string SendAdd,string Title,string  Msg,string Path)
         {
-            if (FromAdd != null || Pass != null || SendAdd != null || Title != null || Msg != null)
+            if (FromAdd != null && Pass != null && SendAdd != null && Title != null && Msg != null && Path!=null)
             {
 
                 var host = "smtp.gmail.com";
@@ -3404,10 +3405,27 @@ namespace camera
 
                 //    mail.From.Add(new MimeKit.MailboxAddress("", "yo.zitei0120@gmail.com"));
                 //    mail.To.Add(new MimeKit.MailboxAddress("", "tony199401@gmail.com"));
+
+                //    var filePath = "test.jpg";  //テンプファイルのパス
+
+                //    //(1)添付ファイルを設定
+                //    var attachment = new MimeKit.MimePart("image/png");
+                //    attachment.Content = new MimeKit.MimeContent(System.IO.File.OpenRead(filePath));
+                //    attachment.ContentDisposition = new MimeKit.ContentDisposition();
+                //    attachment.ContentTransferEncoding = MimeKit.ContentEncoding.Base64;
+                //    attachment.FileName = System.IO.Path.GetFileName(filePath);
+
                 //    mail.Subject = "霜発生しています";
                 //    builder.TextBody = "除去してください！。\n\n以上";
                 //    mail.Body = builder.ToMessageBody();
 
+                //    //(2)Multipartオブジェクトの作成
+                //    var multipart = new MimeKit.Multipart("mixed");
+                //    //multipart.Add(textPart);
+                //    multipart.Add(attachment);
+
+                //    //(3)Bodyに、添付ファイルとメール本文を格納したMultipartオブジェクトを設定
+                //    mail.Body = multipart;
                 //    smtp.Send(mail);
                 //    smtp.Disconnect(true);
                 //}
@@ -3426,12 +3444,38 @@ namespace camera
 
                         mail.From.Add(new MimeKit.MailboxAddress("", FromAdd));
                         mail.To.Add(new MimeKit.MailboxAddress("", SendAdd));
+
+                        //var filePath = PicPath;  //テンプファイルのパス
+
+                        //(1)添付ファイルを設定
+                        var attachment = new MimeKit.MimePart("image/png");
+                        attachment.Content = new MimeKit.MimeContent(System.IO.File.OpenRead(PicPath));
+                        attachment.ContentDisposition = new MimeKit.ContentDisposition();
+                        attachment.ContentTransferEncoding = MimeKit.ContentEncoding.Base64;
+                        attachment.FileName = System.IO.Path.GetFileName(PicPath);
+
+
                         mail.Subject = Title;
-                        builder.TextBody = Msg;
-                        mail.Body = builder.ToMessageBody();
+
+                        //メールの本文を設定
+                        MimeKit.TextPart textPart = new MimeKit.TextPart("plain");
+                        textPart.Text = Msg;
+
+                        //builder.TextBody = Msg;
+                        //mail.Body = builder.ToMessageBody();
+
+                        //(2)Multipartオブジェクトの作成
+                        var multipart = new MimeKit.Multipart("mixed");
+                        multipart.Add(textPart);
+                        multipart.Add(attachment);
+
+                        //(3)Bodyに、添付ファイルとメール本文を格納したMultipartオブジェクトを設定
+                        mail.Body = multipart;
 
                         smtp.Send(mail);
                         smtp.Disconnect(true);
+                        MessageBox.Show("メール送りました");
+
                     }
                 }
                 catch
@@ -3446,9 +3490,43 @@ namespace camera
                     }
                 }
             }
+            else
+            {
+                MessageBox.Show("メール設定にはまだ入力していない情報ある、送信できないです");
+            }
 
         }
 
+        private void MailSet_Click(object sender, EventArgs e)
+        {
+            SettingMail SetMail = new SettingMail();
 
+            SetMail.Owner = this;
+
+            SetMail.SetFromAdd = FromAdd;
+            SetMail.SetPass = Pass;
+            SetMail.SetSendAdd = SendAdd;
+            SetMail.SetTitle = Title;
+            SetMail.SetMsg = Msg;
+            SetMail.SetPicPath = PicPath;
+
+            SetMail.ShowDialog();
+
+            FromAdd = SetMail.SetFromAdd;
+            Pass = SetMail.SetPass;
+            SendAdd = SetMail.SetSendAdd;
+            Title = SetMail.SetTitle;
+            Msg = SetMail.SetMsg;
+            PicPath = SetMail.SetPicPath;
+
+
+            //MessageBox.Show(FromAdd+Pass+SendAdd+Title+Msg+PicPath);
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SendMail(FromAdd, Pass, SendAdd, Title, Msg, PicPath);
+        }
     }
 }

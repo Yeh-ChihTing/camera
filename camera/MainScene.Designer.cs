@@ -118,6 +118,7 @@ namespace camera
             this.ErrorSoundCKB = new System.Windows.Forms.CheckBox();
             this.UseMailCheckBox = new System.Windows.Forms.CheckBox();
             this.MailSet = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CameraPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RedTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GreenTrack)).BeginInit();
@@ -1046,6 +1047,17 @@ namespace camera
             this.MailSet.TabIndex = 322;
             this.MailSet.Text = "メール設定";
             this.MailSet.UseVisualStyleBackColor = true;
+            this.MailSet.Click += new System.EventHandler(this.MailSet_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(839, 763);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 323;
+            this.button1.Text = "sendmail";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainScene
             // 
@@ -1053,6 +1065,7 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 791);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.MailSet);
             this.Controls.Add(this.UseMailCheckBox);
             this.Controls.Add(this.ErrorSoundCKB);
@@ -1198,6 +1211,7 @@ namespace camera
         private System.Windows.Forms.CheckBox ErrorSoundCKB;
         private System.Windows.Forms.CheckBox UseMailCheckBox;
         private System.Windows.Forms.Button MailSet;
+        private System.Windows.Forms.Button button1;
     }
 }
 

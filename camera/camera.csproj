@@ -126,6 +126,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SettingMail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingMail.Designer.cs">
+      <DependentUpon>SettingMail.cs</DependentUpon>
+    </Compile>
     <Compile Include="License.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +188,9 @@
     </Compile>
     <EmbeddedResource Include="SettingBoxName.resx">
       <DependentUpon>SettingBoxName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingMail.resx">
+      <DependentUpon>SettingMail.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
