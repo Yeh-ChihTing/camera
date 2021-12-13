@@ -106,16 +106,13 @@ namespace camera
         ///エーラ信号
         /// </summary>
         public bool ErrorNow = false;
-
         public bool ErrorNowColor = true;
-
         public Color ErrorRed = Color.Red;
         public Color Errorwhite = Color.White;
-
         public float ErrorLoop = 0.0f;
 
         ///<summary>
-        ///メール
+        ///メール用変数
         /// </summary>>
         public string FromAdd;
         public string Pass;
@@ -244,7 +241,9 @@ namespace camera
         /// </summary>
         private bool StarGamamCheck = false;
 
-
+        /// <summary>
+        ///異常確認FLAG
+        /// </summary>
         private bool HaveError = false;
 
         //変数宣言END
@@ -3370,6 +3369,10 @@ namespace camera
 
         }
 
+
+        /// <summary>
+        /// 異常警報用タイマー
+        /// </summary>
         private void Error_Tick(object sender, EventArgs e)
         {
             if (ErrorNow)
@@ -3401,6 +3404,10 @@ namespace camera
 
         }
 
+
+        /// <summary>
+        /// 異常警報止めるボタン
+        /// </summary>
         private void ErrowStopBtn_Click(object sender, EventArgs e)
         {
             if (ErrorNow)
@@ -3411,7 +3418,9 @@ namespace camera
         }
 
 
-
+        /// <summary>
+        /// メール送信用関数
+        /// </summary>
         private void SendMail(string FromAdd, string Pass, string SendAdd, string Title, string Msg, string Path)
         {
             if (FromAdd != null && Pass != null && SendAdd != null && Title != null)
@@ -3524,6 +3533,9 @@ namespace camera
 
         }
 
+        /// <summary>
+        /// メール設定ボタン
+        /// </summary>
         private void MailSet_Click(object sender, EventArgs e)
         {
             SettingMail SetMail = new SettingMail();
@@ -3551,6 +3563,9 @@ namespace camera
 
         }
 
+        /// <summary>
+        ///　メール設定セーフ用関数
+        /// </summary>
         public void SaveMailSetting(string FD,string SPass,string  SA,string STitle,string sMsg)
         {
             string Path = "Mail/MailSetting.txt";
@@ -3576,6 +3591,9 @@ namespace camera
             }
         }
 
+        /// <summary>
+        /// メール設定読み込む用関数
+        /// </summary>
         public void LoadMailSetting()
         {
             string dataSpace = "Mail/MailSetting.txt";
@@ -3616,6 +3634,9 @@ namespace camera
             }
         }
 
+        /// <summary>
+        /// 異常状態の画像を保存用関数
+        /// </summary>
         private string SaveErrorPic()
         {
             string Now = DateTime.Now.Year.ToString() + "年" +
