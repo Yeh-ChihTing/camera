@@ -244,6 +244,9 @@ namespace camera
         /// </summary>
         private bool StarGamamCheck = false;
 
+
+        private bool HaveError = false;
+
         //変数宣言END
 
         //システム
@@ -2182,8 +2185,8 @@ namespace camera
         /// </summary>
         private void Check()
         {
-            //try
-            //{
+            try
+            {
                 //サイズを100%に戻す
                 CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
 
@@ -2379,47 +2382,50 @@ namespace camera
 
                 }
 
-            //正常　
-            if (!haveFail)
-            {
-                //ループモードではない判定
-                if (LoopBtnFlag)
+                //正常　
+                if (!haveFail)
                 {
-                    //正常音
-                    Player = new SoundPlayer(SussesSound);
-                    Player.Play();
+                    ErrorNow = false;
+                    HaveError = false;
+                    //ループモードではない判定
+                    if (LoopBtnFlag)
+                    {
+                        //正常音
+                        Player = new SoundPlayer(SussesSound);
+                        Player.Play();
+                    }
+
+                    //背景緑に変換
+                    this.BackColor = Color.Blue;
+
+                   
                 }
-
-                //背景緑に変換
-                this.BackColor = Color.Blue;
-
-                ErrorNow = false;
-            }
-            //異常
-            else
-            {
-                string Path = SaveErrorPic();
-                PicPath = Path;
-
-                if (!ErrorSoundCKB.Checked)
+                //異常
+                else
                 {
-                    //異常音
-                    Player = new SoundPlayer(FailSound);
-                    Player.Play();
+                    string Path = SaveErrorPic();
+                    PicPath = Path;
+
+                    if (!ErrorSoundCKB.Checked)
+                    {
+                        //異常音
+                        Player = new SoundPlayer(FailSound);
+                        Player.Play();
+                    }
+
+
+                    //背景赤に変換
+                    this.BackColor = Color.Red;
+                    ErrorNow = true;
+                    HaveError = true;
+
+                    if (UseMailCheckBox.Checked)
+                    {
+
+                        SendMail(FromAdd, Pass, SendAdd, Title, DateTime.Now.ToString(), Path);
+                    }
+                    //Ans.Text = "FAIL";
                 }
-
-
-                //背景赤に変換
-                this.BackColor = Color.Red;
-                ErrorNow = true;
-
-                if (UseMailCheckBox.Checked)
-                {
-
-                    SendMail(FromAdd, Pass, SendAdd, Title, DateTime.Now.ToString(), Path);
-                }
-                //Ans.Text = "FAIL";
-            }
 
                 //GetAnser初期化
                 if (GetAnser.Count > 1)
@@ -2436,11 +2442,11 @@ namespace camera
                 //CSVに保存
                 SaveDataOnCsv(OkOrFail);
 
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("画像データを選択してください");
-            //}
+            }
+            catch
+            {
+                MessageBox.Show("画像データを選択してください");
+            }
         }
 
         /// <summary>
@@ -3349,7 +3355,7 @@ namespace camera
             if (GetAnser.Count >= 1)
             {
                 //正常
-                if (GetAnser[e.Index])
+                if (!HaveError)
                 {
                     e.Graphics.DrawString(CheckPerList.Items[e.Index].ToString(), e.Font, Blackbrush, e.Bounds, StringFormat.GenericDefault);
                 }
@@ -3358,7 +3364,9 @@ namespace camera
                 {
                     e.Graphics.DrawString(CheckPerList.Items[e.Index].ToString(), e.Font, Redbrush, e.Bounds, StringFormat.GenericDefault);
                 }
+
             }
+
 
         }
 
@@ -3448,8 +3456,8 @@ namespace camera
                 //    smtp.Send(mail);
                 //    smtp.Disconnect(true);
                 //}
-               // try
-               // {
+                try
+                {
 
                     using (var smtp = new MailKit.Net.Smtp.SmtpClient())
                     {
@@ -3496,18 +3504,18 @@ namespace camera
                         //MessageBox.Show("メール送りました");
 
                     }
-               // }
-                //catch
-                //{
-                //    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
-                //    {
-                //        MessageBox.Show("ネットワーク接続していないです");
-                //    }
-                //    else
-                //    {
-                //        MessageBox.Show("もう一度メール設定確認してください。");
-                //    }
-                //}
+                }
+                catch
+                {
+                    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                    {
+                        MessageBox.Show("ネットワーク接続していないです");
+                    }
+                    else
+                    {
+                        MessageBox.Show("もう一度メール設定確認してください。");
+                    }
+                }
             }
             else
             {
@@ -3608,19 +3616,20 @@ namespace camera
             }
         }
 
-        private string  SaveErrorPic()
+        private string SaveErrorPic()
         {
-            string Now = DateTime.Now.Year.ToString()+"年"+
-                DateTime.Now.Month.ToString() + "月"+
-                DateTime.Now.Day.ToString() + "日"+
-                DateTime.Now.Hour.ToString()+"時"+
-                DateTime.Now.Minute.ToString()+"分";
-            string EPicSavePath = "Mail/"+Now+"の問題画像.jpg";
+            string Now = DateTime.Now.Year.ToString() + "年" +
+                DateTime.Now.Month.ToString() + "月" +
+                DateTime.Now.Day.ToString() + "日" +
+                DateTime.Now.Hour.ToString() + "時" +
+                DateTime.Now.Minute.ToString() + "分";
+            string EPicSavePath = "Mail/" + Now + "の問題画像.jpg";
             //img.SaveImage(sfd.FileName);
             Bitmap bmp = new Bitmap(img.ToBitmap());
             bmp.Save(EPicSavePath, ImageFormat.Jpeg);
 
             return EPicSavePath;
+
         }
 
     }
