@@ -121,7 +121,7 @@ namespace camera
         public string Pass;
         public string SendAdd;
         public string Title;
-        public string Msg;
+        //public string Msg;
         public string PicPath;
 
         //private変数
@@ -312,6 +312,8 @@ namespace camera
             //モードを初期化
             CheckMode.SelectedIndex = 0;
 
+          
+
             /// <summary>
             /// 初期化END
             /// </summary>
@@ -333,11 +335,22 @@ namespace camera
             }
 
             /// <summary>
+            /// SaveDataフォルタ存在検査　存在しないなら作る
+            /// </summary>
+            if (!Directory.Exists("Mail"))
+            {
+                Directory.CreateDirectory("Mail");
+            }
+
+            //メール設定
+            LoadMailSetting();
+
+            /// <summary>
             /// カメラ画面取得
             /// </summary>
             VideoCapture vc = new VideoCapture();
 
-           
+
 
             /// <summary>
             /// カメラの稼働処理
@@ -380,7 +393,7 @@ namespace camera
                         }
                     }
 
-                   
+
 
                     if (vc.ConvertRgb)
                     {
@@ -389,7 +402,7 @@ namespace camera
                         {
                             //取得した画像をMATに変換
                             img = vc.RetrieveMat();
-                  
+
 
                             //ガンマ補正計算
                             try
@@ -427,7 +440,7 @@ namespace camera
                         }
                     }
 
-                });        
+                });
 
             }
             catch
@@ -2169,8 +2182,8 @@ namespace camera
         /// </summary>
         private void Check()
         {
-            try
-            {
+            //try
+            //{
                 //サイズを100%に戻す
                 CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
 
@@ -2366,41 +2379,47 @@ namespace camera
 
                 }
 
-                //正常　
-                if (!haveFail)
+            //正常　
+            if (!haveFail)
+            {
+                //ループモードではない判定
+                if (LoopBtnFlag)
                 {
-                    //ループモードではない判定
-                    if (LoopBtnFlag)
-                    {
-                        //正常音
-                        Player = new SoundPlayer(SussesSound);
-                        Player.Play();
-                    }
-
-                    //背景緑に変換
-                    this.BackColor = Color.Blue;
+                    //正常音
+                    Player = new SoundPlayer(SussesSound);
+                    Player.Play();
                 }
-                //異常
-                else
+
+                //背景緑に変換
+                this.BackColor = Color.Blue;
+
+                ErrorNow = false;
+            }
+            //異常
+            else
+            {
+                string Path = SaveErrorPic();
+                PicPath = Path;
+
+                if (!ErrorSoundCKB.Checked)
                 {
-                    if (!ErrorSoundCKB.Checked)
-                    {
-                        //異常音
-                        Player = new SoundPlayer(FailSound);
-                        Player.Play();
-                    }
-
-                    if (UseMailCheckBox.Checked)
-                    {
-                        SendMail(FromAdd, Pass, SendAdd, Title, Msg,PicPath);
-
-                    }
-
-                    //背景赤に変換
-                    this.BackColor = Color.Red;
-                    ErrorNow = true;
-                    //Ans.Text = "FAIL";
+                    //異常音
+                    Player = new SoundPlayer(FailSound);
+                    Player.Play();
                 }
+
+
+                //背景赤に変換
+                this.BackColor = Color.Red;
+                ErrorNow = true;
+
+                if (UseMailCheckBox.Checked)
+                {
+
+                    SendMail(FromAdd, Pass, SendAdd, Title, DateTime.Now.ToString(), Path);
+                }
+                //Ans.Text = "FAIL";
+            }
 
                 //GetAnser初期化
                 if (GetAnser.Count > 1)
@@ -2417,11 +2436,11 @@ namespace camera
                 //CSVに保存
                 SaveDataOnCsv(OkOrFail);
 
-            }
-            catch
-            {
-                MessageBox.Show("画像データを選択してください");
-            }
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("画像データを選択してください");
+            //}
         }
 
         /// <summary>
@@ -3066,7 +3085,7 @@ namespace camera
                 CSComboBox.SelectedIndex = (int)CutSize.OnehundredPer;
             }
         }
-   
+
         /// <summary>
         ///対象選択したイベント
         /// </summary>
@@ -3385,9 +3404,9 @@ namespace camera
 
 
 
-        private void SendMail(string FromAdd,string Pass,string SendAdd,string Title,string  Msg,string Path)
+        private void SendMail(string FromAdd, string Pass, string SendAdd, string Title, string Msg, string Path)
         {
-            if (FromAdd != null && Pass != null && SendAdd != null && Title != null && Msg != null && Path!=null)
+            if (FromAdd != null && Pass != null && SendAdd != null && Title != null)
             {
 
                 var host = "smtp.gmail.com";
@@ -3429,8 +3448,8 @@ namespace camera
                 //    smtp.Send(mail);
                 //    smtp.Disconnect(true);
                 //}
-                try
-                {
+               // try
+               // {
 
                     using (var smtp = new MailKit.Net.Smtp.SmtpClient())
                     {
@@ -3449,10 +3468,10 @@ namespace camera
 
                         //(1)添付ファイルを設定
                         var attachment = new MimeKit.MimePart("image/png");
-                        attachment.Content = new MimeKit.MimeContent(System.IO.File.OpenRead(PicPath));
+                        attachment.Content = new MimeKit.MimeContent(System.IO.File.OpenRead(Path));
                         attachment.ContentDisposition = new MimeKit.ContentDisposition();
                         attachment.ContentTransferEncoding = MimeKit.ContentEncoding.Base64;
-                        attachment.FileName = System.IO.Path.GetFileName(PicPath);
+                        attachment.FileName = System.IO.Path.GetFileName(Path);
 
 
                         mail.Subject = Title;
@@ -3474,21 +3493,21 @@ namespace camera
 
                         smtp.Send(mail);
                         smtp.Disconnect(true);
-                        MessageBox.Show("メール送りました");
+                        //MessageBox.Show("メール送りました");
 
                     }
-                }
-                catch
-                {
-                    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
-                    {
-                        MessageBox.Show("ネットワーク接続していないです");
-                    }
-                    else
-                    {
-                        MessageBox.Show("もう一度メール設定確認してください。");
-                    }
-                }
+               // }
+                //catch
+                //{
+                //    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                //    {
+                //        MessageBox.Show("ネットワーク接続していないです");
+                //    }
+                //    else
+                //    {
+                //        MessageBox.Show("もう一度メール設定確認してください。");
+                //    }
+                //}
             }
             else
             {
@@ -3507,8 +3526,8 @@ namespace camera
             SetMail.SetPass = Pass;
             SetMail.SetSendAdd = SendAdd;
             SetMail.SetTitle = Title;
-            SetMail.SetMsg = Msg;
-            SetMail.SetPicPath = PicPath;
+            //SetMail.SetMsg = Msg;
+            //SetMail.SetPicPath = PicPath;
 
             SetMail.ShowDialog();
 
@@ -3516,17 +3535,93 @@ namespace camera
             Pass = SetMail.SetPass;
             SendAdd = SetMail.SetSendAdd;
             Title = SetMail.SetTitle;
-            Msg = SetMail.SetMsg;
-            PicPath = SetMail.SetPicPath;
+            //Msg = SetMail.SetMsg;
+            //PicPath = SetMail.SetPicPath;
 
 
             //MessageBox.Show(FromAdd+Pass+SendAdd+Title+Msg+PicPath);
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void SaveMailSetting(string FD,string SPass,string  SA,string STitle,string sMsg)
         {
-            SendMail(FromAdd, Pass, SendAdd, Title, Msg, PicPath);
+            string Path = "Mail/MailSetting.txt";
+
+            //保存データ名NULL確認
+            if (SaveDataname != "")
+            {
+                using (StreamWriter sw = new StreamWriter(Path, false, Encoding.GetEncoding("utf-8")))
+                {
+                    //対象ボックス数量書く
+                    sw.WriteLine(FD);
+
+                    sw.WriteLine(SPass);
+
+                    sw.WriteLine(SA);
+
+                    sw.WriteLine(STitle);
+
+                    //sw.WriteLine(sMsg);
+
+                    //sw.WriteLine(Spath);
+                }
+            }
         }
+
+        public void LoadMailSetting()
+        {
+            string dataSpace = "Mail/MailSetting.txt";
+
+            //対象状態データ存在の時
+            if (File.Exists(dataSpace))
+            {
+                //読み込みカウンター
+                int line_cnt = 0;
+                //読む文字一時置く用
+                string line;
+                //読むデータ保存リスト
+                List<string> DataList = new List<string>();
+
+                //データ読む
+                using (StreamReader sr = new StreamReader(dataSpace))
+                {
+                    // ファイルの内容を1行ずつ読み込み
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        line_cnt++;
+                        //Console.WriteLine("{0}行目:{1}", line_cnt, line);
+                        // Listに追加
+                        DataList.Add(line);
+                    }
+                }
+
+                if (line_cnt == 4)
+                {
+                    FromAdd = DataList[0];
+                    Pass = DataList[1];
+                    SendAdd = DataList[2];
+                    Title = DataList[3];
+                   // Msg = DataList[4];
+                    //PicPath = DataList[5];
+                }
+
+            }
+        }
+
+        private string  SaveErrorPic()
+        {
+            string Now = DateTime.Now.Year.ToString()+"年"+
+                DateTime.Now.Month.ToString() + "月"+
+                DateTime.Now.Day.ToString() + "日"+
+                DateTime.Now.Hour.ToString()+"時"+
+                DateTime.Now.Minute.ToString()+"分";
+            string EPicSavePath = "Mail/"+Now+"の問題画像.jpg";
+            //img.SaveImage(sfd.FileName);
+            Bitmap bmp = new Bitmap(img.ToBitmap());
+            bmp.Save(EPicSavePath, ImageFormat.Jpeg);
+
+            return EPicSavePath;
+        }
+
     }
 }

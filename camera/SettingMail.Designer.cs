@@ -41,7 +41,7 @@ namespace camera
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Complete = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // FromAdd
@@ -82,6 +82,7 @@ namespace camera
             this.Msg.Name = "Msg";
             this.Msg.Size = new System.Drawing.Size(162, 19);
             this.Msg.TabIndex = 4;
+            this.Msg.Visible = false;
             this.Msg.TextChanged += new System.EventHandler(this.Msg_TextChanged);
             // 
             // PicPath
@@ -90,6 +91,7 @@ namespace camera
             this.PicPath.Name = "PicPath";
             this.PicPath.Size = new System.Drawing.Size(162, 19);
             this.PicPath.TabIndex = 5;
+            this.PicPath.Visible = false;
             this.PicPath.TextChanged += new System.EventHandler(this.PicPath_TextChanged);
             // 
             // label1
@@ -136,6 +138,7 @@ namespace camera
             this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 10;
             this.label5.Text = "本文";
+            this.label5.Visible = false;
             // 
             // label6
             // 
@@ -145,16 +148,17 @@ namespace camera
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 11;
             this.label6.Text = "画像位置";
+            this.label6.Visible = false;
             // 
-            // button1
+            // Complete
             // 
-            this.button1.Location = new System.Drawing.Point(186, 283);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "完了";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.Complete.Location = new System.Drawing.Point(186, 283);
+            this.Complete.Name = "Complete";
+            this.Complete.Size = new System.Drawing.Size(75, 23);
+            this.Complete.TabIndex = 12;
+            this.Complete.Text = "完了";
+            this.Complete.UseVisualStyleBackColor = true;
+            this.Complete.Click += new System.EventHandler(this.Complete_Click);
             // 
             // SettingMail
             // 
@@ -162,7 +166,7 @@ namespace camera
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(276, 330);
             this.ControlBox = false;
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.Complete);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -190,7 +194,7 @@ namespace camera
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Complete;
         public System.Windows.Forms.TextBox FromAdd;
         public System.Windows.Forms.TextBox Pass;
         public System.Windows.Forms.TextBox SendAdd;

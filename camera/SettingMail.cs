@@ -23,12 +23,12 @@ namespace camera
 
         private void Msg_TextChanged(object sender, EventArgs e)
         {
-            SetMsg = Msg.Text;
+            //SetMsg = Msg.Text;
         }
 
         private void PicPath_TextChanged(object sender, EventArgs e)
         {
-            SetPicPath = PicPath.Text;
+            //SetPicPath = PicPath.Text;
         }
 
         private void SettingMail_Load(object sender, EventArgs e)
@@ -43,8 +43,9 @@ namespace camera
 
             Msg.Text = SetMsg;
 
-            PicPath.Text = SetPicPath;
+           // PicPath.Text = SetPicPath;
         }
+
 
         private void FromAdd_TextChanged(object sender, EventArgs e)
         {
@@ -69,10 +70,15 @@ namespace camera
 
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Complete_Click(object sender, EventArgs e)
         {
+            MainScene Ms = (MainScene)this.Owner;
+            Ms.SaveMailSetting(SetFromAdd,SetPass,SetSendAdd,SetTitle,SetMsg);
+            
             this.Close();
         }
+
+   
 
 
     }
