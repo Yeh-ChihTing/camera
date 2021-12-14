@@ -173,7 +173,7 @@ namespace camera
                 }
                 return ToReturn;
             }
-            catch (Exception ae)
+            catch /*(Exception ae)*/
             {
                 //throw new Exception(ae.Message, ae.InnerException);
                 return "";
