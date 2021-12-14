@@ -77,6 +77,7 @@ namespace camera
                     {
                         sr.WriteLine(MyID.Text);
                         sr.WriteLine(MyPass.Text);
+                        sr.WriteLine(Environment.MachineName);
                     }
 
                     //認証完成

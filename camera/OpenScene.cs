@@ -115,8 +115,8 @@ namespace camera
 
             ComUser = System.Environment.UserName;
 
-            Lipath = @"C:\Users\" + ComUser + @"\Documents\MKT\LICENSE.bat";
-            Foldpath= @"C:\Users\" + ComUser + @"\Documents\MKT";
+            Lipath = "MktLicense/LICENSE.bat";
+            Foldpath= "MktLicense";
 
             //使用できるWEBカメラ表示
             for (int i = 0; i < CameraNames.Count; i++)
@@ -149,16 +149,18 @@ namespace camera
             //    //IDとPass取得用
             //    string ID;
             //    string Pass;
+            //    string ComName;
 
             //    //データを読み込む
-            //    using (StreamReader sr=new StreamReader(Lipath))
+            //    using (StreamReader sr = new StreamReader(Lipath))
             //    {
             //        ID = sr.ReadLine();
-            //        Pass = sr.ReadLine();                 
+            //        Pass = sr.ReadLine();
+            //        ComName = sr.ReadLine();
             //    }
 
             //    //ライセンス確認
-            //    if (ID != LiID || Pass != LiPass)
+            //    if (ID != LiID || Pass != LiPass || ComName != Environment.MachineName)
             //    {
 
             //        MessageBox.Show("ライセンス問題あり");
@@ -174,14 +176,14 @@ namespace camera
             //        }
 
             //    }
- 
+
             //}
             //else
             //{
-            //   //ライセンス入力画面起動
+            //    //ライセンス入力画面起動
             //    License Li = new License();
             //    Li.Owner = this;
-           
+
             //    Li.ShowDialog();
 
             //    if (!Li.Finish)
