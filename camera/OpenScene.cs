@@ -144,54 +144,71 @@ namespace camera
 
 
             //ライセンスファイル存在確認
-            //if (File.Exists(Lipath))
-            //{
-            //    //IDとPass取得用
-            //    string ID;
-            //    string Pass;
-            //    string ComName;
+            if (File.Exists(Lipath))
+            {
+                //IDとPass取得用
+                string ID="";
+                string Pass="";
+                string ComName="";
+                string Array;
 
-            //    //データを読み込む
-            //    using (StreamReader sr = new StreamReader(Lipath))
-            //    {
-            //        ID = sr.ReadLine();
-            //        Pass = sr.ReadLine();
-            //        ComName = sr.ReadLine();
-            //    }
+                License Lic = new License();
 
-            //    //ライセンス確認
-            //    if (ID != LiID || Pass != LiPass || ComName != Environment.MachineName)
-            //    {
+                
 
-            //        MessageBox.Show("ライセンス問題あり");
+                //データを読み込む
+                using (StreamReader sr = new StreamReader(Lipath))
+                {
+                    //ID = sr.ReadLine();
+                    //Pass = sr.ReadLine();
+                    //ComName = sr.ReadLine();
+                    Array = sr.ReadLine();
+                }
 
-            //        License Li = new License();
-            //        Li.Owner = this;
+                string[] LiList = Lic.Decrypt(Array).Split(',');
 
-            //        Li.ShowDialog();
 
-            //        if (!Li.Finish)
-            //        {
-            //            this.Close();
-            //        }
+                if (LiList.Length == 3)
+                {
+                    ID = LiList[0];
+                    Pass = LiList[1];
+                    ComName = LiList[2];
+                }
 
-            //    }
 
-            //}
-            //else
-            //{
-            //    //ライセンス入力画面起動
-            //    License Li = new License();
-            //    Li.Owner = this;
+                //ライセンス確認
+                if (ID != LiID || Pass != LiPass || ComName != Environment.MachineName)
+                {
 
-            //    Li.ShowDialog();
+                    MessageBox.Show("ライセンス問題あり");
 
-            //    if (!Li.Finish)
-            //    {
-            //        this.Close();
-            //    }
+                    License Li = new License();
+                    Li.Owner = this;
 
-            //}
+                    Li.ShowDialog();
+
+                    if (!Li.Finish)
+                    {
+                        this.Close();
+                    }
+
+                }
+
+            }
+            else
+            {
+                //ライセンス入力画面起動
+                License Li = new License();
+                Li.Owner = this;
+
+                Li.ShowDialog();
+
+                if (!Li.Finish)
+                {
+                    this.Close();
+                }
+
+            }
 
         }
 

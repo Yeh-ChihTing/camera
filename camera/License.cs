@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace camera
 {
@@ -72,12 +74,15 @@ namespace camera
                         Directory.CreateDirectory(os.Foldpath);
                     }
 
+                    string array = Encrypt(MyID.Text + "," + MyPass.Text + "," + Environment.MachineName);
+
                     //IDとPASSの保存
                     using (StreamWriter sr = new StreamWriter(os.Lipath))
                     {
-                        sr.WriteLine(MyID.Text);
-                        sr.WriteLine(MyPass.Text);
-                        sr.WriteLine(Environment.MachineName);
+                        //sr.WriteLine(MyID.Text);
+                        //sr.WriteLine(MyPass.Text);
+                        //sr.WriteLine(Environment.MachineName);
+                        sr.WriteLine(array);
                     }
 
                     //認証完成
@@ -108,5 +113,71 @@ namespace camera
                 SendKeys.Send("{TAB}");
             }
         }
+
+
+        static string Encrypt(string array)
+        {
+            try
+            {
+                //string textToEncrypt = "WaterWorld";
+                string ToReturn = "";
+                string publickey = "15876432";
+                string secretkey = "23467851";
+                byte[] secretkeyByte = { };
+                secretkeyByte = System.Text.Encoding.UTF8.GetBytes(secretkey);
+                byte[] publickeybyte = { };
+                publickeybyte = System.Text.Encoding.UTF8.GetBytes(publickey);
+                MemoryStream ms = null;
+                CryptoStream cs = null;
+                byte[] inputbyteArray = System.Text.Encoding.UTF8.GetBytes(array);
+                using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
+                {
+                    ms = new MemoryStream();
+                    cs = new CryptoStream(ms, des.CreateEncryptor(publickeybyte, secretkeyByte), CryptoStreamMode.Write);
+                    cs.Write(inputbyteArray, 0, inputbyteArray.Length);
+                    cs.FlushFinalBlock();
+                    ToReturn = Convert.ToBase64String(ms.ToArray());
+                }
+                return ToReturn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+        }
+
+        public string Decrypt(string array)
+        {
+            try
+            {
+                //string textToDecrypt = "6+PXxVWlBqcUnIdqsMyUHA==";
+                string ToReturn = "";
+                string publickey = "15876432";
+                string secretkey = "23467851";
+                byte[] privatekeyByte = { };
+                privatekeyByte = System.Text.Encoding.UTF8.GetBytes(secretkey);
+                byte[] publickeybyte = { };
+                publickeybyte = System.Text.Encoding.UTF8.GetBytes(publickey);
+                MemoryStream ms = null;
+                CryptoStream cs = null;
+                byte[] inputbyteArray = new byte[array.Replace(" ", "+").Length];
+                inputbyteArray = Convert.FromBase64String(array.Replace(" ", "+"));
+                using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
+                {
+                    ms = new MemoryStream();
+                    cs = new CryptoStream(ms, des.CreateDecryptor(publickeybyte, privatekeyByte), CryptoStreamMode.Write);
+                    cs.Write(inputbyteArray, 0, inputbyteArray.Length);
+                    cs.FlushFinalBlock();
+                    Encoding encoding = Encoding.UTF8;
+                    ToReturn = encoding.GetString(ms.ToArray());
+                }
+                return ToReturn;
+            }
+            catch (Exception ae)
+            {
+                //throw new Exception(ae.Message, ae.InnerException);
+                return "";
+            }
+}
     }
 }
