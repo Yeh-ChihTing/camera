@@ -118,8 +118,6 @@ namespace camera
         public string Pass;
         public string SendAdd;
         public string Title;
-        //public string Msg;
-        public string PicPath;
 
         //private変数
 
@@ -604,6 +602,40 @@ namespace camera
         {
             //検査関数
             Check();
+        }
+
+        /// <summary>
+        /// 異常警報用タイマー
+        /// </summary>
+        private void Error_Tick(object sender, EventArgs e)
+        {
+            if (ErrorNow)
+            {
+                ErrorLoop++;
+
+                if (ErrorLoop >= 1.0f)
+                {
+
+                    if (ErrorNowColor)
+                    {
+                        this.BackColor = ErrorRed;
+                        ErrorLoop = 0.0f;
+                        ErrorNowColor = !ErrorNowColor;
+                    }
+                    else
+                    {
+                        this.BackColor = Errorwhite;
+                        ErrorLoop = 0.0f;
+                        ErrorNowColor = !ErrorNowColor;
+                    }
+
+
+                }
+
+
+
+            }
+
         }
 
         //ボタン
@@ -2005,6 +2037,48 @@ namespace camera
 
         }
 
+        /// <summary>
+        /// 異常警報止めるボタン
+        /// </summary>
+        private void ErrowStopBtn_Click(object sender, EventArgs e)
+        {
+            if (ErrorNow)
+            {
+                ErrorNow = false;
+                this.BackColor = ErrorRed;
+            }
+        }
+
+        /// <summary>
+        /// メール設定ボタン
+        /// </summary>
+        private void MailSet_Click(object sender, EventArgs e)
+        {
+            SettingMail SetMail = new SettingMail();
+
+            SetMail.Owner = this;
+
+            SetMail.SetFromAdd = FromAdd;
+            SetMail.SetPass = Pass;
+            SetMail.SetSendAdd = SendAdd;
+            SetMail.SetTitle = Title;
+            //SetMail.SetMsg = Msg;
+            //SetMail.SetPicPath = PicPath;
+
+            SetMail.ShowDialog();
+
+            FromAdd = SetMail.SetFromAdd;
+            Pass = SetMail.SetPass;
+            SendAdd = SetMail.SetSendAdd;
+            Title = SetMail.SetTitle;
+            //Msg = SetMail.SetMsg;
+            //PicPath = SetMail.SetPicPath;
+
+
+            //MessageBox.Show(FromAdd+Pass+SendAdd+Title+Msg+PicPath);
+
+        }
+
 
         //マウス
 
@@ -2177,6 +2251,7 @@ namespace camera
             //マウス指したRGB値を表示オフ　
             MouseRGB.Text = null;
         }
+
 
         //自作関数
 
@@ -2404,7 +2479,7 @@ namespace camera
                 else
                 {
                     string Path = SaveErrorPic();
-                    PicPath = Path;
+                    //PicPath = Path;
 
                     if (!ErrorSoundCKB.Checked)
                     {
@@ -2800,8 +2875,214 @@ namespace camera
             }
         }
 
+        /// <summary>
+        ///　メール設定セーフ用関数
+        /// </summary>
+        public void SaveMailSetting(string FD, string SPass, string SA, string STitle, string sMsg)
+        {
+            string Path = "Mail/MailSetting.dll";
 
-        //値変更反応関数
+            //保存データ名NULL確認
+            if (SaveDataname != "")
+            {
+                using (StreamWriter sw = new StreamWriter(Path, false, Encoding.GetEncoding("utf-8")))
+                {
+                    //対象ボックス数量書く
+                    sw.WriteLine(FD);
+
+                    sw.WriteLine(SPass);
+
+                    sw.WriteLine(SA);
+
+                    sw.WriteLine(STitle);
+
+                    //sw.WriteLine(sMsg);
+
+                    //sw.WriteLine(Spath);
+                }
+            }
+        }
+
+        /// <summary>
+        /// メール設定読み込む用関数
+        /// </summary>
+        public void LoadMailSetting()
+        {
+            string dataSpace = "Mail/MailSetting.dll";
+
+            //対象状態データ存在の時
+            if (File.Exists(dataSpace))
+            {
+                //読み込みカウンター
+                int line_cnt = 0;
+                //読む文字一時置く用
+                string line;
+                //読むデータ保存リスト
+                List<string> DataList = new List<string>();
+
+                //データ読む
+                using (StreamReader sr = new StreamReader(dataSpace))
+                {
+                    // ファイルの内容を1行ずつ読み込み
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        line_cnt++;
+                        //Console.WriteLine("{0}行目:{1}", line_cnt, line);
+                        // Listに追加
+                        DataList.Add(line);
+                    }
+                }
+
+                if (line_cnt == 4)
+                {
+                    FromAdd = DataList[0];
+                    Pass = DataList[1];
+                    SendAdd = DataList[2];
+                    Title = DataList[3];
+                    // Msg = DataList[4];
+                    //PicPath = DataList[5];
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 異常状態の画像を保存用関数
+        /// </summary>
+        private string SaveErrorPic()
+        {
+            string Now = DateTime.Now.Year.ToString() + "年" +
+                DateTime.Now.Month.ToString() + "月" +
+                DateTime.Now.Day.ToString() + "日" +
+                DateTime.Now.Hour.ToString() + "時" +
+                DateTime.Now.Minute.ToString() + "分";
+            string EPicSavePath = "Mail/" + Now + "の問題画像.jpg";
+            //img.SaveImage(sfd.FileName);
+            Bitmap bmp = new Bitmap(img.ToBitmap());
+            bmp.Save(EPicSavePath, ImageFormat.Jpeg);
+
+            return EPicSavePath;
+
+        }
+
+        /// <summary>
+        /// メール送信用関数
+        /// </summary>
+        private void SendMail(string FromAdd, string Pass, string SendAdd, string Title, string Msg, string Path)
+        {
+            if (FromAdd != null && Pass != null && SendAdd != null && Title != null)
+            {
+
+                var host = "smtp.gmail.com";
+                var port = 587;
+
+
+                //using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                //{
+                //    //(1)STARTTLSで接続する
+                //    smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
+                //    //(2)GMailメールのアカウントを指定して認証する
+                //    smtp.Authenticate("yo.zitei0120@gmail.com", "t19940120");
+
+                //    var mail = new MimeKit.MimeMessage();
+                //    var builder = new MimeKit.BodyBuilder();
+
+                //    mail.From.Add(new MimeKit.MailboxAddress("", "yo.zitei0120@gmail.com"));
+                //    mail.To.Add(new MimeKit.MailboxAddress("", "tony199401@gmail.com"));
+
+                //    var filePath = "test.jpg";  //テンプファイルのパス
+
+                //    //(1)添付ファイルを設定
+                //    var attachment = new MimeKit.MimePart("image/png");
+                //    attachment.Content = new MimeKit.MimeContent(System.IO.File.OpenRead(filePath));
+                //    attachment.ContentDisposition = new MimeKit.ContentDisposition();
+                //    attachment.ContentTransferEncoding = MimeKit.ContentEncoding.Base64;
+                //    attachment.FileName = System.IO.Path.GetFileName(filePath);
+
+                //    mail.Subject = "霜発生しています";
+                //    builder.TextBody = "除去してください！。\n\n以上";
+                //    mail.Body = builder.ToMessageBody();
+
+                //    //(2)Multipartオブジェクトの作成
+                //    var multipart = new MimeKit.Multipart("mixed");
+                //    //multipart.Add(textPart);
+                //    multipart.Add(attachment);
+
+                //    //(3)Bodyに、添付ファイルとメール本文を格納したMultipartオブジェクトを設定
+                //    mail.Body = multipart;
+                //    smtp.Send(mail);
+                //    smtp.Disconnect(true);
+                //}
+                try
+                {
+
+                    using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                    {
+                        //(1)STARTTLSで接続する
+                        smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
+                        //(2)GMailメールのアカウントを指定して認証する
+                        smtp.Authenticate(FromAdd, Pass);
+
+                        var mail = new MimeKit.MimeMessage();
+                        var builder = new MimeKit.BodyBuilder();
+
+                        mail.From.Add(new MimeKit.MailboxAddress("", FromAdd));
+                        mail.To.Add(new MimeKit.MailboxAddress("", SendAdd));
+
+                        //var filePath = PicPath;  //テンプファイルのパス
+
+                        //(1)添付ファイルを設定
+                        var attachment = new MimeKit.MimePart("image/png");
+                        attachment.Content = new MimeKit.MimeContent(System.IO.File.OpenRead(Path));
+                        attachment.ContentDisposition = new MimeKit.ContentDisposition();
+                        attachment.ContentTransferEncoding = MimeKit.ContentEncoding.Base64;
+                        attachment.FileName = System.IO.Path.GetFileName(Path);
+
+
+                        mail.Subject = Title;
+
+                        //メールの本文を設定
+                        MimeKit.TextPart textPart = new MimeKit.TextPart("plain");
+                        textPart.Text = Msg;
+
+                        //builder.TextBody = Msg;
+                        //mail.Body = builder.ToMessageBody();
+
+                        //(2)Multipartオブジェクトの作成
+                        var multipart = new MimeKit.Multipart("mixed");
+                        multipart.Add(textPart);
+                        multipart.Add(attachment);
+
+                        //(3)Bodyに、添付ファイルとメール本文を格納したMultipartオブジェクトを設定
+                        mail.Body = multipart;
+
+                        smtp.Send(mail);
+                        smtp.Disconnect(true);
+                        //MessageBox.Show("メール送りました");
+
+                    }
+                }
+                catch
+                {
+                    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                    {
+                        MessageBox.Show("ネットワーク接続していないです");
+                    }
+                    else
+                    {
+                        MessageBox.Show("もう一度メール設定確認してください。");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("メール設定にはまだ入力していない情報ある、送信できないです");
+            }
+
+        }
+
+
+        //値変更対する反応関数
 
         /// <summary>
         ///マスター画像サイズ変更処理
@@ -3367,290 +3648,6 @@ namespace camera
 
             }
 
-
-        }
-
-
-        /// <summary>
-        /// 異常警報用タイマー
-        /// </summary>
-        private void Error_Tick(object sender, EventArgs e)
-        {
-            if (ErrorNow)
-            {
-                ErrorLoop++;
-
-                if (ErrorLoop >= 1.0f)
-                {
-
-                    if (ErrorNowColor)
-                    {
-                        this.BackColor = ErrorRed;
-                        ErrorLoop = 0.0f;
-                        ErrorNowColor = !ErrorNowColor;
-                    }
-                    else
-                    {
-                        this.BackColor = Errorwhite;
-                        ErrorLoop = 0.0f;
-                        ErrorNowColor = !ErrorNowColor;
-                    }
-
-
-                }
-
-
-
-            }
-
-        }
-
-
-        /// <summary>
-        /// 異常警報止めるボタン
-        /// </summary>
-        private void ErrowStopBtn_Click(object sender, EventArgs e)
-        {
-            if (ErrorNow)
-            {
-                ErrorNow = false;
-                this.BackColor = ErrorRed;
-            }
-        }
-
-
-        /// <summary>
-        /// メール送信用関数
-        /// </summary>
-        private void SendMail(string FromAdd, string Pass, string SendAdd, string Title, string Msg, string Path)
-        {
-            if (FromAdd != null && Pass != null && SendAdd != null && Title != null)
-            {
-
-                var host = "smtp.gmail.com";
-                var port = 587;
-
-                //using (var smtp = new MailKit.Net.Smtp.SmtpClient())
-                //{
-                //    //(1)STARTTLSで接続する
-                //    smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
-                //    //(2)GMailメールのアカウントを指定して認証する
-                //    smtp.Authenticate("yo.zitei0120@gmail.com", "t19940120");
-
-                //    var mail = new MimeKit.MimeMessage();
-                //    var builder = new MimeKit.BodyBuilder();
-
-                //    mail.From.Add(new MimeKit.MailboxAddress("", "yo.zitei0120@gmail.com"));
-                //    mail.To.Add(new MimeKit.MailboxAddress("", "tony199401@gmail.com"));
-
-                //    var filePath = "test.jpg";  //テンプファイルのパス
-
-                //    //(1)添付ファイルを設定
-                //    var attachment = new MimeKit.MimePart("image/png");
-                //    attachment.Content = new MimeKit.MimeContent(System.IO.File.OpenRead(filePath));
-                //    attachment.ContentDisposition = new MimeKit.ContentDisposition();
-                //    attachment.ContentTransferEncoding = MimeKit.ContentEncoding.Base64;
-                //    attachment.FileName = System.IO.Path.GetFileName(filePath);
-
-                //    mail.Subject = "霜発生しています";
-                //    builder.TextBody = "除去してください！。\n\n以上";
-                //    mail.Body = builder.ToMessageBody();
-
-                //    //(2)Multipartオブジェクトの作成
-                //    var multipart = new MimeKit.Multipart("mixed");
-                //    //multipart.Add(textPart);
-                //    multipart.Add(attachment);
-
-                //    //(3)Bodyに、添付ファイルとメール本文を格納したMultipartオブジェクトを設定
-                //    mail.Body = multipart;
-                //    smtp.Send(mail);
-                //    smtp.Disconnect(true);
-                //}
-                try
-                {
-
-                    using (var smtp = new MailKit.Net.Smtp.SmtpClient())
-                    {
-                        //(1)STARTTLSで接続する
-                        smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
-                        //(2)GMailメールのアカウントを指定して認証する
-                        smtp.Authenticate(FromAdd, Pass);
-
-                        var mail = new MimeKit.MimeMessage();
-                        var builder = new MimeKit.BodyBuilder();
-
-                        mail.From.Add(new MimeKit.MailboxAddress("", FromAdd));
-                        mail.To.Add(new MimeKit.MailboxAddress("", SendAdd));
-
-                        //var filePath = PicPath;  //テンプファイルのパス
-
-                        //(1)添付ファイルを設定
-                        var attachment = new MimeKit.MimePart("image/png");
-                        attachment.Content = new MimeKit.MimeContent(System.IO.File.OpenRead(Path));
-                        attachment.ContentDisposition = new MimeKit.ContentDisposition();
-                        attachment.ContentTransferEncoding = MimeKit.ContentEncoding.Base64;
-                        attachment.FileName = System.IO.Path.GetFileName(Path);
-
-
-                        mail.Subject = Title;
-
-                        //メールの本文を設定
-                        MimeKit.TextPart textPart = new MimeKit.TextPart("plain");
-                        textPart.Text = Msg;
-
-                        //builder.TextBody = Msg;
-                        //mail.Body = builder.ToMessageBody();
-
-                        //(2)Multipartオブジェクトの作成
-                        var multipart = new MimeKit.Multipart("mixed");
-                        multipart.Add(textPart);
-                        multipart.Add(attachment);
-
-                        //(3)Bodyに、添付ファイルとメール本文を格納したMultipartオブジェクトを設定
-                        mail.Body = multipart;
-
-                        smtp.Send(mail);
-                        smtp.Disconnect(true);
-                        //MessageBox.Show("メール送りました");
-
-                    }
-                }
-                catch
-                {
-                    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
-                    {
-                        MessageBox.Show("ネットワーク接続していないです");
-                    }
-                    else
-                    {
-                        MessageBox.Show("もう一度メール設定確認してください。");
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("メール設定にはまだ入力していない情報ある、送信できないです");
-            }
-
-        }
-
-        /// <summary>
-        /// メール設定ボタン
-        /// </summary>
-        private void MailSet_Click(object sender, EventArgs e)
-        {
-            SettingMail SetMail = new SettingMail();
-
-            SetMail.Owner = this;
-
-            SetMail.SetFromAdd = FromAdd;
-            SetMail.SetPass = Pass;
-            SetMail.SetSendAdd = SendAdd;
-            SetMail.SetTitle = Title;
-            //SetMail.SetMsg = Msg;
-            //SetMail.SetPicPath = PicPath;
-
-            SetMail.ShowDialog();
-
-            FromAdd = SetMail.SetFromAdd;
-            Pass = SetMail.SetPass;
-            SendAdd = SetMail.SetSendAdd;
-            Title = SetMail.SetTitle;
-            //Msg = SetMail.SetMsg;
-            //PicPath = SetMail.SetPicPath;
-
-
-            //MessageBox.Show(FromAdd+Pass+SendAdd+Title+Msg+PicPath);
-
-        }
-
-        /// <summary>
-        ///　メール設定セーフ用関数
-        /// </summary>
-        public void SaveMailSetting(string FD,string SPass,string  SA,string STitle,string sMsg)
-        {
-            string Path = "Mail/MailSetting.dll";
-
-            //保存データ名NULL確認
-            if (SaveDataname != "")
-            {
-                using (StreamWriter sw = new StreamWriter(Path, false, Encoding.GetEncoding("utf-8")))
-                {
-                    //対象ボックス数量書く
-                    sw.WriteLine(FD);
-
-                    sw.WriteLine(SPass);
-
-                    sw.WriteLine(SA);
-
-                    sw.WriteLine(STitle);
-
-                    //sw.WriteLine(sMsg);
-
-                    //sw.WriteLine(Spath);
-                }
-            }
-        }
-
-        /// <summary>
-        /// メール設定読み込む用関数
-        /// </summary>
-        public void LoadMailSetting()
-        {
-            string dataSpace = "Mail/MailSetting.dll";
-
-            //対象状態データ存在の時
-            if (File.Exists(dataSpace))
-            {
-                //読み込みカウンター
-                int line_cnt = 0;
-                //読む文字一時置く用
-                string line;
-                //読むデータ保存リスト
-                List<string> DataList = new List<string>();
-
-                //データ読む
-                using (StreamReader sr = new StreamReader(dataSpace))
-                {
-                    // ファイルの内容を1行ずつ読み込み
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        line_cnt++;
-                        //Console.WriteLine("{0}行目:{1}", line_cnt, line);
-                        // Listに追加
-                        DataList.Add(line);
-                    }
-                }
-
-                if (line_cnt == 4)
-                {
-                    FromAdd = DataList[0];
-                    Pass = DataList[1];
-                    SendAdd = DataList[2];
-                    Title = DataList[3];
-                   // Msg = DataList[4];
-                    //PicPath = DataList[5];
-                }
-
-            }
-        }
-
-        /// <summary>
-        /// 異常状態の画像を保存用関数
-        /// </summary>
-        private string SaveErrorPic()
-        {
-            string Now = DateTime.Now.Year.ToString() + "年" +
-                DateTime.Now.Month.ToString() + "月" +
-                DateTime.Now.Day.ToString() + "日" +
-                DateTime.Now.Hour.ToString() + "時" +
-                DateTime.Now.Minute.ToString() + "分";
-            string EPicSavePath = "Mail/" + Now + "の問題画像.jpg";
-            //img.SaveImage(sfd.FileName);
-            Bitmap bmp = new Bitmap(img.ToBitmap());
-            bmp.Save(EPicSavePath, ImageFormat.Jpeg);
-
-            return EPicSavePath;
 
         }
 
