@@ -1877,6 +1877,7 @@ namespace camera
                             }
 
                             CheckLockNum.Text = (BoxNum - 1).ToString();
+                            BoxNum = BoxNum - 1;
 
                         }
 
