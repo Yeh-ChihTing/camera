@@ -115,7 +115,7 @@ namespace camera
 
             ComUser = System.Environment.UserName;
 
-            Lipath = "MktLicense/LICENSE.bat";
+            Lipath = "MktLicense/LICENSE.dll";
             Foldpath= "MktLicense";
 
             //使用できるWEBカメラ表示

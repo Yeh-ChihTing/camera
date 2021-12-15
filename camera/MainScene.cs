@@ -794,7 +794,7 @@ namespace camera
                     //データ名を副名以外取る
                     string[] name = SaveDataname.Split('.');
                     //対象状態データ名
-                    string dataSpace = name[0] + ".bat";
+                    string dataSpace = name[0] + ".dll";
 
                     //結果データリストをクリア
                     GetAnser.Clear();
@@ -2719,7 +2719,7 @@ namespace camera
                 //現画像データ名取得
                 string[] name = SaveDataname.Split('.');
                 //保存データ名
-                string Path = name[0] + ".bat";
+                string Path = name[0] + ".dll";
 
                 //保存データ名NULL確認
                 if (SaveDataname != "")
@@ -3568,7 +3568,7 @@ namespace camera
         /// </summary>
         public void SaveMailSetting(string FD,string SPass,string  SA,string STitle,string sMsg)
         {
-            string Path = "Mail/MailSetting.txt";
+            string Path = "Mail/MailSetting.dll";
 
             //保存データ名NULL確認
             if (SaveDataname != "")
@@ -3596,7 +3596,7 @@ namespace camera
         /// </summary>
         public void LoadMailSetting()
         {
-            string dataSpace = "Mail/MailSetting.txt";
+            string dataSpace = "Mail/MailSetting.dll";
 
             //対象状態データ存在の時
             if (File.Exists(dataSpace))
